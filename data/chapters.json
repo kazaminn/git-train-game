@@ -445,5 +445,139 @@
         "nextLabel": "第3章 完了"
       }
     ]
+  },
+  {
+    "id": 3,
+    "title": "第4章",
+    "subtitle": "駅の名前を変えよう！",
+    "description": "開業済みの駅の名前を変える。歴史改変の技術と危険性を学ぶ。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff9800", "label": "変更前の履歴" },
+      { "color": "#ff5252", "label": "⚠ 危険操作" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線が順調に拡大しています。\nしかし、開業済みの駅の名前を変えたいという要望が来ました。\n「仲木戸」を「京急東神奈川」に改称するようなものです。\n\nGitでも、過去のコミットを修正することがあります。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-start",
+        "nextLabel": "駅名変更に挑む"
+      },
+      {
+        "char": "現場監督",
+        "text": "まずは一番簡単なケースから。\n直前のコミットのメッセージを書き間違えてしまいました。\n「第二号駅 会業」→「第二号駅 開業」に修正したい。\n直前のコミットを修正するコマンドは？",
+        "terminal": "$ git log --oneline -1\na1b2c3d 第二号駅 会業   ← タイポ！",
+        "choices": [
+          { "label": "git commit --amend", "correct": true },
+          { "label": "git commit --fix", "correct": false },
+          { "label": "git commit --edit", "correct": false },
+          { "label": "git commit --redo", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git commit --amend で直前のコミットを修正できます。\nメッセージだけでなく、ファイルの追加忘れも修正できます。\n「直前の駅名変更」のようなイメージです。",
+          "ng": "git commit --amend が正しいです。\namend は「修正する」という意味。直前のコミットだけ修正できます。"
+        },
+        "graph": "ch4-amend"
+      },
+      {
+        "char": "建設局長",
+        "text": "直前の修正は簡単でしたね。\nでは、もっと前の駅名を変えたい場合は？\n3つ前のコミットの内容を編集したいとします。",
+        "terminal": "$ git log --oneline\na1b2c3d 第三号駅 開業\nb2c3d4e 第二号駅 開業\nc3d4e5f 第一号駅 開業   ← これを変えたい\nd4e5f6g init",
+        "choices": null,
+        "graph": "ch4-amend",
+        "nextLabel": "過去を書き換える"
+      },
+      {
+        "char": "現場監督",
+        "text": "直前より前のコミットを修正するには、\n対話的にコミット履歴を編集するコマンドが必要です。\nどのコマンドを使いますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git rebase -i HEAD~3", "correct": true },
+          { "label": "git edit HEAD~3", "correct": false },
+          { "label": "git amend HEAD~3", "correct": false },
+          { "label": "git history --edit 3", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git rebase -i（interactive rebase）で過去のコミットを対話的に編集できます。\nHEAD~3 は「3つ前まで遡る」という意味。pick/edit/squash などの操作ができます。",
+          "ng": "git rebase -i HEAD~3 が正しいです。\n-i は interactive（対話的）の略。過去のコミット履歴を自由に編集できます。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "現場監督",
+        "text": "rebase -i を実行するとエディタが開き、\nコミットごとに操作を指定できます。\nコミットのメッセージを変更したい場合、どの操作を指定しますか？",
+        "terminal": "pick c3d4e5f 第一号駅 開業\npick b2c3d4e 第二号駅 開業\npick a1b2c3d 第三号駅 開業",
+        "choices": [
+          { "label": "reword（メッセージを変更）", "correct": true },
+          { "label": "edit（コミット自体を編集）", "correct": false },
+          { "label": "squash（前のコミットと統合）", "correct": false },
+          { "label": "drop（コミットを削除）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ reword でコミットメッセージだけを変更できます。\nedit はファイル内容も変えたい時、squash は複数コミットを1つにまとめる時に使います。",
+          "ng": "reword が正しいです。\nメッセージだけ変えたい → reword、内容も変えたい → edit、まとめたい → squash です。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "建設局長",
+        "text": "ここで重要な警告です。\n\nこの履歴の書き換え、もし既に管理局（リモート）に push 済みだったら……\n管理局に送った時刻表を、こっそり書き換えるようなものです。\n\n他の人が古い時刻表を元に作業していたら、大混乱になります。",
+        "terminal": "⚠ WARNING ⚠\nリモートに push 済みのコミットを\nrebase で書き換えると、\n他の人の作業が壊れる可能性があります。",
+        "choices": null,
+        "graph": "ch4-danger",
+        "nextLabel": "どうすれば？"
+      },
+      {
+        "char": "現場監督",
+        "text": "push 済みのコミットを rebase で書き換えた場合、\n通常の push は拒否されます。\n強制的に上書きするコマンドがありますが……\nより安全な強制 push のオプションはどれですか？",
+        "terminal": "$ git push origin main\n! [rejected] main -> main (non-fast-forward)\nerror: 管理局が拒否しました。履歴が食い違っています。",
+        "choices": [
+          { "label": "git push --force-with-lease origin main", "correct": true },
+          { "label": "git push --force origin main", "correct": false },
+          { "label": "git push -f origin main", "correct": false },
+          { "label": "git push --overwrite origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ --force-with-lease は「他の人が push していなければ強制 push する」という安全策付きです。\n--force は無条件に上書きするため、他の人の作業を消してしまう危険があります。",
+          "ng": "--force-with-lease が最も安全です。\n--force は他の人の変更も上書きしてしまいます。--force-with-lease は他の人の push がないことを確認してから上書きします。"
+        },
+        "graph": "ch4-force-push"
+      },
+      {
+        "char": "建設局長",
+        "text": "歴史改変のルールを覚えましょう：\n\n1. まだ push していないコミット → 自由に amend / rebase できる\n2. push 済みのコミット → 原則として書き換えてはいけない\n3. どうしても必要なら → --force-with-lease を使う\n\n「開業済みの駅の名前を変えるのは大変」\n＝「push した後の rebase は危険」ということです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-force-push",
+        "nextLabel": "ルールを確認"
+      },
+      {
+        "char": "建設局長",
+        "text": "最後に確認です。\n以下のうち、歴史改変について正しい説明はどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "push前なら amend/rebase は安全に使える", "correct": true },
+          { "label": "rebase はいつでも安全に使える", "correct": false },
+          { "label": "--force で push すれば問題ない", "correct": false },
+          { "label": "歴史改変は絶対にしてはいけない", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ まだ push していないコミットなら、自分のローカルだけの話なので安全です。\npush 後の書き換えは慎重に。チーム開発では事前にメンバーへの周知が必要です。",
+          "ng": "push 前なら amend/rebase は安全に使えます。\n歴史改変自体は悪いことではありません。タイミングと影響範囲を理解して使うことが大切です。"
+        },
+        "graph": "ch4-force-push"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n駅名変更（歴史改変）の技術と注意点を学びました。\n\nあなたは今、こんなことを学びました：\n— git commit --amend で直前のコミットを修正\n— git rebase -i で過去のコミットを対話的に編集\n— reword / edit / squash / drop の使い分け\n— --force-with-lease で安全な強制 push\n— 歴史改変のルール（push前 = 安全、push後 = 危険）\n\n次の章では、他社の路線を買収して自社に統合します。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-force-push",
+        "isLast": true,
+        "nextLabel": "第4章 完了"
+      }
+    ]
   }
 ]
