@@ -1,0 +1,842 @@
+{
+  "empty": {
+    "nodes": [],
+    "lines": [],
+    "labels": []
+  },
+  "ch1-init": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main", "glow": true }
+    ],
+    "lines": [],
+    "labels": [
+      { "x": 80, "y": 60, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+  "ch1-staging": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 100, "color": "#4a6080", "label": "staging", "branch": "main", "dashed": true, "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 100, "x2": 220, "y2": 100, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 80, "y": 60, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+  "ch1-first-commit": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 240, "y": 100, "color": "#00c8ff", "label": "第一号駅", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 100, "x2": 240, "y2": 100, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 160, "y": 60, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+  "ch1-branch-created": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 240, "y": 100, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 320, "y": 200, "color": "#ff9800", "label": "工事開始", "branch": "build/plaza", "dashed": true, "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 100, "x2": 240, "y2": 100, "color": "#00c8ff" },
+      { "x1": 240, "y1": 100, "x2": 320, "y2": 200, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 160, "y": 60, "text": "main", "color": "#00c8ff" },
+      { "x": 320, "y": 240, "text": "build/plaza", "color": "#ff9800" }
+    ]
+  },
+  "ch1-branch-commits": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 240, "y": 100, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 360, "y": 200, "color": "#ff9800", "label": "広場", "branch": "build/plaza" },
+      { "x": 480, "y": 200, "color": "#ff9800", "label": "改札口", "branch": "build/plaza", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 100, "x2": 240, "y2": 100, "color": "#00c8ff" },
+      { "x1": 240, "y1": 100, "x2": 360, "y2": 200, "color": "#ff9800" },
+      { "x1": 360, "y1": 200, "x2": 480, "y2": 200, "color": "#ff9800" }
+    ],
+    "labels": [
+      { "x": 160, "y": 60, "text": "main", "color": "#00c8ff" },
+      { "x": 420, "y": 240, "text": "build/plaza", "color": "#ff9800" }
+    ]
+  },
+  "ch1-merged": {
+    "nodes": [
+      { "x": 80, "y": 100, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 240, "y": 100, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 360, "y": 200, "color": "#ff9800", "label": "広場", "branch": "build/plaza" },
+      { "x": 480, "y": 200, "color": "#ff9800", "label": "改札口", "branch": "build/plaza" },
+      { "x": 560, "y": 100, "color": "#00c8ff", "label": "統合", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 100, "x2": 240, "y2": 100, "color": "#00c8ff" },
+      { "x1": 240, "y1": 100, "x2": 360, "y2": 200, "color": "#ff9800" },
+      { "x1": 360, "y1": 200, "x2": 480, "y2": 200, "color": "#ff9800" },
+      { "x1": 240, "y1": 100, "x2": 560, "y2": 100, "color": "#00c8ff" },
+      { "x1": 480, "y1": 200, "x2": 560, "y2": 100, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 300, "y": 60, "text": "main", "color": "#00c8ff" },
+      { "x": 420, "y": 240, "text": "build/plaza", "color": "#ff9800" }
+    ]
+  },
+
+  "ch2-local-only": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "local/main", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch2-remote-added": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main", "glow": true },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "(空)", "branch": "origin/main", "dashed": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 80, "y": 260, "text": "origin/main", "color": "#a855f7" }
+    ]
+  },
+
+  "ch2-pushed": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 80, "x2": 380, "y2": 220, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 230, "y": 260, "text": "origin/main", "color": "#a855f7" }
+    ]
+  },
+
+  "ch2-pr-created": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main" },
+      { "x": 500, "y": 150, "color": "#ff9800", "label": "PR #1", "branch": "review", "glow": true, "dashed": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 80, "x2": 380, "y2": 220, "color": "#4a6080", "dashed": true },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 150, "color": "#ff9800", "dashed": true },
+      { "x1": 380, "y1": 220, "x2": 500, "y2": 150, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 230, "y": 260, "text": "origin/main", "color": "#a855f7" },
+      { "x": 500, "y": 190, "text": "Pull Request", "color": "#ff9800" }
+    ]
+  },
+
+  "ch2-review": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main" },
+      { "x": 500, "y": 150, "color": "#ff9800", "label": "PR 審査中", "branch": "review", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 80, "x2": 380, "y2": 220, "color": "#4a6080", "dashed": true },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 150, "color": "#ff9800", "dashed": true },
+      { "x1": 380, "y1": 220, "x2": 500, "y2": 150, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 230, "y": 260, "text": "origin/main", "color": "#a855f7" },
+      { "x": 500, "y": 190, "text": "Pull Request", "color": "#ff9800" }
+    ]
+  },
+
+  "ch2-review-fixed": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "修正", "branch": "main", "glow": true },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main" },
+      { "x": 500, "y": 220, "color": "#a855f7", "label": "修正", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 220, "x2": 500, "y2": 220, "color": "#a855f7" },
+      { "x1": 500, "y1": 80, "x2": 500, "y2": 220, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 290, "y": 260, "text": "origin/main", "color": "#a855f7" }
+    ]
+  },
+
+  "ch2-pr-merged": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "修正", "branch": "main" },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main" },
+      { "x": 500, "y": 220, "color": "#a855f7", "label": "修正", "branch": "origin/main" },
+      { "x": 580, "y": 220, "color": "#00e676", "label": "✓ Merged", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 220, "x2": 500, "y2": 220, "color": "#a855f7" },
+      { "x1": 500, "y1": 220, "x2": 580, "y2": 220, "color": "#00e676" },
+      { "x1": 500, "y1": 80, "x2": 500, "y2": 220, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 330, "y": 260, "text": "origin/main", "color": "#a855f7" }
+    ]
+  },
+
+  "ch2-tagged": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "修正", "branch": "main" },
+      { "x": 80, "y": 220, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 220, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 380, "y": 220, "color": "#a855f7", "label": "統合", "branch": "origin/main" },
+      { "x": 500, "y": 220, "color": "#a855f7", "label": "修正", "branch": "origin/main" },
+      { "x": 580, "y": 220, "color": "#00e676", "label": "v1.0 開通", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 220, "x2": 220, "y2": 220, "color": "#a855f7" },
+      { "x1": 220, "y1": 220, "x2": 380, "y2": 220, "color": "#a855f7" },
+      { "x1": 380, "y1": 220, "x2": 500, "y2": 220, "color": "#a855f7" },
+      { "x1": 500, "y1": 220, "x2": 580, "y2": 220, "color": "#00e676" },
+      { "x1": 500, "y1": 80, "x2": 500, "y2": 220, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 330, "y": 260, "text": "origin/main", "color": "#a855f7" },
+      { "x": 580, "y": 190, "text": "🏷 v1.0", "color": "#00e676" }
+    ]
+  },
+
+  "ch3-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch3-branch-created": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station", "dashed": true, "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 340, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-conflict": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 500, "y": 130, "color": "#ff5252", "label": "衝突!", "branch": "conflict", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 130, "color": "#ff5252", "dashed": true },
+      { "x1": 460, "y1": 180, "x2": 500, "y2": 130, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-resolving": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 500, "y": 130, "color": "#00e676", "label": "解消中", "branch": "conflict", "glow": true, "dashed": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 130, "color": "#00e676", "dashed": true },
+      { "x1": 460, "y1": 180, "x2": 500, "y2": 130, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-resolved": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 540, "y": 80, "color": "#00e676", "label": "解決済", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 540, "y2": 80, "color": "#00c8ff" },
+      { "x1": 460, "y1": 180, "x2": 540, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 310, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch4-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "第二号駅", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "第三号駅", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch4-amend": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "第一号駅", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff9800", "label": "会業→開業", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "第三号駅", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 360, "y": 120, "text": "amend ✓", "color": "#ff9800" }
+    ]
+  },
+
+  "ch4-rebase": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 180, "color": "#ff9800", "label": "第一号駅", "branch": "old" },
+      { "x": 360, "y": 180, "color": "#ff9800", "label": "第二号駅", "branch": "old" },
+      { "x": 500, "y": 180, "color": "#ff9800", "label": "第三号駅", "branch": "old" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "改称駅", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "第二号駅", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "第三号駅", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 180, "color": "#ff9800", "dashed": true },
+      { "x1": 220, "y1": 180, "x2": 360, "y2": 180, "color": "#ff9800", "dashed": true },
+      { "x1": 360, "y1": 180, "x2": 500, "y2": 180, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 360, "y": 40, "text": "main (rebase後)", "color": "#00c8ff" },
+      { "x": 360, "y": 220, "text": "(書換前)", "color": "#ff9800" }
+    ]
+  },
+
+  "ch4-danger": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "改称駅", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "第二号駅", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "第三号駅", "branch": "main", "glow": true },
+      { "x": 220, "y": 200, "color": "#a855f7", "label": "第一号駅", "branch": "origin/main" },
+      { "x": 360, "y": 200, "color": "#a855f7", "label": "第二号駅", "branch": "origin/main" },
+      { "x": 500, "y": 200, "color": "#ff5252", "label": "⚠ 不一致", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 200, "x2": 220, "y2": 200, "color": "#a855f7" },
+      { "x1": 220, "y1": 200, "x2": 360, "y2": 200, "color": "#a855f7" },
+      { "x1": 360, "y1": 200, "x2": 500, "y2": 200, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "local (rebase後)", "color": "#00c8ff" },
+      { "x": 290, "y": 240, "text": "origin (書換前)", "color": "#a855f7" }
+    ]
+  },
+
+  "ch4-force-push": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "init", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "改称駅", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "第二号駅", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "第三号駅", "branch": "main", "glow": true },
+      { "x": 80, "y": 200, "color": "#a855f7", "label": "init", "branch": "origin/main" },
+      { "x": 220, "y": 200, "color": "#a855f7", "label": "改称駅", "branch": "origin/main" },
+      { "x": 360, "y": 200, "color": "#a855f7", "label": "第二号駅", "branch": "origin/main" },
+      { "x": 500, "y": 200, "color": "#a855f7", "label": "第三号駅", "branch": "origin/main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 200, "x2": 220, "y2": 200, "color": "#a855f7" },
+      { "x1": 220, "y1": 200, "x2": 360, "y2": 200, "color": "#a855f7" },
+      { "x1": 360, "y1": 200, "x2": 500, "y2": 200, "color": "#a855f7" },
+      { "x1": 500, "y1": 80, "x2": 500, "y2": 200, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "local/main", "color": "#00c8ff" },
+      { "x": 290, "y": 240, "text": "origin/main", "color": "#a855f7" },
+      { "x": 540, "y": 140, "text": "--force-with-lease", "color": "#00e676" }
+    ]
+  },
+
+  "ch5-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main", "glow": true },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" }
+    ],
+    "lines": [],
+    "labels": [
+      { "x": 80, "y": 40, "text": "自社 (main)", "color": "#00c8ff" },
+      { "x": 80, "y": 240, "text": "他社 (public)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-fork": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" },
+      { "x": 260, "y": 200, "color": "#e040fb", "label": "設計図A", "branch": "other" },
+      { "x": 260, "y": 80, "color": "#ff9800", "label": "Fork!", "branch": "fork", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 200, "x2": 260, "y2": 200, "color": "#e040fb" },
+      { "x1": 260, "y1": 200, "x2": 260, "y2": 80, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 80, "y": 40, "text": "自社 (main)", "color": "#00c8ff" },
+      { "x": 170, "y": 240, "text": "他社 (public)", "color": "#e040fb" },
+      { "x": 260, "y": 40, "text": "fork (自分のコピー)", "color": "#ff9800" }
+    ]
+  },
+
+  "ch5-upstream": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 260, "y": 80, "color": "#ff9800", "label": "Fork", "branch": "fork" },
+      { "x": 400, "y": 80, "color": "#ff9800", "label": "自社改変", "branch": "fork", "glow": true },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "upstream" },
+      { "x": 260, "y": 200, "color": "#e040fb", "label": "本家更新", "branch": "upstream" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 260, "y2": 80, "color": "#ff9800" },
+      { "x1": 260, "y1": 80, "x2": 400, "y2": 80, "color": "#ff9800" },
+      { "x1": 80, "y1": 200, "x2": 260, "y2": 200, "color": "#e040fb" },
+      { "x1": 260, "y1": 200, "x2": 260, "y2": 80, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "origin (fork)", "color": "#ff9800" },
+      { "x": 170, "y": 240, "text": "upstream (本家)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-submodule": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "開発中", "branch": "main" },
+      { "x": 400, "y": 80, "color": "#00c8ff", "label": "+submodule", "branch": "main", "glow": true },
+      { "x": 400, "y": 200, "color": "#e040fb", "label": "他社v1.0", "branch": "submodule" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 400, "y1": 80, "x2": 400, "y2": 200, "color": "#e040fb", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 240, "text": "submodule (他社)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-submodule-update": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "+submodule", "branch": "main" },
+      { "x": 400, "y": 80, "color": "#00c8ff", "label": "更新反映", "branch": "main", "glow": true },
+      { "x": 240, "y": 200, "color": "#e040fb", "label": "他社v1.0", "branch": "submodule" },
+      { "x": 400, "y": 200, "color": "#e040fb", "label": "他社v2.0", "branch": "submodule", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 200, "x2": 400, "y2": 200, "color": "#e040fb" },
+      { "x1": 240, "y1": 80, "x2": 240, "y2": 200, "color": "#e040fb", "dashed": true },
+      { "x1": 400, "y1": 80, "x2": 400, "y2": 200, "color": "#e040fb", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 320, "y": 240, "text": "submodule (他社)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-subtree": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "開発中", "branch": "main" },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" },
+      { "x": 240, "y": 200, "color": "#e040fb", "label": "設計図", "branch": "other" },
+      { "x": 400, "y": 80, "color": "#00e676", "label": "統合済", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 200, "x2": 240, "y2": 200, "color": "#e040fb" },
+      { "x1": 240, "y1": 200, "x2": 400, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main (subtree統合後)", "color": "#00c8ff" },
+      { "x": 160, "y": 240, "text": "他社路線", "color": "#e040fb" }
+    ]
+  },
+
+  "ch6-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 200, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 320, "y": 80, "color": "#00c8ff", "label": "駅C", "branch": "main" },
+      { "x": 440, "y": 80, "color": "#00c8ff", "label": "駅D", "branch": "main" },
+      { "x": 560, "y": 80, "color": "#00c8ff", "label": "駅E", "branch": "main", "glow": true },
+      { "x": 260, "y": 180, "color": "#ff9800", "label": "feature", "branch": "feature" },
+      { "x": 380, "y": 180, "color": "#ff9800", "label": "feature", "branch": "feature" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 200, "y2": 80, "color": "#00c8ff" },
+      { "x1": 200, "y1": 80, "x2": 320, "y2": 80, "color": "#00c8ff" },
+      { "x1": 320, "y1": 80, "x2": 440, "y2": 80, "color": "#00c8ff" },
+      { "x1": 440, "y1": 80, "x2": 560, "y2": 80, "color": "#00c8ff" },
+      { "x1": 200, "y1": 80, "x2": 260, "y2": 180, "color": "#ff9800" },
+      { "x1": 260, "y1": 180, "x2": 380, "y2": 180, "color": "#ff9800" }
+    ],
+    "labels": [
+      { "x": 320, "y": 40, "text": "main (拡大中…)", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch6-ci-concept": {
+    "nodes": [
+      { "x": 80, "y": 120, "color": "#00c8ff", "label": "commit", "branch": "main" },
+      { "x": 220, "y": 120, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 360, "y": 120, "color": "#00e676", "label": "CI テスト", "branch": "ci", "glow": true },
+      { "x": 500, "y": 120, "color": "#00e676", "label": "CI ビルド", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 120, "x2": 220, "y2": 120, "color": "#00c8ff" },
+      { "x1": 220, "y1": 120, "x2": 360, "y2": 120, "color": "#00e676" },
+      { "x1": 360, "y1": 120, "x2": 500, "y2": 120, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 150, "y": 80, "text": "開発者の作業", "color": "#00c8ff" },
+      { "x": 430, "y": 80, "text": "CI（自動）", "color": "#00e676" }
+    ]
+  },
+
+  "ch6-workflow": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "checkout", "branch": "ci" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "npm test", "branch": "ci", "glow": true },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "完了", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": ".github/workflows/ci.yml", "color": "#00e676" }
+    ]
+  },
+
+  "ch6-test-fail": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "checkout", "branch": "ci" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "テスト失敗", "branch": "ci", "glow": true },
+      { "x": 500, "y": 80, "color": "#ff5252", "label": "マージ禁止", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "CI パイプライン", "color": "#ff5252" },
+      { "x": 500, "y": 120, "text": "❌ BLOCKED", "color": "#ff5252" }
+    ]
+  },
+
+  "ch6-cd-deploy": {
+    "nodes": [
+      { "x": 60, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 180, "y": 80, "color": "#00e676", "label": "テスト", "branch": "ci" },
+      { "x": 300, "y": 80, "color": "#00e676", "label": "ビルド", "branch": "ci" },
+      { "x": 420, "y": 80, "color": "#00e676", "label": "デプロイ", "branch": "cd", "glow": true },
+      { "x": 540, "y": 80, "color": "#00e676", "label": "本番稼働", "branch": "cd" }
+    ],
+    "lines": [
+      { "x1": 60, "y1": 80, "x2": 180, "y2": 80, "color": "#00e676" },
+      { "x1": 180, "y1": 80, "x2": 300, "y2": 80, "color": "#00e676" },
+      { "x1": 300, "y1": 80, "x2": 420, "y2": 80, "color": "#00e676" },
+      { "x1": 420, "y1": 80, "x2": 540, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 180, "y": 40, "text": "CI", "color": "#00e676" },
+      { "x": 420, "y": 40, "text": "CD", "color": "#00e676" },
+      { "x": 540, "y": 120, "text": "✅ LIVE", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-incident": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "障害発生", "branch": "main", "glow": true },
+      { "x": 500, "y": 80, "color": "#ff5252", "label": "運行停止", "branch": "main" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main (正常)", "color": "#00c8ff" },
+      { "x": 430, "y": 40, "text": "🚨 障害区間", "color": "#ff5252" }
+    ]
+  },
+
+  "ch7-revert": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "障害原因", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "revert", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 500, "y": 120, "text": "打ち消し ✓", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-cherry-pick": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#ff5252", "label": "障害原因", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "revert", "branch": "main" },
+      { "x": 220, "y": 200, "color": "#ff9800", "label": "feature", "branch": "feature" },
+      { "x": 380, "y": 200, "color": "#00e676", "label": "cherry-pick", "branch": "feature", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 200, "color": "#ff9800" },
+      { "x1": 220, "y1": 200, "x2": 380, "y2": 200, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 200, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 220, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 300, "y": 240, "text": "feature", "color": "#ff9800" },
+      { "x": 380, "y": 170, "text": "🍒 pick!", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-reflog": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "HEAD@{3}", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "HEAD@{2}", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "HEAD@{1}", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "HEAD@{0}", "branch": "main", "glow": true },
+      { "x": 360, "y": 200, "color": "#4a6080", "label": "削除済", "branch": "deleted", "dashed": true },
+      { "x": 500, "y": 200, "color": "#00e676", "label": "復元!", "branch": "restored", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 360, "y2": 200, "color": "#4a6080", "dashed": true },
+      { "x1": 360, "y1": 200, "x2": 500, "y2": 200, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "reflog (操作履歴)", "color": "#00c8ff" },
+      { "x": 430, "y": 240, "text": "復元可能!", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-bisect": {
+    "nodes": [
+      { "x": 60, "y": 80, "color": "#00e676", "label": "good", "branch": "main" },
+      { "x": 160, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 260, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff9800", "label": "bisect", "branch": "main", "glow": true },
+      { "x": 460, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 560, "y": 80, "color": "#ff5252", "label": "bad", "branch": "main" }
+    ],
+    "lines": [
+      { "x1": 60, "y1": 80, "x2": 160, "y2": 80, "color": "#00e676" },
+      { "x1": 160, "y1": 80, "x2": 260, "y2": 80, "color": "#4a6080" },
+      { "x1": 260, "y1": 80, "x2": 360, "y2": 80, "color": "#4a6080" },
+      { "x1": 360, "y1": 80, "x2": 460, "y2": 80, "color": "#4a6080" },
+      { "x1": 460, "y1": 80, "x2": 560, "y2": 80, "color": "#ff5252" }
+    ],
+    "labels": [
+      { "x": 60, "y": 120, "text": "正常", "color": "#00e676" },
+      { "x": 360, "y": 120, "text": "← 二分探索 →", "color": "#ff9800" },
+      { "x": 560, "y": 120, "text": "異常", "color": "#ff5252" }
+    ]
+  },
+
+  "ch7-protection": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "commit", "branch": "dev" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "push", "branch": "dev" },
+      { "x": 360, "y": 80, "color": "#ff9800", "label": "PR", "branch": "review" },
+      { "x": 460, "y": 80, "color": "#00e676", "label": "Review ✓", "branch": "review" },
+      { "x": 560, "y": 80, "color": "#00e676", "label": "CI ✓", "branch": "ci" },
+      { "x": 560, "y": 200, "color": "#00e676", "label": "main", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff9800" },
+      { "x1": 360, "y1": 80, "x2": 460, "y2": 80, "color": "#00e676" },
+      { "x1": 460, "y1": 80, "x2": 560, "y2": 80, "color": "#00e676" },
+      { "x1": 560, "y1": 80, "x2": 560, "y2": 200, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "開発者", "color": "#00c8ff" },
+      { "x": 410, "y": 40, "text": "保護ルール", "color": "#00e676" },
+      { "x": 560, "y": 240, "text": "🔒 protected", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-safe": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00e676", "label": ".gitignore", "branch": "safety" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "branch保護", "branch": "safety" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "レビュー必須", "branch": "safety" },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "CI必須", "branch": "safety" },
+      { "x": 290, "y": 200, "color": "#00e676", "label": "安全運行宣言", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" },
+      { "x1": 80, "y1": 80, "x2": 290, "y2": 200, "color": "#00e676" },
+      { "x1": 500, "y1": 80, "x2": 290, "y2": 200, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "安全運行体制", "color": "#00e676" },
+      { "x": 290, "y": 240, "text": "✅ 全路線 安全運行中", "color": "#00e676" }
+    ]
+  }
+}

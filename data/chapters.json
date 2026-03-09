@@ -1,0 +1,953 @@
+[
+  {
+    "id": 0,
+    "title": "第1章",
+    "subtitle": "git鉄道をつくろう",
+    "description": "駅を作って線路を引く。自社路線の建設が始まる。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "ようこそ、git鉄道建設本部へ。\nあなたは今日から、新しい鉄道路線の建設責任者です。\nまずは建設の準備から始めましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "empty",
+        "nextLabel": "建設を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道を作るには、まず「建設用地」を確保する必要があります。\nGitでは、プロジェクトの土台となる「リポジトリ」を作ります。\nどのコマンドで建設用地を確保しますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git start", "correct": false },
+          { "label": "git init", "correct": true },
+          { "label": "git new", "correct": false },
+          { "label": "git create", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git init で建設用地（リポジトリ）が確保されました。\n.git ディレクトリが作られ、すべての記録がここに保存されます。",
+          "ng": "git init が正しいコマンドです。\ninitialize（初期化する）の略。建設用地を更地から整備するイメージです。"
+        },
+        "graph": "ch1-init"
+      },
+      {
+        "char": "建設局長",
+        "text": "建設用地に、最初にやるべきことがあります。\n工事現場には「立入禁止区域」が必要ですよね。\nGitにも、管理対象から除外するファイルを指定する仕組みがあります。",
+        "terminal": "$ ls -a\n.git/\nnode_modules/\n.env\nsrc/",
+        "choices": [
+          { "label": ".gitkeep を作成する", "correct": false },
+          { "label": ".gitignore を作成する", "correct": true },
+          { "label": ".gitexclude を作成する", "correct": false },
+          { "label": ".gitskip を作成する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ .gitignore に書いたファイルやフォルダは、Gitの管理対象外になります。\nnode_modules/ や .env など、共有すべきでないものを除外する「立入禁止看板」です。\n（この知識は、後の章で重要な意味を持ちます……）",
+          "ng": ".gitignore が正しいです。\n秘密情報（.env）や巨大フォルダ（node_modules/）を除外する、工事現場の「立入禁止看板」です。"
+        },
+        "graph": "ch1-init"
+      },
+      {
+        "char": "現場監督",
+        "text": "建設用地が整いました！\nでは最初の駅舎を建てましょう。設計図（ファイル）を用意しました。\nこれを建設予定リスト（ステージングエリア）に登録してください。",
+        "terminal": "$ ls\nstation.html\nstyle.css",
+        "choices": [
+          { "label": "git stage .", "correct": false },
+          { "label": "git add .", "correct": true },
+          { "label": "git commit .", "correct": false },
+          { "label": "git register .", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git add で設計図をステージングエリアに登録しました。\n「.」を使うと、すべてのファイルをまとめて登録できます。\nまだ建設（コミット）はしていません。「建設予定リスト」に載せただけです。",
+          "ng": "git add が正しいです。\n変更をコミット前の「建設予定リスト」に登録するコマンドです。"
+        },
+        "graph": "ch1-staging"
+      },
+      {
+        "char": "現場監督",
+        "text": "建設予定リストの確認が取れました。\nいよいよ駅を開業（コミット）します！\n記念すべき第一号駅の開業記録を残しましょう。",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: station.html\n  new file: style.css",
+        "choices": [
+          { "label": "git commit -m \"第一号駅 開業\"", "correct": true },
+          { "label": "git save -m \"第一号駅 開業\"", "correct": false },
+          { "label": "git push -m \"第一号駅 開業\"", "correct": false },
+          { "label": "git build -m \"第一号駅 開業\"", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 記念すべき第一号駅が開業しました！\ngit commit -m でコミットメッセージ付きの記録を残します。\nこれが路線図の最初の「駅」になります。",
+          "ng": "git commit -m \"メッセージ\" が正しいです。\n開業記録（コミット）には必ずメッセージを添えましょう。"
+        },
+        "graph": "ch1-first-commit"
+      },
+      {
+        "char": "建設局長",
+        "text": "第一号駅、開業おめでとうございます！\nさて、次は駅前広場と改札口を同時に工事したい。\nでも本線の運行を止めるわけにはいきません。\n工事用の別路線（ブランチ）を引きましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-first-commit",
+        "nextLabel": "工事路線を引く"
+      },
+      {
+        "char": "現場監督",
+        "text": "本線（main）の運行を止めずに工事するには、\n工事用の支線（ブランチ）を作って、そこで作業します。\n支線を作って、すぐそちらに移動するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git branch build/plaza", "correct": false },
+          { "label": "git switch -c build/plaza", "correct": true },
+          { "label": "git checkout plaza", "correct": false },
+          { "label": "git new-branch build/plaza", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git switch -c で工事用支線を作り、すぐそちらに移動しました。\n-c は create（作成）の略。\nbuild/plaza のように「目的が分かる名前」を付けるのが現場のルールです。",
+          "ng": "git switch -c build/plaza が正しいです。\n-c で新しいブランチを作成しつつ、そこに切り替えます。"
+        },
+        "graph": "ch1-branch-created"
+      },
+      {
+        "char": "現場監督",
+        "text": "工事用支線で駅前広場の建設が完了しました！コミットも済んでいます。\n次は改札口の工事もコミットしましょう。\n……よし、工事用支線での作業がすべて完了です。",
+        "terminal": "$ git log --oneline\nb4e2a1c (HEAD -> build/plaza) 改札口を建設\na7f3c9d 駅前広場を建設\n1d0e8f2 (main) 第一号駅 開業",
+        "choices": null,
+        "graph": "ch1-branch-commits",
+        "nextLabel": "本線に戻る"
+      },
+      {
+        "char": "建設局長",
+        "text": "工事が完了しました。\n工事結果を本線（main）に統合（マージ）しましょう。\nまず本線に戻る必要があります。どのコマンドで戻りますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git switch main", "correct": true },
+          { "label": "git back main", "correct": false },
+          { "label": "git return main", "correct": false },
+          { "label": "git move main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git switch main で本線に戻りました。\nswitch は路線（ブランチ）の切り替えコマンドです。",
+          "ng": "git switch main が正しいです。\nブランチ間の移動は switch を使います。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "建設局長",
+        "text": "本線に戻りました。\n工事用支線（build/plaza）の成果を本線に統合します。\nこの「統合」を何と呼びますか？",
+        "terminal": "$ git branch\n  build/plaza\n* main",
+        "choices": [
+          { "label": "git merge build/plaza", "correct": true },
+          { "label": "git combine build/plaza", "correct": false },
+          { "label": "git join build/plaza", "correct": false },
+          { "label": "git integrate build/plaza", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git merge で工事成果が本線に統合されました！\n駅前広場と改札口が本線の駅に組み込まれます。",
+          "ng": "git merge build/plaza が正しいです。\n今いるブランチ（main）に、指定したブランチの内容を統合します。"
+        },
+        "graph": "ch1-merged"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n第一号駅が、駅前広場と改札口を備えた立派な駅になりました。\n\nあなたは今、こんなことを学びました：\n— git init で建設用地を確保\n— .gitignore で立入禁止区域を設定\n— git add / commit で駅を建設\n— git switch -c でブランチ（工事用支線）を作成\n— git merge で工事成果を本線に統合\n\n次の章では、この路線を正式に開通させるため、\n鉄道管理局への申請に挑みます。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-merged",
+        "isLast": true,
+        "nextLabel": "第1章 完了"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "第2章",
+    "subtitle": "鉄道管理局の承認を得よう",
+    "description": "自社線を正式に開通させるため、鉄道管理局（GitHub）へ申請する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#a855f7", "label": "origin/main 管理局" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "第一号駅が完成しました。しかし、自社の路線だけでは正式な鉄道とは認められません。\n鉄道管理局（リモートリポジトリ）に路線図を提出し、認可を受ける必要があります。\nまずは管理局との「直通運転協定」を結びましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-local-only",
+        "nextLabel": "管理局へ向かう"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道管理局との接続を確立します。\n管理局のアドレス（URL）を登録して、直通運転協定を結ぶコマンドは？",
+        "terminal": "管理局アドレス:\nhttps://github.com/your-company/train-line.git",
+        "choices": [
+          { "label": "git remote add origin https://github.com/...", "correct": true },
+          { "label": "git connect origin https://github.com/...", "correct": false },
+          { "label": "git link origin https://github.com/...", "correct": false },
+          { "label": "git register origin https://github.com/...", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git remote add origin で管理局との直通運転協定が結ばれました。\n「origin」は直通先の名前です。慣例として最初のリモートに origin と名付けます。",
+          "ng": "git remote add origin URL が正しいです。\nremote add で「直通先」を登録します。origin は直通先の名前（ニックネーム）です。"
+        },
+        "graph": "ch2-remote-added"
+      },
+      {
+        "char": "建設局長",
+        "text": "直通運転協定が成立しました！\nでもまだ管理局には、あなたの路線情報が届いていません。\n自社のダイヤ（コミット履歴）を管理局に送る必要があります。\nこれを「ダイヤの提出」と呼びましょう。",
+        "terminal": "$ git remote -v\norigin  https://github.com/your-company/train-line.git (fetch)\norigin  https://github.com/your-company/train-line.git (push)",
+        "choices": null,
+        "graph": "ch2-remote-added",
+        "nextLabel": "ダイヤを提出する"
+      },
+      {
+        "char": "建設局長",
+        "text": "自社のダイヤ（コミット履歴）を管理局に提出します。\n本線（main）のダイヤを origin に送るコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git push origin main", "correct": true },
+          { "label": "git send origin main", "correct": false },
+          { "label": "git upload origin main", "correct": false },
+          { "label": "git deploy origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git push origin main で、本線のダイヤが管理局に提出されました。\npush は「押し出す」＝自分の変更を相手に送ること。origin が送り先、main が送る路線です。",
+          "ng": "git push origin main が正しいです。\npush は自分のコミットをリモートに送るコマンドです。"
+        },
+        "graph": "ch2-pushed"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "管理局の審査官です。ダイヤは受理しました。\nしかし、正式な開通認可を得るには「運行申請書」を提出してもらう必要があります。\nGitHubでは、これを「プルリクエスト」と呼びます。\n変更内容を説明して、レビューを依頼する仕組みです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-pushed",
+        "nextLabel": "運行申請書を出す"
+      },
+      {
+        "char": "建設局長",
+        "text": "管理局に正式な運行申請を出しましょう。\n開発用ブランチから main へのマージを申請する、この仕組みの名前は？",
+        "terminal": null,
+        "choices": [
+          { "label": "Pull Request（プルリクエスト）", "correct": true },
+          { "label": "Merge Request（マージリクエスト）", "correct": false },
+          { "label": "Push Request（プッシュリクエスト）", "correct": false },
+          { "label": "Review Request（レビューリクエスト）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Pull Request（PR）は、変更の取り込みを依頼する仕組みです。\n「自分の変更をpull（取り込んで）ください」というお願い。運行申請書のようなものです。\n※ GitLabでは Merge Request と呼びますが、仕組みは同じです。",
+          "ng": "GitHubでは Pull Request（PR）と呼びます。\n「この変更を取り込んでほしい」という依頼の仕組みです。\n※ GitLabでは Merge Request ですが、GitHubでは Pull Request が正式名称です。"
+        },
+        "graph": "ch2-pr-created"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "運行申請書（プルリクエスト）を受理しました。\nこれからレビューを行います。\n\n……確認しました。1点指摘があります。\nダイヤの説明文（コミットメッセージ）に改善の余地があります。\n修正してから再提出してください。",
+        "terminal": "Review comment:\n「コミットメッセージに具体的な変更内容を\n 記載してください。\n 例: feat: 駅前広場と改札口を追加」",
+        "choices": null,
+        "graph": "ch2-review",
+        "nextLabel": "修正する"
+      },
+      {
+        "char": "現場監督",
+        "text": "審査官の指摘を受けて修正しました。\n修正をコミットしてプッシュすれば、プルリクエストに自動で反映されます。\n修正後の変更を管理局に再提出するコマンドは？",
+        "terminal": "$ git add .\n$ git commit -m \"fix: コミットメッセージを改善\"",
+        "choices": [
+          { "label": "git push origin main", "correct": true },
+          { "label": "git push --force origin main", "correct": false },
+          { "label": "git pr update", "correct": false },
+          { "label": "git resubmit origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 修正を push すれば、PRに自動反映されます。\n新しいPRを作り直す必要はありません。同じブランチに push するだけです。",
+          "ng": "git push origin main が正しいです。\n同じブランチに push すれば、既存のPRに修正が自動反映されます。"
+        },
+        "graph": "ch2-review-fixed"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "修正を確認しました。問題ありません。\nプルリクエストを承認（Approve）します。\nマージを実行して、正式に路線を開通させましょう！",
+        "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+        "choices": null,
+        "graph": "ch2-pr-merged",
+        "nextLabel": "マージを実行"
+      },
+      {
+        "char": "建設局長",
+        "text": "路線が正式に開通しました！\n最後に、この記念すべき開通日に「タグ」を打ちましょう。\nリリースバージョンを記録するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git tag v1.0", "correct": true },
+          { "label": "git mark v1.0", "correct": false },
+          { "label": "git label v1.0", "correct": false },
+          { "label": "git version v1.0", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git tag v1.0 で開通記念のタグが付きました。\nタグはコミットに「名札」を付ける機能です。リリースや重要なマイルストーンの目印になります。",
+          "ng": "git tag v1.0 が正しいです。\nタグは特定のコミットに名前を付ける機能です。バージョン管理に使います。"
+        },
+        "graph": "ch2-tagged"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\ngit鉄道は鉄道管理局の認可を受け、正式に開通しました！\n\nあなたは今、こんなことを学びました：\n— git remote add でリモートリポジトリを登録\n— git push で変更をリモートに送信\n— Pull Request で変更のレビューを依頼\n— レビュー指摘を修正して再push\n— git tag でリリースバージョンを記録\n\n次の章では、路線を延伸して新しい駅を作ります。\nしかし……駅名をめぐって、思わぬ騒動が起きるようです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-tagged",
+        "isLast": true,
+        "nextLabel": "第2章 完了"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "第3章",
+    "subtitle": "新しい駅を作ろう！",
+    "description": "路線を延伸して新しい駅を作る。しかし駅名をめぐって大騒ぎが起きる。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff9800", "label": "feature/new-station 延伸工事" },
+      { "color": "#ff5252", "label": "コンフリクト（衝突）" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線が正式に開通しました！\n次は路線の延伸です。新しい駅を建設しましょう。\nしかし……新駅の計画には、沿線住民の声も聞かなければなりません。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-start",
+        "nextLabel": "延伸計画を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "住民から「新駅の名前が気に入らない」という声が上がっています。\nこういった問題提起や議論を記録・管理する仕組みが必要です。\nGitHubでこの仕組みを何と呼びますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Issue（イシュー）", "correct": true },
+          { "label": "Ticket（チケット）", "correct": false },
+          { "label": "Report（レポート）", "correct": false },
+          { "label": "Thread（スレッド）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Issue は問題提起・要望・バグ報告などを記録する仕組みです。\n住民の声を整理して議論するための「公聴会の議事録」のようなものです。",
+          "ng": "GitHubでは Issue と呼びます。\n問題提起や要望を記録し、議論を整理するための仕組みです。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "Issue を立てました！\n「新駅の名前は『高輪ゲートウェイ』ではなく『泉岳寺』にすべきだ！」\nIssue にはラベルを付けて分類できます。この議論に適切なラベルは？",
+        "terminal": "Issue #42: 新駅の駅名について\nStatus: Open\nComments: 15",
+        "choices": [
+          { "label": "bug（バグ）", "correct": false },
+          { "label": "enhancement（機能改善）", "correct": false },
+          { "label": "discussion（議論）", "correct": true },
+          { "label": "wontfix（対応しない）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ discussion ラベルで「議論が必要な案件」と分かります。\nラベルを使うと Issue を分類・フィルタリングしやすくなります。",
+          "ng": "この場合は discussion（議論）が適切です。\nバグではなく、意見が分かれている案件なのでラベルで明確に分類します。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "建設局長",
+        "text": "議論を踏まえて、新駅の建設を進めましょう。\n延伸工事用のブランチを作って作業します。\nあなたのブランチ名は feature/new-station です。",
+        "terminal": "$ git switch -c feature/new-station\nSwitched to a new branch 'feature/new-station'",
+        "choices": null,
+        "graph": "ch3-branch-created",
+        "nextLabel": "工事を進める"
+      },
+      {
+        "char": "現場監督",
+        "text": "新駅の駅舎を建設してコミットしました。\nしかし……同時に別のチームも main ブランチで駅名ファイルを編集していたようです。\nマージしようとしたら、衝突（コンフリクト）が発生しました！",
+        "terminal": "$ git switch main\n$ git merge feature/new-station\nAuto-merging station-name.txt\nCONFLICT (content): Merge conflict in station-name.txt\nAutomatic merge failed; fix conflicts and then commit.",
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "状況を確認する"
+      },
+      {
+        "char": "現場監督",
+        "text": "コンフリクトが発生しました！\n同じファイルの同じ箇所を、二人が別々に変更してしまった状態です。\nまず、どこが衝突しているか確認するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git diff", "correct": true },
+          { "label": "git status", "correct": false },
+          { "label": "git log", "correct": false },
+          { "label": "git show", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git diff でコンフリクト箇所の詳細を確認できます。\nどの行が衝突しているか、双方の変更内容が表示されます。",
+          "ng": "git diff が最適です。\nstatus は衝突ファイル名を確認できますが、diff は具体的な衝突内容を表示します。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "現場監督",
+        "text": "コンフリクトの中身を見てみましょう。\nGitはファイル内に特別なマーカーを挿入して、衝突箇所を示します。\n「自分の変更」と「相手の変更」を区切る記号はどれですか？",
+        "terminal": "<<<<<<< HEAD\n駅名: 泉岳寺\n=======\n駅名: 高輪ゲートウェイ\n>>>>>>> feature/new-station",
+        "choices": [
+          { "label": "<<<<<<< と >>>>>>> と =======", "correct": true },
+          { "label": "### と --- と ###", "correct": false },
+          { "label": "/* と */ と //", "correct": false },
+          { "label": "{{ と }} と ||", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ <<<<<<< が自分の変更の開始、======= が区切り、>>>>>>> が相手の変更の終了です。\nこのマーカーを手動で編集して、最終的にどちらを採用するか（または両方混ぜるか）を決めます。",
+          "ng": "<<<<<<< ======= >>>>>>> がコンフリクトマーカーです。\nGitが自動挿入する記号で、手動で解消する必要があります。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "建設局長",
+        "text": "コンフリクトを解消しましょう。\nファイルを編集してマーカーを削除し、最終的な内容に書き換えました。\n解消後、Gitに「解決済み」と伝えるために何をしますか？",
+        "terminal": "（編集後の station-name.txt）\n駅名: 高輪ゲートウェイ（副称: 泉岳寺）",
+        "choices": [
+          { "label": "git add station-name.txt", "correct": true },
+          { "label": "git resolve station-name.txt", "correct": false },
+          { "label": "git fix station-name.txt", "correct": false },
+          { "label": "git merge --continue", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 解消したファイルを git add するとGitは「解決済み」と認識します。\nその後 git commit でマージコミットを作成して完了です。",
+          "ng": "git add が正しいです。\n衝突を解消したファイルを add すると、Gitは「このファイルの衝突は解決済み」と認識します。"
+        },
+        "graph": "ch3-resolving"
+      },
+      {
+        "char": "現場監督",
+        "text": "ファイルを add しました。\nあとはコミットしてマージを完了させましょう。\n解消後のコミットと、修正を管理局に再送するコマンドの組み合わせは？",
+        "terminal": "$ git status\nAll conflicts fixed but you are still merging.\n  (use \"git commit\" to conclude merge)",
+        "choices": [
+          { "label": "git commit → git push origin main", "correct": true },
+          { "label": "git merge --finish → git push", "correct": false },
+          { "label": "git resolve --commit → git push", "correct": false },
+          { "label": "git commit --merge → git send", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git commit でマージコミットが作成され、git push で管理局に送信されます。\nコンフリクト解消は「手動で直して → add → commit → push」の流れです。",
+          "ng": "git commit → git push origin main が正しいです。\n特別なコマンドは不要。普通に commit して push するだけです。"
+        },
+        "graph": "ch3-resolved"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "駅名が「高輪ゲートウェイ（副称: 泉岳寺）」に決まりました！\n双方の意見を取り入れた素晴らしい解決です。\nIssue #42 をクローズして、この議論を終了しましょう。",
+        "terminal": "Issue #42: 新駅の駅名について\nStatus: Closed ✓\nResolution: 双方の案を採用",
+        "choices": null,
+        "graph": "ch3-resolved",
+        "nextLabel": "Issue をクローズ"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n新駅が開業し、駅名論争も無事解決しました。\n\nあなたは今、こんなことを学びました：\n— Issue で問題提起・議論を管理\n— ラベルで Issue を分類\n— git diff でコンフリクト箇所を確認\n— コンフリクトマーカーの読み方（<<<<<<< ======= >>>>>>>）\n— git add で解決済みを宣言し、commit で完了\n\n次の章では、既に開業した駅の名前を変更します。\n歴史を書き換える……危険な操作が待っています。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-resolved",
+        "isLast": true,
+        "nextLabel": "第3章 完了"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "第4章",
+    "subtitle": "駅の名前を変えよう！",
+    "description": "開業済みの駅の名前を変える。歴史改変の技術と危険性を学ぶ。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff9800", "label": "変更前の履歴" },
+      { "color": "#ff5252", "label": "⚠ 危険操作" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線が順調に拡大しています。\nしかし、開業済みの駅の名前を変えたいという要望が来ました。\n「仲木戸」を「京急東神奈川」に改称するようなものです。\n\nGitでも、過去のコミットを修正することがあります。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-start",
+        "nextLabel": "駅名変更に挑む"
+      },
+      {
+        "char": "現場監督",
+        "text": "まずは一番簡単なケースから。\n直前のコミットのメッセージを書き間違えてしまいました。\n「第二号駅 会業」→「第二号駅 開業」に修正したい。\n直前のコミットを修正するコマンドは？",
+        "terminal": "$ git log --oneline -1\na1b2c3d 第二号駅 会業   ← タイポ！",
+        "choices": [
+          { "label": "git commit --amend", "correct": true },
+          { "label": "git commit --fix", "correct": false },
+          { "label": "git commit --edit", "correct": false },
+          { "label": "git commit --redo", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git commit --amend で直前のコミットを修正できます。\nメッセージだけでなく、ファイルの追加忘れも修正できます。\n「直前の駅名変更」のようなイメージです。",
+          "ng": "git commit --amend が正しいです。\namend は「修正する」という意味。直前のコミットだけ修正できます。"
+        },
+        "graph": "ch4-amend"
+      },
+      {
+        "char": "建設局長",
+        "text": "直前の修正は簡単でしたね。\nでは、もっと前の駅名を変えたい場合は？\n3つ前のコミットの内容を編集したいとします。",
+        "terminal": "$ git log --oneline\na1b2c3d 第三号駅 開業\nb2c3d4e 第二号駅 開業\nc3d4e5f 第一号駅 開業   ← これを変えたい\nd4e5f6g init",
+        "choices": null,
+        "graph": "ch4-amend",
+        "nextLabel": "過去を書き換える"
+      },
+      {
+        "char": "現場監督",
+        "text": "直前より前のコミットを修正するには、\n対話的にコミット履歴を編集するコマンドが必要です。\nどのコマンドを使いますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git rebase -i HEAD~3", "correct": true },
+          { "label": "git edit HEAD~3", "correct": false },
+          { "label": "git amend HEAD~3", "correct": false },
+          { "label": "git history --edit 3", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git rebase -i（interactive rebase）で過去のコミットを対話的に編集できます。\nHEAD~3 は「3つ前まで遡る」という意味。pick/edit/squash などの操作ができます。",
+          "ng": "git rebase -i HEAD~3 が正しいです。\n-i は interactive（対話的）の略。過去のコミット履歴を自由に編集できます。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "現場監督",
+        "text": "rebase -i を実行するとエディタが開き、\nコミットごとに操作を指定できます。\nコミットのメッセージを変更したい場合、どの操作を指定しますか？",
+        "terminal": "pick c3d4e5f 第一号駅 開業\npick b2c3d4e 第二号駅 開業\npick a1b2c3d 第三号駅 開業",
+        "choices": [
+          { "label": "reword（メッセージを変更）", "correct": true },
+          { "label": "edit（コミット自体を編集）", "correct": false },
+          { "label": "squash（前のコミットと統合）", "correct": false },
+          { "label": "drop（コミットを削除）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ reword でコミットメッセージだけを変更できます。\nedit はファイル内容も変えたい時、squash は複数コミットを1つにまとめる時に使います。",
+          "ng": "reword が正しいです。\nメッセージだけ変えたい → reword、内容も変えたい → edit、まとめたい → squash です。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "建設局長",
+        "text": "ここで重要な警告です。\n\nこの履歴の書き換え、もし既に管理局（リモート）に push 済みだったら……\n管理局に送った時刻表を、こっそり書き換えるようなものです。\n\n他の人が古い時刻表を元に作業していたら、大混乱になります。",
+        "terminal": "⚠ WARNING ⚠\nリモートに push 済みのコミットを\nrebase で書き換えると、\n他の人の作業が壊れる可能性があります。",
+        "choices": null,
+        "graph": "ch4-danger",
+        "nextLabel": "どうすれば？"
+      },
+      {
+        "char": "現場監督",
+        "text": "push 済みのコミットを rebase で書き換えた場合、\n通常の push は拒否されます。\n強制的に上書きするコマンドがありますが……\nより安全な強制 push のオプションはどれですか？",
+        "terminal": "$ git push origin main\n! [rejected] main -> main (non-fast-forward)\nerror: 管理局が拒否しました。履歴が食い違っています。",
+        "choices": [
+          { "label": "git push --force-with-lease origin main", "correct": true },
+          { "label": "git push --force origin main", "correct": false },
+          { "label": "git push -f origin main", "correct": false },
+          { "label": "git push --overwrite origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ --force-with-lease は「他の人が push していなければ強制 push する」という安全策付きです。\n--force は無条件に上書きするため、他の人の作業を消してしまう危険があります。",
+          "ng": "--force-with-lease が最も安全です。\n--force は他の人の変更も上書きしてしまいます。--force-with-lease は他の人の push がないことを確認してから上書きします。"
+        },
+        "graph": "ch4-force-push"
+      },
+      {
+        "char": "建設局長",
+        "text": "歴史改変のルールを覚えましょう：\n\n1. まだ push していないコミット → 自由に amend / rebase できる\n2. push 済みのコミット → 原則として書き換えてはいけない\n3. どうしても必要なら → --force-with-lease を使う\n\n「開業済みの駅の名前を変えるのは大変」\n＝「push した後の rebase は危険」ということです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-force-push",
+        "nextLabel": "ルールを確認"
+      },
+      {
+        "char": "建設局長",
+        "text": "最後に確認です。\n以下のうち、歴史改変について正しい説明はどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "push前なら amend/rebase は安全に使える", "correct": true },
+          { "label": "rebase はいつでも安全に使える", "correct": false },
+          { "label": "--force で push すれば問題ない", "correct": false },
+          { "label": "歴史改変は絶対にしてはいけない", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ まだ push していないコミットなら、自分のローカルだけの話なので安全です。\npush 後の書き換えは慎重に。チーム開発では事前にメンバーへの周知が必要です。",
+          "ng": "push 前なら amend/rebase は安全に使えます。\n歴史改変自体は悪いことではありません。タイミングと影響範囲を理解して使うことが大切です。"
+        },
+        "graph": "ch4-force-push"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n駅名変更（歴史改変）の技術と注意点を学びました。\n\nあなたは今、こんなことを学びました：\n— git commit --amend で直前のコミットを修正\n— git rebase -i で過去のコミットを対話的に編集\n— reword / edit / squash / drop の使い分け\n— --force-with-lease で安全な強制 push\n— 歴史改変のルール（push前 = 安全、push後 = 危険）\n\n次の章では、他社の路線を買収して自社に統合します。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-force-push",
+        "isLast": true,
+        "nextLabel": "第4章 完了"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "第5章",
+    "subtitle": "他社の路線を買収しよう",
+    "description": "サブモジュールやフォークで他社路線を自社に統合する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 自社本線" },
+      { "color": "#e040fb", "label": "他社路線" },
+      { "color": "#ff9800", "label": "fork / subtree" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "自社路線が順調に成長しました。\nしかし、すべてをゼロから作る必要はありません。\n他社が公開している路線の設計図を活用する方法があります。\n\nまずは「フォーク」から学びましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-start",
+        "nextLabel": "他社路線を見に行く"
+      },
+      {
+        "char": "建設局長",
+        "text": "GitHubで他社のリポジトリを「自分のアカウントにコピー」する操作。\n他社の路線図をベースに、自社版を自由に開発できるようになります。\nこの操作を何と呼びますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Fork（フォーク）", "correct": true },
+          { "label": "Clone（クローン）", "correct": false },
+          { "label": "Copy（コピー）", "correct": false },
+          { "label": "Mirror（ミラー）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Fork はリポジトリを自分のアカウントにコピーする操作です。\n元のリポジトリとの繋がりを保ちつつ、自由に改変できます。\nClone はローカルにダウンロードするだけですが、Fork はGitHub上にコピーを作ります。",
+          "ng": "Fork が正しいです。\nClone はローカルにコピーするだけ。Fork はGitHub上に自分の独立したコピーを作り、元リポジトリとの関係も保持します。"
+        },
+        "graph": "ch5-fork"
+      },
+      {
+        "char": "建設局長",
+        "text": "Fork した後、元のリポジトリ（本家）の更新も追いかけたい。\n本家のリポジトリを「upstream」として登録します。\nこれで本家の変更を取り込めるようになります。",
+        "terminal": "$ git remote add upstream https://github.com/original/train.git\n$ git remote -v\norigin    https://github.com/you/train.git (fork)\nupstream  https://github.com/original/train.git (本家)",
+        "choices": null,
+        "graph": "ch5-upstream",
+        "nextLabel": "買収の方法を学ぶ"
+      },
+      {
+        "char": "買収先企業代表",
+        "text": "はじめまして。御社に路線を提供できることを光栄に思います。\nさて、他社の路線を自社プロジェクトの「一部」として組み込む方法があります。\n独自のダイヤ（コミット履歴）を保ったまま自社の一部になる仕組みは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git submodule add", "correct": true },
+          { "label": "git import", "correct": false },
+          { "label": "git include", "correct": false },
+          { "label": "git embed", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule add で他のリポジトリを自分のプロジェクト内に組み込めます。\n買収した路線が独自のダイヤ（履歴）を持ったまま、自社の一部として管理されます。",
+          "ng": "git submodule add が正しいです。\nサブモジュールは「リポジトリの中にリポジトリを入れる」仕組みです。"
+        },
+        "graph": "ch5-submodule"
+      },
+      {
+        "char": "現場監督",
+        "text": "サブモジュールとして追加した他社路線の最新版に更新したい。\nサブモジュールのダイヤを最新に更新するコマンドは？",
+        "terminal": "$ ls\nsrc/\nlibs/other-train/   ← サブモジュール\n.gitmodules",
+        "choices": [
+          { "label": "git submodule update --remote", "correct": true },
+          { "label": "git submodule pull", "correct": false },
+          { "label": "git submodule sync", "correct": false },
+          { "label": "git submodule refresh", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule update --remote で、サブモジュールを最新のコミットに更新できます。\n買収先の路線が更新されたら、このコマンドで取り込みます。",
+          "ng": "git submodule update --remote が正しいです。\n--remote を付けるとリモートの最新を取得します。"
+        },
+        "graph": "ch5-submodule-update"
+      },
+      {
+        "char": "建設局長",
+        "text": "サブモジュールには注意点があります。\n\n• clone時に --recurse-submodules が必要\n• サブモジュールは特定のコミットに固定される\n• 更新するには明示的に update が必要\n\n管理が複雑になることもあるため、\n別の方法として「subtree」もあります。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-submodule-update",
+        "nextLabel": "subtree を学ぶ"
+      },
+      {
+        "char": "現場監督",
+        "text": "git subtree は、他のリポジトリの内容を\n自分のリポジトリに「直接取り込む」方法です。\nサブモジュールとの違いはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "subtree は履歴を自分のリポジトリに統合する", "correct": true },
+          { "label": "subtree の方が常に優れている", "correct": false },
+          { "label": "subtree は .gitmodules ファイルを使う", "correct": false },
+          { "label": "subtree は別リポジトリへの参照を保持する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ subtree は他社の履歴を自分のリポジトリに統合します。\nsubmodule = 「別会社として独立運営」、subtree = 「完全に自社に吸収合併」のイメージです。",
+          "ng": "subtree は履歴を自分のリポジトリに統合するのが特徴です。\nsubmodule は参照を保持し、subtree は内容をコピーして統合します。"
+        },
+        "graph": "ch5-subtree"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n他社路線の活用方法を学びました。\n\nあなたは今、こんなことを学びました：\n— Fork で他社リポジトリを自分のアカウントにコピー\n— upstream で本家の更新を追跡\n— git submodule で独立したリポジトリを組み込む\n— git submodule update --remote で最新に更新\n— git subtree で履歴ごと統合する方法\n\n次の章では、路線が拡大した今、\n自動運行システム（CI/CD）を導入します。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-subtree",
+        "isLast": true,
+        "nextLabel": "第5章 完了"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "第6章",
+    "subtitle": "自動運行システムを導入しよう",
+    "description": "路線拡大で人手の限界に。CI/CDで自動信号システムを導入する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#00e676", "label": "CI/CD パイプライン" },
+      { "color": "#ff5252", "label": "テスト失敗" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線がどんどん拡大しています。\n駅が増え、ブランチが増え、プルリクエストも増え……\n人手でのチェックに限界が来ました。\n\n自動信号システム（CI/CD）を導入しましょう！",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-start",
+        "nextLabel": "自動化を始める"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "はじめまして。自動運行システムの担当です。\nCI とは、コードが変更されるたびに自動でテスト・ビルドを行う仕組みです。\nCI は何の略ですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Continuous Integration（継続的インテグレーション）", "correct": true },
+          { "label": "Code Inspection（コード検査）", "correct": false },
+          { "label": "Commit Integration（コミット統合）", "correct": false },
+          { "label": "Central Infrastructure（中央基盤）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ CI = Continuous Integration（継続的インテグレーション）。\n列車が駅に入る前に、自動で安全チェックを行う仕組みです。\nコードの変更があるたびに自動でテストが走ります。",
+          "ng": "CI = Continuous Integration です。\n「継続的に統合（テスト・ビルド）する」仕組みで、変更のたびに自動で品質チェックが行われます。"
+        },
+        "graph": "ch6-ci-concept"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "GitHub で CI/CD を実現する標準ツールがあります。\nリポジトリに設定ファイルを置くだけで、\npush やプルリクエストのたびに自動でジョブが実行されます。\nこのツールの名前は？",
+        "terminal": null,
+        "choices": [
+          { "label": "GitHub Actions", "correct": true },
+          { "label": "GitHub Workflows", "correct": false },
+          { "label": "GitHub Pipelines", "correct": false },
+          { "label": "GitHub CI", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ GitHub Actions はGitHubの組み込みCI/CDツールです。\n.github/workflows/ ディレクトリにYAMLファイルを置いて設定します。",
+          "ng": "GitHub Actions が正しいです。\nGitHubに標準搭載されたCI/CDツールで、.github/workflows/ に設定ファイルを置きます。"
+        },
+        "graph": "ch6-ci-concept"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "GitHub Actions の設定ファイルを見てみましょう。\nワークフローファイルはどこに配置しますか？",
+        "terminal": "name: CI\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm test",
+        "choices": [
+          { "label": ".github/workflows/ci.yml", "correct": true },
+          { "label": ".ci/config.yml", "correct": false },
+          { "label": "ci.config.json", "correct": false },
+          { "label": ".github/ci.yml", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ .github/workflows/ ディレクトリに YAML ファイルを配置します。\non: [push, pull_request] で「push時とPR時に実行」と指定しています。",
+          "ng": ".github/workflows/ が正しい配置場所です。\nファイル名は自由ですが、ディレクトリは .github/workflows/ 固定です。"
+        },
+        "graph": "ch6-workflow"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "テストが自動で走るようになりました！\nしかし……テストが失敗しています。\nテストが失敗した場合、プルリクエストはどうなりますか？",
+        "terminal": "❌ CI: test — Failed\n  npm test\n  FAIL src/station.test.js\n  ✗ 駅名が正しく表示されること\n    Expected: \"東神奈川\" Received: \"仲木戸\"",
+        "choices": [
+          { "label": "マージがブロックされる（設定による）", "correct": true },
+          { "label": "自動でマージが取り消される", "correct": false },
+          { "label": "テスト結果は表示されるがマージには影響しない", "correct": false },
+          { "label": "自動でコードが修正される", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ ブランチ保護ルールで「CIが通らないとマージ禁止」に設定できます。\nテストが通らない列車は発車させない ＝ 品質を自動で守る仕組みです。",
+          "ng": "「マージがブロックされる」が正しいです。\nブランチ保護ルールの設定次第ですが、CI必須にすればテスト通過がマージの条件になります。"
+        },
+        "graph": "ch6-test-fail"
+      },
+      {
+        "char": "建設局長",
+        "text": "テストを修正して再 push しましょう。\nCIが通ったら次の段階、CD に進みます。\n\nCD = Continuous Delivery / Deployment（継続的デリバリー/デプロイ）。\n「検査通過後に自動で次の駅まで走らせる」＝ 自動デプロイのことです。",
+        "terminal": "✅ CI: test — Passed\n✅ CI: build — Passed\n✅ CI: deploy — Passed\n→ 本番環境に自動デプロイ完了",
+        "choices": null,
+        "graph": "ch6-cd-deploy",
+        "nextLabel": "自動運行開始！"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "CI/CD の全体像を確認しましょう。\n正しいパイプラインの流れはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "push → テスト → ビルド → デプロイ", "correct": true },
+          { "label": "デプロイ → テスト → ビルド → push", "correct": false },
+          { "label": "ビルド → push → テスト → デプロイ", "correct": false },
+          { "label": "テスト → push → デプロイ → ビルド", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ push → テスト → ビルド → デプロイ が標準的な流れです。\n列車を発車（push）→ 安全検査（テスト）→ 組立（ビルド）→ 運行開始（デプロイ）。",
+          "ng": "push → テスト → ビルド → デプロイ が正しい順序です。\nまずコードを送り、品質チェックを通過してから本番に反映します。"
+        },
+        "graph": "ch6-cd-deploy"
+      },
+      {
+        "char": "建設局長",
+        "text": "素晴らしい！自動運行システムが稼働を開始しました。\n\nここまでの第1〜5章では「駅と線路」（静的な構造物）を作ってきました。\n第6章で初めて、その上を電車が走り始めたのです。\n「静」から「動」への転換点です。\n\nあなたは今、こんなことを学びました：\n— CI（Continuous Integration）の概念\n— GitHub Actions でワークフローを設定\n— .github/workflows/ にYAMLファイルを配置\n— テスト失敗時のマージブロック\n— CD（Continuous Delivery/Deployment）の流れ\n\n最終章では……緊急事態が発生します。\nそして、安全運行のための最終防衛線を学びます。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-cd-deploy",
+        "isLast": true,
+        "nextLabel": "第6章 完了"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "第7章",
+    "subtitle": "緊急事態発生！ そして安全運行へ",
+    "description": "事故発生の対処と、事故を防ぐための安全運行体制を学ぶ。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff5252", "label": "障害区間" },
+      { "color": "#00e676", "label": "復旧 / 安全対策" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "緊急事態です！\n沿線の変電所で火災が発生し、送電が停止しました。\n一部区間が運行不能になっています。\n\n直ちに対処しなければなりません！",
+        "terminal": "🚨 ALERT 🚨\n送電停止により一部区間で運行障害発生\n原因: commit a3f8b2c で導入された変更\n影響: 本番環境でエラー多発",
+        "choices": null,
+        "graph": "ch7-incident",
+        "nextLabel": "対処を開始する"
+      },
+      {
+        "char": "現場監督",
+        "text": "問題のコミットを特定しました。\nこのコミットの変更を「打ち消す」新しいコミットを作りましょう。\n該当区間の運行を止めるイメージです。\n元のコミットを残したまま、効果だけを取り消すコマンドは？",
+        "terminal": "$ git log --oneline\na3f8b2c 新しい信号システムを導入   ← これが原因\nb7c1d3e 駅舎の改修\nc2d4e6f 路線延伸",
+        "choices": [
+          { "label": "git revert a3f8b2c", "correct": true },
+          { "label": "git reset a3f8b2c", "correct": false },
+          { "label": "git delete a3f8b2c", "correct": false },
+          { "label": "git undo a3f8b2c", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git revert は指定コミットの変更を打ち消す新しいコミットを作ります。\n歴史を書き換えず（reset と違い）、安全に「取り消し」ができます。\n該当区間の運行を止める＝問題の変更を元に戻す、というイメージです。",
+          "ng": "git revert が正しいです。\nreset は歴史を書き換えますが、revert は打ち消しコミットを新しく作るため安全です。"
+        },
+        "graph": "ch7-revert"
+      },
+      {
+        "char": "建設局長",
+        "text": "問題のコミットは打ち消しました。\nしかし、そのコミットに含まれていた「改札機の更新」だけは\n別路線で必要です。\n特定のコミットの変更だけを別ブランチに適用するコマンドは？",
+        "terminal": "$ git log --oneline (feature/gate ブランチにて)\n→ a3f8b2c の中の改札機更新だけ欲しい",
+        "choices": [
+          { "label": "git cherry-pick a3f8b2c", "correct": true },
+          { "label": "git copy a3f8b2c", "correct": false },
+          { "label": "git apply a3f8b2c", "correct": false },
+          { "label": "git extract a3f8b2c", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git cherry-pick は「必要なコミットだけを摘み取って適用する」コマンドです。\n鉄道で言えば、運休になった列車の乗客を別の列車に振り替えるような操作です。",
+          "ng": "git cherry-pick が正しいです。\n「さくらんぼ摘み」のように、必要なコミットだけ選んで別ブランチに適用します。"
+        },
+        "graph": "ch7-cherry-pick"
+      },
+      {
+        "char": "現場監督",
+        "text": "さらに困ったことに、復旧作業中に\n間違えてブランチを削除してしまいました！\n消してしまった運行記録を復元する必要があります。\nGitの操作履歴を確認するコマンドは？",
+        "terminal": "$ git branch -D feature/emergency-fix\n→ ブランチを間違えて削除してしまった！",
+        "choices": [
+          { "label": "git reflog", "correct": true },
+          { "label": "git history", "correct": false },
+          { "label": "git recover", "correct": false },
+          { "label": "git undelete", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git reflog はGitのすべての操作履歴を表示します。\n「30分前のダイヤに戻す」ことができる強力なコマンドです。\n削除したブランチも reflog から復元できます。",
+          "ng": "git reflog が正しいです。\nreflog = reference log。HEAD の移動履歴をすべて記録しているため、消した変更も復元可能です。"
+        },
+        "graph": "ch7-reflog"
+      },
+      {
+        "char": "建設局長",
+        "text": "reflog から削除前のコミットハッシュを見つけました。\nこれで復元できます。\n\nさて、もう一つ。この障害が「いつから」起きていたか\n正確に特定したい場合があります。\n二分探索でバグの原因コミットを探すコマンドは？",
+        "terminal": "$ git reflog\na3f8b2c HEAD@{0}: branch -D: ...\nb7c1d3e HEAD@{1}: commit: ...\n→ git switch -c feature/emergency-fix a3f8b2c で復元！",
+        "choices": [
+          { "label": "git bisect", "correct": true },
+          { "label": "git search", "correct": false },
+          { "label": "git trace", "correct": false },
+          { "label": "git debug", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git bisect は二分探索でバグの原因コミットを自動的に特定します。\n「good」と「bad」を指定すると、Gitが効率的に犯人を絞り込みます。\n100個のコミットでも7回で見つかります。",
+          "ng": "git bisect が正しいです。\nbisect = 二分する。good/bad を教えると、Gitが自動的にバグを導入したコミットを特定します。"
+        },
+        "graph": "ch7-bisect"
+      },
+      {
+        "char": "建設局長",
+        "text": "事故は収束しました。\nしかし「二度と起こさないために」何をすべきでしょうか。\n\nここからは防災体制を整えましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-bisect",
+        "nextLabel": "防災体制を整える"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "安全運行のため、ブランチ保護ルールを設定しましょう。\nmain ブランチに直接 push できないようにする設定です。\n必要な保護ルールはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "プルリクエスト必須 + レビュー承認必須", "correct": true },
+          { "label": "push を完全に禁止する", "correct": false },
+          { "label": "main ブランチを削除する", "correct": false },
+          { "label": "全員に管理者権限を付与する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ プルリクエスト必須 + レビュー承認必須が標準的な保護ルールです。\n「一人で列車を発車させない。必ず車掌の確認を得る」という安全運行の原則です。",
+          "ng": "プルリクエスト必須 + レビュー承認必須が正しいです。\n完全禁止ではなく、レビューを通せば変更できる仕組みが実用的です。"
+        },
+        "graph": "ch7-protection"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "さらに、CI の必須チェックも追加しましょう。\nテストが通らないコードはマージできないようにします。\n\nそして覚えていますか？ 第1章で設定した .gitignore ——\nあの「立入禁止区域」が、実は重要な安全策だったのです。",
+        "terminal": "ブランチ保護ルール:\n✅ プルリクエスト必須\n✅ 1人以上のレビュー承認必須\n✅ CI ステータスチェック必須\n✅ force push 禁止",
+        "choices": null,
+        "graph": "ch7-protection",
+        "nextLabel": "伏線回収！"
+      },
+      {
+        "char": "建設局長",
+        "text": ".gitignore で .env ファイルを除外していたおかげで、\nAPIキーやパスワードがリポジトリに入らずに済みました。\nもし .gitignore がなければ、秘密情報が全世界に公開されていた可能性があります。\n\n第1章の「立入禁止区域」は、最も基本的で最も重要な安全策だったのです。\n\n最後の確認です。安全運行のために最も重要なことは？",
+        "terminal": null,
+        "choices": [
+          { "label": "予防策を最初から設定し、チームで運用する", "correct": true },
+          { "label": "事故が起きたら素早く対処する", "correct": false },
+          { "label": "高度なコマンドをたくさん覚える", "correct": false },
+          { "label": "一人で全部管理する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 予防こそ最善の対策。\n.gitignore、ブランチ保護、CI必須化、レビュー文化——\nこれらを「最初から」「チームで」運用することが、安全運行の鍵です。",
+          "ng": "「予防策を最初から設定し、チームで運用する」が最も重要です。\n事後対処も大切ですが、事故を起こさない仕組みを作ることが最善です。"
+        },
+        "graph": "ch7-safe"
+      },
+      {
+        "char": "建設局長",
+        "text": "🎉 全路線開通おめでとうございます！ 🎉\n\ngit鉄道は、安全運行体制を確立し、\nすべての路線が安全に運行されています。\n\n第7章で学んだこと：\n— git revert で安全にコミットを打ち消す\n— git cherry-pick で必要な変更だけ適用\n— git reflog で操作履歴を確認・復元\n— git bisect で二分探索によるバグ特定\n— ブランチ保護ルールで安全運行体制を構築\n— .gitignore の伏線回収（最初の安全策が最も重要）\n\nあなたはGitの基礎から応用まで、\nすべてを学び終えました。\n安全運行をお祈りしています。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-safe",
+        "isLast": true,
+        "nextLabel": "全路線 開通！"
+      }
+    ]
+  }
+]
