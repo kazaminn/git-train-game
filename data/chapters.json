@@ -579,5 +579,115 @@
         "nextLabel": "第4章 完了"
       }
     ]
+  },
+  {
+    "id": 4,
+    "title": "第5章",
+    "subtitle": "他社の路線を買収しよう",
+    "description": "サブモジュールやフォークで他社路線を自社に統合する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 自社本線" },
+      { "color": "#e040fb", "label": "他社路線" },
+      { "color": "#ff9800", "label": "fork / subtree" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "自社路線が順調に成長しました。\nしかし、すべてをゼロから作る必要はありません。\n他社が公開している路線の設計図を活用する方法があります。\n\nまずは「フォーク」から学びましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-start",
+        "nextLabel": "他社路線を見に行く"
+      },
+      {
+        "char": "建設局長",
+        "text": "GitHubで他社のリポジトリを「自分のアカウントにコピー」する操作。\n他社の路線図をベースに、自社版を自由に開発できるようになります。\nこの操作を何と呼びますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Fork（フォーク）", "correct": true },
+          { "label": "Clone（クローン）", "correct": false },
+          { "label": "Copy（コピー）", "correct": false },
+          { "label": "Mirror（ミラー）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Fork はリポジトリを自分のアカウントにコピーする操作です。\n元のリポジトリとの繋がりを保ちつつ、自由に改変できます。\nClone はローカルにダウンロードするだけですが、Fork はGitHub上にコピーを作ります。",
+          "ng": "Fork が正しいです。\nClone はローカルにコピーするだけ。Fork はGitHub上に自分の独立したコピーを作り、元リポジトリとの関係も保持します。"
+        },
+        "graph": "ch5-fork"
+      },
+      {
+        "char": "建設局長",
+        "text": "Fork した後、元のリポジトリ（本家）の更新も追いかけたい。\n本家のリポジトリを「upstream」として登録します。\nこれで本家の変更を取り込めるようになります。",
+        "terminal": "$ git remote add upstream https://github.com/original/train.git\n$ git remote -v\norigin    https://github.com/you/train.git (fork)\nupstream  https://github.com/original/train.git (本家)",
+        "choices": null,
+        "graph": "ch5-upstream",
+        "nextLabel": "買収の方法を学ぶ"
+      },
+      {
+        "char": "買収先企業代表",
+        "text": "はじめまして。御社に路線を提供できることを光栄に思います。\nさて、他社の路線を自社プロジェクトの「一部」として組み込む方法があります。\n独自のダイヤ（コミット履歴）を保ったまま自社の一部になる仕組みは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git submodule add", "correct": true },
+          { "label": "git import", "correct": false },
+          { "label": "git include", "correct": false },
+          { "label": "git embed", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule add で他のリポジトリを自分のプロジェクト内に組み込めます。\n買収した路線が独自のダイヤ（履歴）を持ったまま、自社の一部として管理されます。",
+          "ng": "git submodule add が正しいです。\nサブモジュールは「リポジトリの中にリポジトリを入れる」仕組みです。"
+        },
+        "graph": "ch5-submodule"
+      },
+      {
+        "char": "現場監督",
+        "text": "サブモジュールとして追加した他社路線の最新版に更新したい。\nサブモジュールのダイヤを最新に更新するコマンドは？",
+        "terminal": "$ ls\nsrc/\nlibs/other-train/   ← サブモジュール\n.gitmodules",
+        "choices": [
+          { "label": "git submodule update --remote", "correct": true },
+          { "label": "git submodule pull", "correct": false },
+          { "label": "git submodule sync", "correct": false },
+          { "label": "git submodule refresh", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule update --remote で、サブモジュールを最新のコミットに更新できます。\n買収先の路線が更新されたら、このコマンドで取り込みます。",
+          "ng": "git submodule update --remote が正しいです。\n--remote を付けるとリモートの最新を取得します。"
+        },
+        "graph": "ch5-submodule-update"
+      },
+      {
+        "char": "建設局長",
+        "text": "サブモジュールには注意点があります。\n\n• clone時に --recurse-submodules が必要\n• サブモジュールは特定のコミットに固定される\n• 更新するには明示的に update が必要\n\n管理が複雑になることもあるため、\n別の方法として「subtree」もあります。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-submodule-update",
+        "nextLabel": "subtree を学ぶ"
+      },
+      {
+        "char": "現場監督",
+        "text": "git subtree は、他のリポジトリの内容を\n自分のリポジトリに「直接取り込む」方法です。\nサブモジュールとの違いはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "subtree は履歴を自分のリポジトリに統合する", "correct": true },
+          { "label": "subtree の方が常に優れている", "correct": false },
+          { "label": "subtree は .gitmodules ファイルを使う", "correct": false },
+          { "label": "subtree は別リポジトリへの参照を保持する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ subtree は他社の履歴を自分のリポジトリに統合します。\nsubmodule = 「別会社として独立運営」、subtree = 「完全に自社に吸収合併」のイメージです。",
+          "ng": "subtree は履歴を自分のリポジトリに統合するのが特徴です。\nsubmodule は参照を保持し、subtree は内容をコピーして統合します。"
+        },
+        "graph": "ch5-subtree"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n他社路線の活用方法を学びました。\n\nあなたは今、こんなことを学びました：\n— Fork で他社リポジトリを自分のアカウントにコピー\n— upstream で本家の更新を追跡\n— git submodule で独立したリポジトリを組み込む\n— git submodule update --remote で最新に更新\n— git subtree で履歴ごと統合する方法\n\n次の章では、路線が拡大した今、\n自動運行システム（CI/CD）を導入します。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-subtree",
+        "isLast": true,
+        "nextLabel": "第5章 完了"
+      }
+    ]
   }
 ]

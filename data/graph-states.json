@@ -485,5 +485,114 @@
       { "x": 290, "y": 240, "text": "origin/main", "color": "#a855f7" },
       { "x": 540, "y": 140, "text": "--force-with-lease", "color": "#00e676" }
     ]
+  },
+
+  "ch5-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main", "glow": true },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" }
+    ],
+    "lines": [],
+    "labels": [
+      { "x": 80, "y": 40, "text": "自社 (main)", "color": "#00c8ff" },
+      { "x": 80, "y": 240, "text": "他社 (public)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-fork": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" },
+      { "x": 260, "y": 200, "color": "#e040fb", "label": "設計図A", "branch": "other" },
+      { "x": 260, "y": 80, "color": "#ff9800", "label": "Fork!", "branch": "fork", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 200, "x2": 260, "y2": 200, "color": "#e040fb" },
+      { "x1": 260, "y1": 200, "x2": 260, "y2": 80, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 80, "y": 40, "text": "自社 (main)", "color": "#00c8ff" },
+      { "x": 170, "y": 240, "text": "他社 (public)", "color": "#e040fb" },
+      { "x": 260, "y": 40, "text": "fork (自分のコピー)", "color": "#ff9800" }
+    ]
+  },
+
+  "ch5-upstream": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 260, "y": 80, "color": "#ff9800", "label": "Fork", "branch": "fork" },
+      { "x": 400, "y": 80, "color": "#ff9800", "label": "自社改変", "branch": "fork", "glow": true },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "upstream" },
+      { "x": 260, "y": 200, "color": "#e040fb", "label": "本家更新", "branch": "upstream" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 260, "y2": 80, "color": "#ff9800" },
+      { "x1": 260, "y1": 80, "x2": 400, "y2": 80, "color": "#ff9800" },
+      { "x1": 80, "y1": 200, "x2": 260, "y2": 200, "color": "#e040fb" },
+      { "x1": 260, "y1": 200, "x2": 260, "y2": 80, "color": "#4a6080", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "origin (fork)", "color": "#ff9800" },
+      { "x": 170, "y": 240, "text": "upstream (本家)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-submodule": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "開発中", "branch": "main" },
+      { "x": 400, "y": 80, "color": "#00c8ff", "label": "+submodule", "branch": "main", "glow": true },
+      { "x": 400, "y": 200, "color": "#e040fb", "label": "他社v1.0", "branch": "submodule" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 400, "y1": 80, "x2": 400, "y2": 200, "color": "#e040fb", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 240, "text": "submodule (他社)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-submodule-update": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "+submodule", "branch": "main" },
+      { "x": 400, "y": 80, "color": "#00c8ff", "label": "更新反映", "branch": "main", "glow": true },
+      { "x": 240, "y": 200, "color": "#e040fb", "label": "他社v1.0", "branch": "submodule" },
+      { "x": 400, "y": 200, "color": "#e040fb", "label": "他社v2.0", "branch": "submodule", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 200, "x2": 400, "y2": 200, "color": "#e040fb" },
+      { "x1": 240, "y1": 80, "x2": 240, "y2": 200, "color": "#e040fb", "dashed": true },
+      { "x1": 400, "y1": 80, "x2": 400, "y2": 200, "color": "#e040fb", "dashed": true }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 320, "y": 240, "text": "submodule (他社)", "color": "#e040fb" }
+    ]
+  },
+
+  "ch5-subtree": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "自社本線", "branch": "main" },
+      { "x": 240, "y": 80, "color": "#00c8ff", "label": "開発中", "branch": "main" },
+      { "x": 80, "y": 200, "color": "#e040fb", "label": "他社路線", "branch": "other" },
+      { "x": 240, "y": 200, "color": "#e040fb", "label": "設計図", "branch": "other" },
+      { "x": 400, "y": 80, "color": "#00e676", "label": "統合済", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 240, "y2": 80, "color": "#00c8ff" },
+      { "x1": 240, "y1": 80, "x2": 400, "y2": 80, "color": "#00c8ff" },
+      { "x1": 80, "y1": 200, "x2": 240, "y2": 200, "color": "#e040fb" },
+      { "x1": 240, "y1": 200, "x2": 400, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 240, "y": 40, "text": "main (subtree統合後)", "color": "#00c8ff" },
+      { "x": 160, "y": 240, "text": "他社路線", "color": "#e040fb" }
+    ]
   }
 }
