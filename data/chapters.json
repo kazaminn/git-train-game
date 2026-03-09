@@ -295,5 +295,155 @@
         "nextLabel": "第2章 完了"
       }
     ]
+  },
+  {
+    "id": 2,
+    "title": "第3章",
+    "subtitle": "新しい駅を作ろう！",
+    "description": "路線を延伸して新しい駅を作る。しかし駅名をめぐって大騒ぎが起きる。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff9800", "label": "feature/new-station 延伸工事" },
+      { "color": "#ff5252", "label": "コンフリクト（衝突）" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線が正式に開通しました！\n次は路線の延伸です。新しい駅を建設しましょう。\nしかし……新駅の計画には、沿線住民の声も聞かなければなりません。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-start",
+        "nextLabel": "延伸計画を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "住民から「新駅の名前が気に入らない」という声が上がっています。\nこういった問題提起や議論を記録・管理する仕組みが必要です。\nGitHubでこの仕組みを何と呼びますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Issue（イシュー）", "correct": true },
+          { "label": "Ticket（チケット）", "correct": false },
+          { "label": "Report（レポート）", "correct": false },
+          { "label": "Thread（スレッド）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Issue は問題提起・要望・バグ報告などを記録する仕組みです。\n住民の声を整理して議論するための「公聴会の議事録」のようなものです。",
+          "ng": "GitHubでは Issue と呼びます。\n問題提起や要望を記録し、議論を整理するための仕組みです。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "Issue を立てました！\n「新駅の名前は『高輪ゲートウェイ』ではなく『泉岳寺』にすべきだ！」\nIssue にはラベルを付けて分類できます。この議論に適切なラベルは？",
+        "terminal": "Issue #42: 新駅の駅名について\nStatus: Open\nComments: 15",
+        "choices": [
+          { "label": "bug（バグ）", "correct": false },
+          { "label": "enhancement（機能改善）", "correct": false },
+          { "label": "discussion（議論）", "correct": true },
+          { "label": "wontfix（対応しない）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ discussion ラベルで「議論が必要な案件」と分かります。\nラベルを使うと Issue を分類・フィルタリングしやすくなります。",
+          "ng": "この場合は discussion（議論）が適切です。\nバグではなく、意見が分かれている案件なのでラベルで明確に分類します。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "建設局長",
+        "text": "議論を踏まえて、新駅の建設を進めましょう。\n延伸工事用のブランチを作って作業します。\nあなたのブランチ名は feature/new-station です。",
+        "terminal": "$ git switch -c feature/new-station\nSwitched to a new branch 'feature/new-station'",
+        "choices": null,
+        "graph": "ch3-branch-created",
+        "nextLabel": "工事を進める"
+      },
+      {
+        "char": "現場監督",
+        "text": "新駅の駅舎を建設してコミットしました。\nしかし……同時に別のチームも main ブランチで駅名ファイルを編集していたようです。\nマージしようとしたら、衝突（コンフリクト）が発生しました！",
+        "terminal": "$ git switch main\n$ git merge feature/new-station\nAuto-merging station-name.txt\nCONFLICT (content): Merge conflict in station-name.txt\nAutomatic merge failed; fix conflicts and then commit.",
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "状況を確認する"
+      },
+      {
+        "char": "現場監督",
+        "text": "コンフリクトが発生しました！\n同じファイルの同じ箇所を、二人が別々に変更してしまった状態です。\nまず、どこが衝突しているか確認するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git diff", "correct": true },
+          { "label": "git status", "correct": false },
+          { "label": "git log", "correct": false },
+          { "label": "git show", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git diff でコンフリクト箇所の詳細を確認できます。\nどの行が衝突しているか、双方の変更内容が表示されます。",
+          "ng": "git diff が最適です。\nstatus は衝突ファイル名を確認できますが、diff は具体的な衝突内容を表示します。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "現場監督",
+        "text": "コンフリクトの中身を見てみましょう。\nGitはファイル内に特別なマーカーを挿入して、衝突箇所を示します。\n「自分の変更」と「相手の変更」を区切る記号はどれですか？",
+        "terminal": "<<<<<<< HEAD\n駅名: 泉岳寺\n=======\n駅名: 高輪ゲートウェイ\n>>>>>>> feature/new-station",
+        "choices": [
+          { "label": "<<<<<<< と >>>>>>> と =======", "correct": true },
+          { "label": "### と --- と ###", "correct": false },
+          { "label": "/* と */ と //", "correct": false },
+          { "label": "{{ と }} と ||", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ <<<<<<< が自分の変更の開始、======= が区切り、>>>>>>> が相手の変更の終了です。\nこのマーカーを手動で編集して、最終的にどちらを採用するか（または両方混ぜるか）を決めます。",
+          "ng": "<<<<<<< ======= >>>>>>> がコンフリクトマーカーです。\nGitが自動挿入する記号で、手動で解消する必要があります。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "建設局長",
+        "text": "コンフリクトを解消しましょう。\nファイルを編集してマーカーを削除し、最終的な内容に書き換えました。\n解消後、Gitに「解決済み」と伝えるために何をしますか？",
+        "terminal": "（編集後の station-name.txt）\n駅名: 高輪ゲートウェイ（副称: 泉岳寺）",
+        "choices": [
+          { "label": "git add station-name.txt", "correct": true },
+          { "label": "git resolve station-name.txt", "correct": false },
+          { "label": "git fix station-name.txt", "correct": false },
+          { "label": "git merge --continue", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 解消したファイルを git add するとGitは「解決済み」と認識します。\nその後 git commit でマージコミットを作成して完了です。",
+          "ng": "git add が正しいです。\n衝突を解消したファイルを add すると、Gitは「このファイルの衝突は解決済み」と認識します。"
+        },
+        "graph": "ch3-resolving"
+      },
+      {
+        "char": "現場監督",
+        "text": "ファイルを add しました。\nあとはコミットしてマージを完了させましょう。\n解消後のコミットと、修正を管理局に再送するコマンドの組み合わせは？",
+        "terminal": "$ git status\nAll conflicts fixed but you are still merging.\n  (use \"git commit\" to conclude merge)",
+        "choices": [
+          { "label": "git commit → git push origin main", "correct": true },
+          { "label": "git merge --finish → git push", "correct": false },
+          { "label": "git resolve --commit → git push", "correct": false },
+          { "label": "git commit --merge → git send", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git commit でマージコミットが作成され、git push で管理局に送信されます。\nコンフリクト解消は「手動で直して → add → commit → push」の流れです。",
+          "ng": "git commit → git push origin main が正しいです。\n特別なコマンドは不要。普通に commit して push するだけです。"
+        },
+        "graph": "ch3-resolved"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "駅名が「高輪ゲートウェイ（副称: 泉岳寺）」に決まりました！\n双方の意見を取り入れた素晴らしい解決です。\nIssue #42 をクローズして、この議論を終了しましょう。",
+        "terminal": "Issue #42: 新駅の駅名について\nStatus: Closed ✓\nResolution: 双方の案を採用",
+        "choices": null,
+        "graph": "ch3-resolved",
+        "nextLabel": "Issue をクローズ"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n新駅が開業し、駅名論争も無事解決しました。\n\nあなたは今、こんなことを学びました：\n— Issue で問題提起・議論を管理\n— ラベルで Issue を分類\n— git diff でコンフリクト箇所を確認\n— コンフリクトマーカーの読み方（<<<<<<< ======= >>>>>>>）\n— git add で解決済みを宣言し、commit で完了\n\n次の章では、既に開業した駅の名前を変更します。\n歴史を書き換える……危険な操作が待っています。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-resolved",
+        "isLast": true,
+        "nextLabel": "第3章 完了"
+      }
+    ]
   }
 ]

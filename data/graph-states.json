@@ -277,5 +277,103 @@
       { "x": 330, "y": 260, "text": "origin/main", "color": "#a855f7" },
       { "x": 580, "y": 190, "text": "🏷 v1.0", "color": "#00e676" }
     ]
+  },
+
+  "ch3-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch3-branch-created": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station", "dashed": true, "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800", "dashed": true }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 340, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-conflict": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 500, "y": 130, "color": "#ff5252", "label": "衝突!", "branch": "conflict", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 130, "color": "#ff5252", "dashed": true },
+      { "x1": 460, "y1": 180, "x2": 500, "y2": 130, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-resolving": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 500, "y": 130, "color": "#00e676", "label": "解消中", "branch": "conflict", "glow": true, "dashed": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 500, "y2": 130, "color": "#00e676", "dashed": true },
+      { "x1": 460, "y1": 180, "x2": 500, "y2": 130, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 230, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
+  },
+
+  "ch3-resolved": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "統合", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "v1.0", "branch": "main" },
+      { "x": 380, "y": 80, "color": "#00c8ff", "label": "駅名変更A", "branch": "main" },
+      { "x": 340, "y": 180, "color": "#ff9800", "label": "新駅建設", "branch": "feature/new-station" },
+      { "x": 460, "y": 180, "color": "#ff9800", "label": "駅名変更B", "branch": "feature/new-station" },
+      { "x": 540, "y": 80, "color": "#00e676", "label": "解決済", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 340, "y2": 180, "color": "#ff9800" },
+      { "x1": 340, "y1": 180, "x2": 460, "y2": 180, "color": "#ff9800" },
+      { "x1": 380, "y1": 80, "x2": 540, "y2": 80, "color": "#00c8ff" },
+      { "x1": 460, "y1": 180, "x2": 540, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 310, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 400, "y": 220, "text": "feature/new-station", "color": "#ff9800" }
+    ]
   }
 }
