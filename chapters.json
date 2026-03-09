@@ -1,0 +1,158 @@
+[
+  {
+    "id": 0,
+    "title": "第1章",
+    "subtitle": "git鉄道をつくろう",
+    "description": "駅を作って線路を引く。自社路線の建設が始まる。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "ようこそ、git鉄道建設本部へ。\nあなたは今日から、新しい鉄道路線の建設責任者です。\nまずは建設の準備から始めましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "empty",
+        "nextLabel": "建設を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道を作るには、まず「建設用地」を確保する必要があります。\nGitでは、プロジェクトの土台となる「リポジトリ」を作ります。\nどのコマンドで建設用地を確保しますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git start", "correct": false },
+          { "label": "git init", "correct": true },
+          { "label": "git new", "correct": false },
+          { "label": "git create", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git init で建設用地（リポジトリ）が確保されました。\n.git ディレクトリが作られ、すべての記録がここに保存されます。",
+          "ng": "git init が正しいコマンドです。\ninitialize（初期化する）の略。建設用地を更地から整備するイメージです。"
+        },
+        "graph": "ch1-init"
+      },
+      {
+        "char": "建設局長",
+        "text": "建設用地に、最初にやるべきことがあります。\n工事現場には「立入禁止区域」が必要ですよね。\nGitにも、管理対象から除外するファイルを指定する仕組みがあります。",
+        "terminal": "$ ls -a\n.git/\nnode_modules/\n.env\nsrc/",
+        "choices": [
+          { "label": ".gitkeep を作成する", "correct": false },
+          { "label": ".gitignore を作成する", "correct": true },
+          { "label": ".gitexclude を作成する", "correct": false },
+          { "label": ".gitskip を作成する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ .gitignore に書いたファイルやフォルダは、Gitの管理対象外になります。\nnode_modules/ や .env など、共有すべきでないものを除外する「立入禁止看板」です。\n（この知識は、後の章で重要な意味を持ちます……）",
+          "ng": ".gitignore が正しいです。\n秘密情報（.env）や巨大フォルダ（node_modules/）を除外する、工事現場の「立入禁止看板」です。"
+        },
+        "graph": "ch1-init"
+      },
+      {
+        "char": "現場監督",
+        "text": "建設用地が整いました！\nでは最初の駅舎を建てましょう。設計図（ファイル）を用意しました。\nこれを建設予定リスト（ステージングエリア）に登録してください。",
+        "terminal": "$ ls\nstation.html\nstyle.css",
+        "choices": [
+          { "label": "git stage .", "correct": false },
+          { "label": "git add .", "correct": true },
+          { "label": "git commit .", "correct": false },
+          { "label": "git register .", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git add で設計図をステージングエリアに登録しました。\n「.」を使うと、すべてのファイルをまとめて登録できます。\nまだ建設（コミット）はしていません。「建設予定リスト」に載せただけです。",
+          "ng": "git add が正しいです。\n変更をコミット前の「建設予定リスト」に登録するコマンドです。"
+        },
+        "graph": "ch1-staging"
+      },
+      {
+        "char": "現場監督",
+        "text": "建設予定リストの確認が取れました。\nいよいよ駅を開業（コミット）します！\n記念すべき第一号駅の開業記録を残しましょう。",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: station.html\n  new file: style.css",
+        "choices": [
+          { "label": "git commit -m \"第一号駅 開業\"", "correct": true },
+          { "label": "git save -m \"第一号駅 開業\"", "correct": false },
+          { "label": "git push -m \"第一号駅 開業\"", "correct": false },
+          { "label": "git build -m \"第一号駅 開業\"", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 記念すべき第一号駅が開業しました！\ngit commit -m でコミットメッセージ付きの記録を残します。\nこれが路線図の最初の「駅」になります。",
+          "ng": "git commit -m \"メッセージ\" が正しいです。\n開業記録（コミット）には必ずメッセージを添えましょう。"
+        },
+        "graph": "ch1-first-commit"
+      },
+      {
+        "char": "建設局長",
+        "text": "第一号駅、開業おめでとうございます！\nさて、次は駅前広場と改札口を同時に工事したい。\nでも本線の運行を止めるわけにはいきません。\n工事用の別路線（ブランチ）を引きましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-first-commit",
+        "nextLabel": "工事路線を引く"
+      },
+      {
+        "char": "現場監督",
+        "text": "本線（main）の運行を止めずに工事するには、\n工事用の支線（ブランチ）を作って、そこで作業します。\n支線を作って、すぐそちらに移動するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git branch build/plaza", "correct": false },
+          { "label": "git switch -c build/plaza", "correct": true },
+          { "label": "git checkout plaza", "correct": false },
+          { "label": "git new-branch build/plaza", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git switch -c で工事用支線を作り、すぐそちらに移動しました。\n-c は create（作成）の略。\nbuild/plaza のように「目的が分かる名前」を付けるのが現場のルールです。",
+          "ng": "git switch -c build/plaza が正しいです。\n-c で新しいブランチを作成しつつ、そこに切り替えます。"
+        },
+        "graph": "ch1-branch-created"
+      },
+      {
+        "char": "現場監督",
+        "text": "工事用支線で駅前広場の建設が完了しました！コミットも済んでいます。\n次は改札口の工事もコミットしましょう。\n……よし、工事用支線での作業がすべて完了です。",
+        "terminal": "$ git log --oneline\nb4e2a1c (HEAD -> build/plaza) 改札口を建設\na7f3c9d 駅前広場を建設\n1d0e8f2 (main) 第一号駅 開業",
+        "choices": null,
+        "graph": "ch1-branch-commits",
+        "nextLabel": "本線に戻る"
+      },
+      {
+        "char": "建設局長",
+        "text": "工事が完了しました。\n工事結果を本線（main）に統合（マージ）しましょう。\nまず本線に戻る必要があります。どのコマンドで戻りますか？",
+        "terminal": null,
+        "choices": [
+          { "label": "git switch main", "correct": true },
+          { "label": "git back main", "correct": false },
+          { "label": "git return main", "correct": false },
+          { "label": "git move main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git switch main で本線に戻りました。\nswitch は路線（ブランチ）の切り替えコマンドです。",
+          "ng": "git switch main が正しいです。\nブランチ間の移動は switch を使います。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "建設局長",
+        "text": "本線に戻りました。\n工事用支線（build/plaza）の成果を本線に統合します。\nこの「統合」を何と呼びますか？",
+        "terminal": "$ git branch\n  build/plaza\n* main",
+        "choices": [
+          { "label": "git merge build/plaza", "correct": true },
+          { "label": "git combine build/plaza", "correct": false },
+          { "label": "git join build/plaza", "correct": false },
+          { "label": "git integrate build/plaza", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git merge で工事成果が本線に統合されました！\n駅前広場と改札口が本線の駅に組み込まれます。",
+          "ng": "git merge build/plaza が正しいです。\n今いるブランチ（main）に、指定したブランチの内容を統合します。"
+        },
+        "graph": "ch1-merged"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\n第一号駅が、駅前広場と改札口を備えた立派な駅になりました。\n\nあなたは今、こんなことを学びました：\n— git init で建設用地を確保\n— .gitignore で立入禁止区域を設定\n— git add / commit で駅を建設\n— git switch -c でブランチ（工事用支線）を作成\n— git merge で工事成果を本線に統合\n\n次の章では、この路線を正式に開通させるため、\n鉄道管理局への申請に挑みます。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-merged",
+        "isLast": true,
+        "nextLabel": "第1章 完了"
+      }
+    ]
+  }
+]
