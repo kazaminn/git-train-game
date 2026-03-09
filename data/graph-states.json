@@ -691,5 +691,152 @@
       { "x": 420, "y": 40, "text": "CD", "color": "#00e676" },
       { "x": 540, "y": 120, "text": "✅ LIVE", "color": "#00e676" }
     ]
+  },
+
+  "ch7-incident": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "障害発生", "branch": "main", "glow": true },
+      { "x": 500, "y": 80, "color": "#ff5252", "label": "運行停止", "branch": "main" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "main (正常)", "color": "#00c8ff" },
+      { "x": 430, "y": 40, "text": "🚨 障害区間", "color": "#ff5252" }
+    ]
+  },
+
+  "ch7-revert": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "障害原因", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "revert", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 500, "y": 120, "text": "打ち消し ✓", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-cherry-pick": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#ff5252", "label": "障害原因", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "revert", "branch": "main" },
+      { "x": 220, "y": 200, "color": "#ff9800", "label": "feature", "branch": "feature" },
+      { "x": 380, "y": 200, "color": "#00e676", "label": "cherry-pick", "branch": "feature", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 200, "color": "#ff9800" },
+      { "x1": 220, "y1": 200, "x2": 380, "y2": 200, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 380, "y2": 200, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 220, "y": 40, "text": "main", "color": "#00c8ff" },
+      { "x": 300, "y": 240, "text": "feature", "color": "#ff9800" },
+      { "x": 380, "y": 170, "text": "🍒 pick!", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-reflog": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "HEAD@{3}", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "HEAD@{2}", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#00c8ff", "label": "HEAD@{1}", "branch": "main" },
+      { "x": 500, "y": 80, "color": "#00c8ff", "label": "HEAD@{0}", "branch": "main", "glow": true },
+      { "x": 360, "y": 200, "color": "#4a6080", "label": "削除済", "branch": "deleted", "dashed": true },
+      { "x": 500, "y": 200, "color": "#00e676", "label": "復元!", "branch": "restored", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00c8ff" },
+      { "x1": 360, "y1": 80, "x2": 360, "y2": 200, "color": "#4a6080", "dashed": true },
+      { "x1": 360, "y1": 200, "x2": 500, "y2": 200, "color": "#00e676", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "reflog (操作履歴)", "color": "#00c8ff" },
+      { "x": 430, "y": 240, "text": "復元可能!", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-bisect": {
+    "nodes": [
+      { "x": 60, "y": 80, "color": "#00e676", "label": "good", "branch": "main" },
+      { "x": 160, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 260, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 360, "y": 80, "color": "#ff9800", "label": "bisect", "branch": "main", "glow": true },
+      { "x": 460, "y": 80, "color": "#4a6080", "label": "?", "branch": "main" },
+      { "x": 560, "y": 80, "color": "#ff5252", "label": "bad", "branch": "main" }
+    ],
+    "lines": [
+      { "x1": 60, "y1": 80, "x2": 160, "y2": 80, "color": "#00e676" },
+      { "x1": 160, "y1": 80, "x2": 260, "y2": 80, "color": "#4a6080" },
+      { "x1": 260, "y1": 80, "x2": 360, "y2": 80, "color": "#4a6080" },
+      { "x1": 360, "y1": 80, "x2": 460, "y2": 80, "color": "#4a6080" },
+      { "x1": 460, "y1": 80, "x2": 560, "y2": 80, "color": "#ff5252" }
+    ],
+    "labels": [
+      { "x": 60, "y": 120, "text": "正常", "color": "#00e676" },
+      { "x": 360, "y": 120, "text": "← 二分探索 →", "color": "#ff9800" },
+      { "x": 560, "y": 120, "text": "異常", "color": "#ff5252" }
+    ]
+  },
+
+  "ch7-protection": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "commit", "branch": "dev" },
+      { "x": 220, "y": 80, "color": "#00c8ff", "label": "push", "branch": "dev" },
+      { "x": 360, "y": 80, "color": "#ff9800", "label": "PR", "branch": "review" },
+      { "x": 460, "y": 80, "color": "#00e676", "label": "Review ✓", "branch": "review" },
+      { "x": 560, "y": 80, "color": "#00e676", "label": "CI ✓", "branch": "ci" },
+      { "x": 560, "y": 200, "color": "#00e676", "label": "main", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00c8ff" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff9800" },
+      { "x1": 360, "y1": 80, "x2": 460, "y2": 80, "color": "#00e676" },
+      { "x1": 460, "y1": 80, "x2": 560, "y2": 80, "color": "#00e676" },
+      { "x1": 560, "y1": 80, "x2": 560, "y2": 200, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 150, "y": 40, "text": "開発者", "color": "#00c8ff" },
+      { "x": 410, "y": 40, "text": "保護ルール", "color": "#00e676" },
+      { "x": 560, "y": 240, "text": "🔒 protected", "color": "#00e676" }
+    ]
+  },
+
+  "ch7-safe": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00e676", "label": ".gitignore", "branch": "safety" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "branch保護", "branch": "safety" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "レビュー必須", "branch": "safety" },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "CI必須", "branch": "safety" },
+      { "x": 290, "y": 200, "color": "#00e676", "label": "安全運行宣言", "branch": "main", "glow": true }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" },
+      { "x1": 80, "y1": 80, "x2": 290, "y2": 200, "color": "#00e676" },
+      { "x1": 500, "y1": 80, "x2": 290, "y2": 200, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "安全運行体制", "color": "#00e676" },
+      { "x": 290, "y": 240, "text": "✅ 全路線 安全運行中", "color": "#00e676" }
+    ]
   }
 }

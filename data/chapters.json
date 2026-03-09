@@ -807,5 +807,147 @@
         "nextLabel": "第6章 完了"
       }
     ]
+  },
+  {
+    "id": 6,
+    "title": "第7章",
+    "subtitle": "緊急事態発生！ そして安全運行へ",
+    "description": "事故発生の対処と、事故を防ぐための安全運行体制を学ぶ。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#ff5252", "label": "障害区間" },
+      { "color": "#00e676", "label": "復旧 / 安全対策" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "緊急事態です！\n沿線の変電所で火災が発生し、送電が停止しました。\n一部区間が運行不能になっています。\n\n直ちに対処しなければなりません！",
+        "terminal": "🚨 ALERT 🚨\n送電停止により一部区間で運行障害発生\n原因: commit a3f8b2c で導入された変更\n影響: 本番環境でエラー多発",
+        "choices": null,
+        "graph": "ch7-incident",
+        "nextLabel": "対処を開始する"
+      },
+      {
+        "char": "現場監督",
+        "text": "問題のコミットを特定しました。\nこのコミットの変更を「打ち消す」新しいコミットを作りましょう。\n該当区間の運行を止めるイメージです。\n元のコミットを残したまま、効果だけを取り消すコマンドは？",
+        "terminal": "$ git log --oneline\na3f8b2c 新しい信号システムを導入   ← これが原因\nb7c1d3e 駅舎の改修\nc2d4e6f 路線延伸",
+        "choices": [
+          { "label": "git revert a3f8b2c", "correct": true },
+          { "label": "git reset a3f8b2c", "correct": false },
+          { "label": "git delete a3f8b2c", "correct": false },
+          { "label": "git undo a3f8b2c", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git revert は指定コミットの変更を打ち消す新しいコミットを作ります。\n歴史を書き換えず（reset と違い）、安全に「取り消し」ができます。\n該当区間の運行を止める＝問題の変更を元に戻す、というイメージです。",
+          "ng": "git revert が正しいです。\nreset は歴史を書き換えますが、revert は打ち消しコミットを新しく作るため安全です。"
+        },
+        "graph": "ch7-revert"
+      },
+      {
+        "char": "建設局長",
+        "text": "問題のコミットは打ち消しました。\nしかし、そのコミットに含まれていた「改札機の更新」だけは\n別路線で必要です。\n特定のコミットの変更だけを別ブランチに適用するコマンドは？",
+        "terminal": "$ git log --oneline (feature/gate ブランチにて)\n→ a3f8b2c の中の改札機更新だけ欲しい",
+        "choices": [
+          { "label": "git cherry-pick a3f8b2c", "correct": true },
+          { "label": "git copy a3f8b2c", "correct": false },
+          { "label": "git apply a3f8b2c", "correct": false },
+          { "label": "git extract a3f8b2c", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git cherry-pick は「必要なコミットだけを摘み取って適用する」コマンドです。\n鉄道で言えば、運休になった列車の乗客を別の列車に振り替えるような操作です。",
+          "ng": "git cherry-pick が正しいです。\n「さくらんぼ摘み」のように、必要なコミットだけ選んで別ブランチに適用します。"
+        },
+        "graph": "ch7-cherry-pick"
+      },
+      {
+        "char": "現場監督",
+        "text": "さらに困ったことに、復旧作業中に\n間違えてブランチを削除してしまいました！\n消してしまった運行記録を復元する必要があります。\nGitの操作履歴を確認するコマンドは？",
+        "terminal": "$ git branch -D feature/emergency-fix\n→ ブランチを間違えて削除してしまった！",
+        "choices": [
+          { "label": "git reflog", "correct": true },
+          { "label": "git history", "correct": false },
+          { "label": "git recover", "correct": false },
+          { "label": "git undelete", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git reflog はGitのすべての操作履歴を表示します。\n「30分前のダイヤに戻す」ことができる強力なコマンドです。\n削除したブランチも reflog から復元できます。",
+          "ng": "git reflog が正しいです。\nreflog = reference log。HEAD の移動履歴をすべて記録しているため、消した変更も復元可能です。"
+        },
+        "graph": "ch7-reflog"
+      },
+      {
+        "char": "建設局長",
+        "text": "reflog から削除前のコミットハッシュを見つけました。\nこれで復元できます。\n\nさて、もう一つ。この障害が「いつから」起きていたか\n正確に特定したい場合があります。\n二分探索でバグの原因コミットを探すコマンドは？",
+        "terminal": "$ git reflog\na3f8b2c HEAD@{0}: branch -D: ...\nb7c1d3e HEAD@{1}: commit: ...\n→ git switch -c feature/emergency-fix a3f8b2c で復元！",
+        "choices": [
+          { "label": "git bisect", "correct": true },
+          { "label": "git search", "correct": false },
+          { "label": "git trace", "correct": false },
+          { "label": "git debug", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git bisect は二分探索でバグの原因コミットを自動的に特定します。\n「good」と「bad」を指定すると、Gitが効率的に犯人を絞り込みます。\n100個のコミットでも7回で見つかります。",
+          "ng": "git bisect が正しいです。\nbisect = 二分する。good/bad を教えると、Gitが自動的にバグを導入したコミットを特定します。"
+        },
+        "graph": "ch7-bisect"
+      },
+      {
+        "char": "建設局長",
+        "text": "事故は収束しました。\nしかし「二度と起こさないために」何をすべきでしょうか。\n\nここからは防災体制を整えましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-bisect",
+        "nextLabel": "防災体制を整える"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "安全運行のため、ブランチ保護ルールを設定しましょう。\nmain ブランチに直接 push できないようにする設定です。\n必要な保護ルールはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "プルリクエスト必須 + レビュー承認必須", "correct": true },
+          { "label": "push を完全に禁止する", "correct": false },
+          { "label": "main ブランチを削除する", "correct": false },
+          { "label": "全員に管理者権限を付与する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ プルリクエスト必須 + レビュー承認必須が標準的な保護ルールです。\n「一人で列車を発車させない。必ず車掌の確認を得る」という安全運行の原則です。",
+          "ng": "プルリクエスト必須 + レビュー承認必須が正しいです。\n完全禁止ではなく、レビューを通せば変更できる仕組みが実用的です。"
+        },
+        "graph": "ch7-protection"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "さらに、CI の必須チェックも追加しましょう。\nテストが通らないコードはマージできないようにします。\n\nそして覚えていますか？ 第1章で設定した .gitignore ——\nあの「立入禁止区域」が、実は重要な安全策だったのです。",
+        "terminal": "ブランチ保護ルール:\n✅ プルリクエスト必須\n✅ 1人以上のレビュー承認必須\n✅ CI ステータスチェック必須\n✅ force push 禁止",
+        "choices": null,
+        "graph": "ch7-protection",
+        "nextLabel": "伏線回収！"
+      },
+      {
+        "char": "建設局長",
+        "text": ".gitignore で .env ファイルを除外していたおかげで、\nAPIキーやパスワードがリポジトリに入らずに済みました。\nもし .gitignore がなければ、秘密情報が全世界に公開されていた可能性があります。\n\n第1章の「立入禁止区域」は、最も基本的で最も重要な安全策だったのです。\n\n最後の確認です。安全運行のために最も重要なことは？",
+        "terminal": null,
+        "choices": [
+          { "label": "予防策を最初から設定し、チームで運用する", "correct": true },
+          { "label": "事故が起きたら素早く対処する", "correct": false },
+          { "label": "高度なコマンドをたくさん覚える", "correct": false },
+          { "label": "一人で全部管理する", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 予防こそ最善の対策。\n.gitignore、ブランチ保護、CI必須化、レビュー文化——\nこれらを「最初から」「チームで」運用することが、安全運行の鍵です。",
+          "ng": "「予防策を最初から設定し、チームで運用する」が最も重要です。\n事後対処も大切ですが、事故を起こさない仕組みを作ることが最善です。"
+        },
+        "graph": "ch7-safe"
+      },
+      {
+        "char": "建設局長",
+        "text": "🎉 全路線開通おめでとうございます！ 🎉\n\ngit鉄道は、安全運行体制を確立し、\nすべての路線が安全に運行されています。\n\n第7章で学んだこと：\n— git revert で安全にコミットを打ち消す\n— git cherry-pick で必要な変更だけ適用\n— git reflog で操作履歴を確認・復元\n— git bisect で二分探索によるバグ特定\n— ブランチ保護ルールで安全運行体制を構築\n— .gitignore の伏線回収（最初の安全策が最も重要）\n\nあなたはGitの基礎から応用まで、\nすべてを学び終えました。\n安全運行をお祈りしています。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-safe",
+        "isLast": true,
+        "nextLabel": "全路線 開通！"
+      }
+    ]
   }
 ]
