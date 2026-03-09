@@ -689,5 +689,123 @@
         "nextLabel": "第5章 完了"
       }
     ]
+  },
+  {
+    "id": 5,
+    "title": "第6章",
+    "subtitle": "自動運行システムを導入しよう",
+    "description": "路線拡大で人手の限界に。CI/CDで自動信号システムを導入する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#00e676", "label": "CI/CD パイプライン" },
+      { "color": "#ff5252", "label": "テスト失敗" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "路線がどんどん拡大しています。\n駅が増え、ブランチが増え、プルリクエストも増え……\n人手でのチェックに限界が来ました。\n\n自動信号システム（CI/CD）を導入しましょう！",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-start",
+        "nextLabel": "自動化を始める"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "はじめまして。自動運行システムの担当です。\nCI とは、コードが変更されるたびに自動でテスト・ビルドを行う仕組みです。\nCI は何の略ですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "Continuous Integration（継続的インテグレーション）", "correct": true },
+          { "label": "Code Inspection（コード検査）", "correct": false },
+          { "label": "Commit Integration（コミット統合）", "correct": false },
+          { "label": "Central Infrastructure（中央基盤）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ CI = Continuous Integration（継続的インテグレーション）。\n列車が駅に入る前に、自動で安全チェックを行う仕組みです。\nコードの変更があるたびに自動でテストが走ります。",
+          "ng": "CI = Continuous Integration です。\n「継続的に統合（テスト・ビルド）する」仕組みで、変更のたびに自動で品質チェックが行われます。"
+        },
+        "graph": "ch6-ci-concept"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "GitHub で CI/CD を実現する標準ツールがあります。\nリポジトリに設定ファイルを置くだけで、\npush やプルリクエストのたびに自動でジョブが実行されます。\nこのツールの名前は？",
+        "terminal": null,
+        "choices": [
+          { "label": "GitHub Actions", "correct": true },
+          { "label": "GitHub Workflows", "correct": false },
+          { "label": "GitHub Pipelines", "correct": false },
+          { "label": "GitHub CI", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ GitHub Actions はGitHubの組み込みCI/CDツールです。\n.github/workflows/ ディレクトリにYAMLファイルを置いて設定します。",
+          "ng": "GitHub Actions が正しいです。\nGitHubに標準搭載されたCI/CDツールで、.github/workflows/ に設定ファイルを置きます。"
+        },
+        "graph": "ch6-ci-concept"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "GitHub Actions の設定ファイルを見てみましょう。\nワークフローファイルはどこに配置しますか？",
+        "terminal": "name: CI\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm test",
+        "choices": [
+          { "label": ".github/workflows/ci.yml", "correct": true },
+          { "label": ".ci/config.yml", "correct": false },
+          { "label": "ci.config.json", "correct": false },
+          { "label": ".github/ci.yml", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ .github/workflows/ ディレクトリに YAML ファイルを配置します。\non: [push, pull_request] で「push時とPR時に実行」と指定しています。",
+          "ng": ".github/workflows/ が正しい配置場所です。\nファイル名は自由ですが、ディレクトリは .github/workflows/ 固定です。"
+        },
+        "graph": "ch6-workflow"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "テストが自動で走るようになりました！\nしかし……テストが失敗しています。\nテストが失敗した場合、プルリクエストはどうなりますか？",
+        "terminal": "❌ CI: test — Failed\n  npm test\n  FAIL src/station.test.js\n  ✗ 駅名が正しく表示されること\n    Expected: \"東神奈川\" Received: \"仲木戸\"",
+        "choices": [
+          { "label": "マージがブロックされる（設定による）", "correct": true },
+          { "label": "自動でマージが取り消される", "correct": false },
+          { "label": "テスト結果は表示されるがマージには影響しない", "correct": false },
+          { "label": "自動でコードが修正される", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ ブランチ保護ルールで「CIが通らないとマージ禁止」に設定できます。\nテストが通らない列車は発車させない ＝ 品質を自動で守る仕組みです。",
+          "ng": "「マージがブロックされる」が正しいです。\nブランチ保護ルールの設定次第ですが、CI必須にすればテスト通過がマージの条件になります。"
+        },
+        "graph": "ch6-test-fail"
+      },
+      {
+        "char": "建設局長",
+        "text": "テストを修正して再 push しましょう。\nCIが通ったら次の段階、CD に進みます。\n\nCD = Continuous Delivery / Deployment（継続的デリバリー/デプロイ）。\n「検査通過後に自動で次の駅まで走らせる」＝ 自動デプロイのことです。",
+        "terminal": "✅ CI: test — Passed\n✅ CI: build — Passed\n✅ CI: deploy — Passed\n→ 本番環境に自動デプロイ完了",
+        "choices": null,
+        "graph": "ch6-cd-deploy",
+        "nextLabel": "自動運行開始！"
+      },
+      {
+        "char": "システムエンジニア",
+        "text": "CI/CD の全体像を確認しましょう。\n正しいパイプラインの流れはどれですか？",
+        "terminal": null,
+        "choices": [
+          { "label": "push → テスト → ビルド → デプロイ", "correct": true },
+          { "label": "デプロイ → テスト → ビルド → push", "correct": false },
+          { "label": "ビルド → push → テスト → デプロイ", "correct": false },
+          { "label": "テスト → push → デプロイ → ビルド", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ push → テスト → ビルド → デプロイ が標準的な流れです。\n列車を発車（push）→ 安全検査（テスト）→ 組立（ビルド）→ 運行開始（デプロイ）。",
+          "ng": "push → テスト → ビルド → デプロイ が正しい順序です。\nまずコードを送り、品質チェックを通過してから本番に反映します。"
+        },
+        "graph": "ch6-cd-deploy"
+      },
+      {
+        "char": "建設局長",
+        "text": "素晴らしい！自動運行システムが稼働を開始しました。\n\nここまでの第1〜5章では「駅と線路」（静的な構造物）を作ってきました。\n第6章で初めて、その上を電車が走り始めたのです。\n「静」から「動」への転換点です。\n\nあなたは今、こんなことを学びました：\n— CI（Continuous Integration）の概念\n— GitHub Actions でワークフローを設定\n— .github/workflows/ にYAMLファイルを配置\n— テスト失敗時のマージブロック\n— CD（Continuous Delivery/Deployment）の流れ\n\n最終章では……緊急事態が発生します。\nそして、安全運行のための最終防衛線を学びます。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-cd-deploy",
+        "isLast": true,
+        "nextLabel": "第6章 完了"
+      }
+    ]
   }
 ]

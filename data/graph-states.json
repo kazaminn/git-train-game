@@ -594,5 +594,102 @@
       { "x": 240, "y": 40, "text": "main (subtree統合後)", "color": "#00c8ff" },
       { "x": 160, "y": 240, "text": "他社路線", "color": "#e040fb" }
     ]
+  },
+
+  "ch6-start": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "駅A", "branch": "main" },
+      { "x": 200, "y": 80, "color": "#00c8ff", "label": "駅B", "branch": "main" },
+      { "x": 320, "y": 80, "color": "#00c8ff", "label": "駅C", "branch": "main" },
+      { "x": 440, "y": 80, "color": "#00c8ff", "label": "駅D", "branch": "main" },
+      { "x": 560, "y": 80, "color": "#00c8ff", "label": "駅E", "branch": "main", "glow": true },
+      { "x": 260, "y": 180, "color": "#ff9800", "label": "feature", "branch": "feature" },
+      { "x": 380, "y": 180, "color": "#ff9800", "label": "feature", "branch": "feature" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 200, "y2": 80, "color": "#00c8ff" },
+      { "x1": 200, "y1": 80, "x2": 320, "y2": 80, "color": "#00c8ff" },
+      { "x1": 320, "y1": 80, "x2": 440, "y2": 80, "color": "#00c8ff" },
+      { "x1": 440, "y1": 80, "x2": 560, "y2": 80, "color": "#00c8ff" },
+      { "x1": 200, "y1": 80, "x2": 260, "y2": 180, "color": "#ff9800" },
+      { "x1": 260, "y1": 180, "x2": 380, "y2": 180, "color": "#ff9800" }
+    ],
+    "labels": [
+      { "x": 320, "y": 40, "text": "main (拡大中…)", "color": "#00c8ff" }
+    ]
+  },
+
+  "ch6-ci-concept": {
+    "nodes": [
+      { "x": 80, "y": 120, "color": "#00c8ff", "label": "commit", "branch": "main" },
+      { "x": 220, "y": 120, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 360, "y": 120, "color": "#00e676", "label": "CI テスト", "branch": "ci", "glow": true },
+      { "x": 500, "y": 120, "color": "#00e676", "label": "CI ビルド", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 120, "x2": 220, "y2": 120, "color": "#00c8ff" },
+      { "x1": 220, "y1": 120, "x2": 360, "y2": 120, "color": "#00e676" },
+      { "x1": 360, "y1": 120, "x2": 500, "y2": 120, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 150, "y": 80, "text": "開発者の作業", "color": "#00c8ff" },
+      { "x": 430, "y": 80, "text": "CI（自動）", "color": "#00e676" }
+    ]
+  },
+
+  "ch6-workflow": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "checkout", "branch": "ci" },
+      { "x": 360, "y": 80, "color": "#00e676", "label": "npm test", "branch": "ci", "glow": true },
+      { "x": 500, "y": 80, "color": "#00e676", "label": "完了", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#00e676" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": ".github/workflows/ci.yml", "color": "#00e676" }
+    ]
+  },
+
+  "ch6-test-fail": {
+    "nodes": [
+      { "x": 80, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 220, "y": 80, "color": "#00e676", "label": "checkout", "branch": "ci" },
+      { "x": 360, "y": 80, "color": "#ff5252", "label": "テスト失敗", "branch": "ci", "glow": true },
+      { "x": 500, "y": 80, "color": "#ff5252", "label": "マージ禁止", "branch": "ci" }
+    ],
+    "lines": [
+      { "x1": 80, "y1": 80, "x2": 220, "y2": 80, "color": "#00e676" },
+      { "x1": 220, "y1": 80, "x2": 360, "y2": 80, "color": "#ff5252" },
+      { "x1": 360, "y1": 80, "x2": 500, "y2": 80, "color": "#ff5252", "dashed": true }
+    ],
+    "labels": [
+      { "x": 290, "y": 40, "text": "CI パイプライン", "color": "#ff5252" },
+      { "x": 500, "y": 120, "text": "❌ BLOCKED", "color": "#ff5252" }
+    ]
+  },
+
+  "ch6-cd-deploy": {
+    "nodes": [
+      { "x": 60, "y": 80, "color": "#00c8ff", "label": "push", "branch": "main" },
+      { "x": 180, "y": 80, "color": "#00e676", "label": "テスト", "branch": "ci" },
+      { "x": 300, "y": 80, "color": "#00e676", "label": "ビルド", "branch": "ci" },
+      { "x": 420, "y": 80, "color": "#00e676", "label": "デプロイ", "branch": "cd", "glow": true },
+      { "x": 540, "y": 80, "color": "#00e676", "label": "本番稼働", "branch": "cd" }
+    ],
+    "lines": [
+      { "x1": 60, "y1": 80, "x2": 180, "y2": 80, "color": "#00e676" },
+      { "x1": 180, "y1": 80, "x2": 300, "y2": 80, "color": "#00e676" },
+      { "x1": 300, "y1": 80, "x2": 420, "y2": 80, "color": "#00e676" },
+      { "x1": 420, "y1": 80, "x2": 540, "y2": 80, "color": "#00e676" }
+    ],
+    "labels": [
+      { "x": 180, "y": 40, "text": "CI", "color": "#00e676" },
+      { "x": 420, "y": 40, "text": "CD", "color": "#00e676" },
+      { "x": 540, "y": 120, "text": "✅ LIVE", "color": "#00e676" }
+    ]
   }
 }
