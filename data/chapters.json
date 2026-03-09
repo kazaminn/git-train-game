@@ -154,5 +154,146 @@
         "nextLabel": "第1章 完了"
       }
     ]
+  },
+  {
+    "id": 1,
+    "title": "第2章",
+    "subtitle": "鉄道管理局の承認を得よう",
+    "description": "自社線を正式に開通させるため、鉄道管理局（GitHub）へ申請する。",
+    "legend": [
+      { "color": "#00c8ff", "label": "main 本線" },
+      { "color": "#a855f7", "label": "origin/main 管理局" }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "第一号駅が完成しました。しかし、自社の路線だけでは正式な鉄道とは認められません。\n鉄道管理局（リモートリポジトリ）に路線図を提出し、認可を受ける必要があります。\nまずは管理局との「直通運転協定」を結びましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-local-only",
+        "nextLabel": "管理局へ向かう"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道管理局との接続を確立します。\n管理局のアドレス（URL）を登録して、直通運転協定を結ぶコマンドは？",
+        "terminal": "管理局アドレス:\nhttps://github.com/your-company/train-line.git",
+        "choices": [
+          { "label": "git remote add origin https://github.com/...", "correct": true },
+          { "label": "git connect origin https://github.com/...", "correct": false },
+          { "label": "git link origin https://github.com/...", "correct": false },
+          { "label": "git register origin https://github.com/...", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git remote add origin で管理局との直通運転協定が結ばれました。\n「origin」は直通先の名前です。慣例として最初のリモートに origin と名付けます。",
+          "ng": "git remote add origin URL が正しいです。\nremote add で「直通先」を登録します。origin は直通先の名前（ニックネーム）です。"
+        },
+        "graph": "ch2-remote-added"
+      },
+      {
+        "char": "建設局長",
+        "text": "直通運転協定が成立しました！\nでもまだ管理局には、あなたの路線情報が届いていません。\n自社のダイヤ（コミット履歴）を管理局に送る必要があります。\nこれを「ダイヤの提出」と呼びましょう。",
+        "terminal": "$ git remote -v\norigin  https://github.com/your-company/train-line.git (fetch)\norigin  https://github.com/your-company/train-line.git (push)",
+        "choices": null,
+        "graph": "ch2-remote-added",
+        "nextLabel": "ダイヤを提出する"
+      },
+      {
+        "char": "建設局長",
+        "text": "自社のダイヤ（コミット履歴）を管理局に提出します。\n本線（main）のダイヤを origin に送るコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git push origin main", "correct": true },
+          { "label": "git send origin main", "correct": false },
+          { "label": "git upload origin main", "correct": false },
+          { "label": "git deploy origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git push origin main で、本線のダイヤが管理局に提出されました。\npush は「押し出す」＝自分の変更を相手に送ること。origin が送り先、main が送る路線です。",
+          "ng": "git push origin main が正しいです。\npush は自分のコミットをリモートに送るコマンドです。"
+        },
+        "graph": "ch2-pushed"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "管理局の審査官です。ダイヤは受理しました。\nしかし、正式な開通認可を得るには「運行申請書」を提出してもらう必要があります。\nGitHubでは、これを「プルリクエスト」と呼びます。\n変更内容を説明して、レビューを依頼する仕組みです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-pushed",
+        "nextLabel": "運行申請書を出す"
+      },
+      {
+        "char": "建設局長",
+        "text": "管理局に正式な運行申請を出しましょう。\n開発用ブランチから main へのマージを申請する、この仕組みの名前は？",
+        "terminal": null,
+        "choices": [
+          { "label": "Pull Request（プルリクエスト）", "correct": true },
+          { "label": "Merge Request（マージリクエスト）", "correct": false },
+          { "label": "Push Request（プッシュリクエスト）", "correct": false },
+          { "label": "Review Request（レビューリクエスト）", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ Pull Request（PR）は、変更の取り込みを依頼する仕組みです。\n「自分の変更をpull（取り込んで）ください」というお願い。運行申請書のようなものです。\n※ GitLabでは Merge Request と呼びますが、仕組みは同じです。",
+          "ng": "GitHubでは Pull Request（PR）と呼びます。\n「この変更を取り込んでほしい」という依頼の仕組みです。\n※ GitLabでは Merge Request ですが、GitHubでは Pull Request が正式名称です。"
+        },
+        "graph": "ch2-pr-created"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "運行申請書（プルリクエスト）を受理しました。\nこれからレビューを行います。\n\n……確認しました。1点指摘があります。\nダイヤの説明文（コミットメッセージ）に改善の余地があります。\n修正してから再提出してください。",
+        "terminal": "Review comment:\n「コミットメッセージに具体的な変更内容を\n 記載してください。\n 例: feat: 駅前広場と改札口を追加」",
+        "choices": null,
+        "graph": "ch2-review",
+        "nextLabel": "修正する"
+      },
+      {
+        "char": "現場監督",
+        "text": "審査官の指摘を受けて修正しました。\n修正をコミットしてプッシュすれば、プルリクエストに自動で反映されます。\n修正後の変更を管理局に再提出するコマンドは？",
+        "terminal": "$ git add .\n$ git commit -m \"fix: コミットメッセージを改善\"",
+        "choices": [
+          { "label": "git push origin main", "correct": true },
+          { "label": "git push --force origin main", "correct": false },
+          { "label": "git pr update", "correct": false },
+          { "label": "git resubmit origin main", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ 修正を push すれば、PRに自動反映されます。\n新しいPRを作り直す必要はありません。同じブランチに push するだけです。",
+          "ng": "git push origin main が正しいです。\n同じブランチに push すれば、既存のPRに修正が自動反映されます。"
+        },
+        "graph": "ch2-review-fixed"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "修正を確認しました。問題ありません。\nプルリクエストを承認（Approve）します。\nマージを実行して、正式に路線を開通させましょう！",
+        "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+        "choices": null,
+        "graph": "ch2-pr-merged",
+        "nextLabel": "マージを実行"
+      },
+      {
+        "char": "建設局長",
+        "text": "路線が正式に開通しました！\n最後に、この記念すべき開通日に「タグ」を打ちましょう。\nリリースバージョンを記録するコマンドは？",
+        "terminal": null,
+        "choices": [
+          { "label": "git tag v1.0", "correct": true },
+          { "label": "git mark v1.0", "correct": false },
+          { "label": "git label v1.0", "correct": false },
+          { "label": "git version v1.0", "correct": false }
+        ],
+        "feedback": {
+          "ok": "正解！ git tag v1.0 で開通記念のタグが付きました。\nタグはコミットに「名札」を付ける機能です。リリースや重要なマイルストーンの目印になります。",
+          "ng": "git tag v1.0 が正しいです。\nタグは特定のコミットに名前を付ける機能です。バージョン管理に使います。"
+        },
+        "graph": "ch2-tagged"
+      },
+      {
+        "char": "建設局長",
+        "text": "おめでとうございます！\ngit鉄道は鉄道管理局の認可を受け、正式に開通しました！\n\nあなたは今、こんなことを学びました：\n— git remote add でリモートリポジトリを登録\n— git push で変更をリモートに送信\n— Pull Request で変更のレビューを依頼\n— レビュー指摘を修正して再push\n— git tag でリリースバージョンを記録\n\n次の章では、路線を延伸して新しい駅を作ります。\nしかし……駅名をめぐって、思わぬ騒動が起きるようです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-tagged",
+        "isLast": true,
+        "nextLabel": "第2章 完了"
+      }
+    ]
   }
 ]
