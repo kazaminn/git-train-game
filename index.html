@@ -113,6 +113,11 @@
       min-width: 360px;
       max-width: 480px;
     }
+    .story-panel.collapsed {
+      flex: 0 0 auto;
+      min-width: 0;
+      max-width: none;
+    }
   }
 
   /* ========== GRAPH PANEL ========== */
@@ -143,7 +148,7 @@
   }
 
   .graph-toggle {
-    display: none;
+    display: block;
     background: none;
     border: 1px solid var(--border);
     color: var(--dim);
@@ -154,12 +159,17 @@
     font-family: 'Share Tech Mono', monospace;
   }
 
+  /* 折りたたみ時: グラフ内容を非表示 */
+  .graph-panel.collapsed .graph-wrap,
+  .graph-panel.collapsed #legend { display: none; }
+
   @media (max-width: 767px) {
     .graph-panel { max-height: 200px; }
     .graph-panel.collapsed { max-height: 40px; overflow: hidden; }
-    .graph-panel.collapsed .graph-wrap,
-    .graph-panel.collapsed #legend { display: none; }
-    .graph-toggle { display: block; }
+  }
+
+  @media (min-width: 768px) {
+    .graph-panel.collapsed { flex: 0 0 auto; }
   }
 
   .graph-wrap {
@@ -197,10 +207,49 @@
     min-height: 0;
   }
 
-  .scene-box {
-    padding: 20px;
+  .story-panel.collapsed .story-scroll { display: none; }
+
+  .story-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    flex-shrink: 0;
+  }
+
+  .story-title {
+    font-size: 0.65rem;
+    color: var(--dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .story-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  /* 問題文＋選択肢をまとめてスクロール */
+  .story-scroll {
     flex: 1;
     overflow-y: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scene-box {
+    padding: 20px;
     border-bottom: 1px solid var(--border);
   }
 
@@ -533,15 +582,21 @@
   </div>
 
   <!-- ストーリー -->
-  <div class="story-panel">
-    <div class="scene-box">
-      <div class="scene-character" id="scene-char"></div>
-      <div class="scene-text" id="scene-text"></div>
-      <div class="terminal-output" id="terminal-out"></div>
+  <div class="story-panel" id="story-panel">
+    <div class="story-header">
+      <div class="story-title">問題</div>
+      <button class="story-toggle" onclick="toggleStory()">表示/非表示</button>
     </div>
-    <div class="choices-box" id="choices-box"></div>
-    <div class="feedback-box" id="feedback-box"></div>
-    <button class="next-btn" id="next-btn">次の駅へ</button>
+    <div class="story-scroll">
+      <div class="scene-box">
+        <div class="scene-character" id="scene-char"></div>
+        <div class="scene-text" id="scene-text"></div>
+        <div class="terminal-output" id="terminal-out"></div>
+      </div>
+      <div class="choices-box" id="choices-box"></div>
+      <div class="feedback-box" id="feedback-box"></div>
+      <button class="next-btn" id="next-btn">次の駅へ</button>
+    </div>
   </div>
 </div>
 
@@ -551,6 +606,9 @@
 <script>
   function toggleGraph() {
     document.getElementById('graph-panel').classList.toggle('collapsed');
+  }
+  function toggleStory() {
+    document.getElementById('story-panel').classList.toggle('collapsed');
   }
 </script>
 </body>
