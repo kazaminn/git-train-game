@@ -1,0 +1,82 @@
+{
+  "company": {
+    "gr": "GR（Git鉄道）",
+    "marinaRailway": "横浜マリン鉄道",
+    "authority": "鉄道管理局"
+  },
+  "platforms": {
+    "railHub": {
+      "name": "RailHub",
+      "realWorld": "GitHub",
+      "description": "全路線の公式ネットワーク。ここに登録すると電車が走れるようになる。",
+      "note": "コマンド上のremote名はoriginのまま使用"
+    },
+    "local": {
+      "name": "GR（ローカル）",
+      "description": "会社の設計室。ここで路線を設計・記録する。"
+    }
+  },
+  "characters": {
+    "player": {
+      "department": "路線開発部",
+      "defaultName": "あなた"
+    },
+    "constructionChief": {
+      "name": "建設局長",
+      "role": "上司"
+    },
+    "siteManager": {
+      "name": "現場監督",
+      "role": "現場の責任者"
+    },
+    "authorityInspector": {
+      "name": "管理局審査官",
+      "role": "鉄道管理局の審査担当"
+    },
+    "residentRep": {
+      "name": "地元住民代表",
+      "role": "沿線住民の代表"
+    },
+    "president": {
+      "name": "社長",
+      "role": "GR社長"
+    },
+    "tanaka": {
+      "name": "田中くん",
+      "role": "路線開発部の新人（Z世代）",
+      "appearsFrom": "第6章"
+    },
+    "sato": {
+      "name": "佐藤さん",
+      "role": "路線開発部のベテラン（インターネット老人会）",
+      "appearsFrom": "第6章"
+    }
+  },
+  "stations": {
+    "mainLine": [
+      { "name": "新橋", "order": 1, "appearsIn": "第1章" },
+      { "name": "品川", "order": 2, "appearsIn": "第1章" },
+      { "name": "川崎", "order": 3, "appearsIn": "第1章" },
+      { "name": "横浜", "order": 4, "appearsIn": "第3章", "note": "後に桜木町に改称" },
+      { "name": "桜木町", "order": 4, "appearsIn": "第4章", "note": "初代横浜駅、1915/8/15改称" },
+      { "name": "横浜（二代目）", "order": 5, "appearsIn": "第4章", "note": "1915/8/15開業" },
+      { "name": "関内", "order": 6, "appearsIn": "第5章", "note": "横浜スタジアム最寄" }
+    ],
+    "minatomiraiLine": [
+      { "name": "みなとみらい", "order": 1, "appearsIn": "第5章" },
+      { "name": "馬車道", "order": 2, "appearsIn": "第5章" },
+      { "name": "日本大通り", "order": 3, "appearsIn": "第5章" },
+      { "name": "元町・中華街", "order": 4, "appearsIn": "第5章" }
+    ]
+  },
+  "chapters": [
+    { "id": 1, "title": "git鉄道をつくろう" },
+    { "id": 2, "title": "管理局の承認を得よう" },
+    { "id": 3, "title": "新しい駅を作ろう" },
+    { "id": 4, "title": "横浜駅移転計画" },
+    { "id": 5, "title": "みなとみらい線を迎え入れよう" },
+    { "id": 6, "title": "開発環境を整えよう" },
+    { "id": 7, "title": "自動化しよう" },
+    { "id": 8, "title": "一晩で全駅にホームドアを！" }
+  ]
+}
