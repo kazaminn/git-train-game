@@ -1,0 +1,159 @@
+{
+  "id": 7,
+  "title": "第8章",
+  "subtitle": "一晩で全駅にホームドアを！",
+  "description": "深夜、全駅に一斉ホームドアを設置する。全駅の検測が通らなければ、始発は出せない。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#ff9800", "label": "各駅 設置作業" },
+    { "color": "#00e676", "label": "検測 通過" },
+    { "color": "#ff5252", "label": "⚠ 緊急対応" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "今夜、横浜駅と桜木町駅に同時にホームドアを設置する。\n隣り合った2駅だが、それぞれ別のチームで並行して進めたい。\n\n終電から始発まで、約5時間。\n両駅の設置が完了して検測を通過しなければ、始発は出せない。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "nextLabel": "作戦を聞く"
+    },
+    {
+      "char": "建設局長",
+      "text": "通常、作業ブランチは1つだ。\nしかし今夜は横浜・桜木町を同時並行で進めたい。\n\nGitには、1つのリポジトリで複数の作業ディレクトリを同時に持てる仕組みがある。\nどのコマンドを使う？",
+      "terminal": null,
+      "choices": [
+        { "label": "git worktree add", "correct": true },
+        { "label": "git branch --parallel", "correct": false },
+        { "label": "git clone --multi", "correct": false },
+        { "label": "git checkout --all", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git worktree add で、同じリポジトリを複数の場所に展開できる。\nそれぞれ別のブランチで独立して作業できる。\nリポジトリを丸ごとcloneしなくていいのが利点だ。",
+        "ng": "git worktree add が正しい。同じリポジトリで複数の作業ディレクトリを持てる。別々のブランチを同時に作業できる。"
+      },
+      "graph": "ch8-worktree"
+    },
+    {
+      "char": "現場監督",
+      "text": "全6駅の作業ディレクトリを展開しました。\nそれぞれ独立したブランチで作業を進めます。",
+      "terminal": "$ git worktree add ../work-yokohama feature/door-yokohama\n$ git worktree add ../work-sakuragicho feature/door-sakuragicho\n\n$ git worktree list\n/repo               main\n/work-yokohama      feature/door-yokohama\n/work-sakuragicho   feature/door-sakuragicho",
+      "choices": null,
+      "graph": "ch8-worktree",
+      "nextLabel": "作業開始"
+    },
+    {
+      "char": "現場監督",
+      "text": "2チームが並行して作業を進めている。\n桜木町駅の設置が完了した。横浜駅はまだ作業中だ。",
+      "terminal": "work-sakuragicho $ git commit -m \"feat: 桜木町駅 ホームドアを設置\"\nwork-yokohama    $ # 作業中……",
+      "choices": null,
+      "graph": "ch8-worktree",
+      "nextLabel": "作業継続中……"
+    },
+    {
+      "char": "現場監督",
+      "text": "横浜駅の作業中です。ホームドアの取り付けを進めています……",
+      "terminal": "work-yokohama $ # ホームドア設置中（未コミット）\nwork-yokohama $ git status\nChanges not staged for commit:\n  modified: platform_yokohama.json\n  modified: door_sensor_yokohama.json",
+      "choices": null,
+      "graph": "ch8-worktree",
+      "nextLabel": "そのとき……"
+    },
+    {
+      "char": "建設局長",
+      "text": "横浜駅の作業中に連絡が入った。\nホームドアのセンサー仕様が変更になった。\n最新の仕様書を取り込んでから作業を再開してほしい。",
+      "terminal": "⚠ 仕様変更通知\n  door_sensor_spec v2.1 → v2.2\n  センサーの取り付け位置が変更",
+      "choices": null,
+      "graph": "ch8-stash",
+      "nextLabel": "どうする？"
+    },
+    {
+      "char": "現場監督",
+      "text": "横浜駅の作業が途中だ。コミットもできない状態で最新仕様書を取り込めない。\n作業中の変更を一時退避させるコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git stash", "correct": true },
+        { "label": "git save", "correct": false },
+        { "label": "git pause", "correct": false },
+        { "label": "git temp-commit", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git stash でコミットしていない変更を一時的に退避できる。\n作業ディレクトリがきれいな状態になるので、別の作業に切り替えられる。",
+        "ng": "git stash が正しい。未コミットの変更を一時退避して、作業ディレクトリをきれいにできる。"
+      },
+      "graph": "ch8-stash"
+    },
+    {
+      "char": "現場監督",
+      "text": "横浜駅の作業を退避しました。\n最新の仕様書を取り込みます。",
+      "terminal": "work-yokohama $ git stash\nSaved working directory and index state\nWIP on feature/door-yokohama: 「ホームドア設置中」\n\nwork-yokohama $ git pull origin feature/door-yokohama\n# 最新仕様書（door_sensor_spec v2.2）を取り込んだ",
+      "choices": null,
+      "graph": "ch8-stash",
+      "nextLabel": "安全確認完了"
+    },
+    {
+      "char": "現場監督",
+      "text": "最新仕様書の取り込みが完了しました。\n退避していた作業を復元して、新しい仕様で続きをやりましょう。\n退避した変更を復元するコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git stash pop", "correct": true },
+        { "label": "git stash restore", "correct": false },
+        { "label": "git stash resume", "correct": false },
+        { "label": "git unstash", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git stash pop で退避していた変更を復元できる。\nスタックに積まれた変更を取り出すイメージだ。",
+        "ng": "git stash pop が正しい。退避した変更をスタックから取り出して復元する。"
+      },
+      "graph": "ch8-stash"
+    },
+    {
+      "char": "現場監督",
+      "text": "作業が再開できた。横浜駅のホームドア設置を完了させよう。",
+      "terminal": "work-yokohama $ git stash pop\nOn branch feature/door-yokohama\nChanges not staged for commit:\n  modified: platform_yokohama.json\n  modified: door_sensor_yokohama.json\n\nwork-yokohama $ git commit -m \"feat: 横浜駅 ホームドアを設置\"",
+      "choices": null,
+      "graph": "ch8-stash",
+      "nextLabel": "残りの駅も完了させる"
+    },
+    {
+      "char": "現場監督",
+      "text": "横浜駅のホームドア設置も完了しました。\n両駅の設置完了です。\n\n各ブランチからPRを出して、検測を受けましょう。",
+      "terminal": "work-yokohama $ git commit -m \"feat: 横浜駅 ホームドアを設置\"\n\n横浜・桜木町 設置完了\n→ 各ブランチからPRを提出",
+      "choices": null,
+      "graph": "ch8-testing",
+      "nextLabel": "検測を受ける"
+    },
+    {
+      "char": "現場監督",
+      "text": "全6駅の検測が完了しました。",
+      "terminal": "✓ 横浜駅   ホームドア検測: 通過\n✓ 桜木町駅 ホームドア検測: 通過\n\n両駅 通過",
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "管理局の承認へ"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "両駅の検測結果を確認しました。問題ありません。\n2件、承認します。",
+      "terminal": "✓ 2PR 承認\n→ マージ実行",
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "マージ"
+    },
+    {
+      "char": "建設局長",
+      "text": "横浜・桜木町へのホームドア設置、完了。\n始発列車、出発。",
+      "terminal": "06:00 桜木町発 横浜行き\n横浜・桜木町 ホームドア稼働中\n→ 定刻通り出発",
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "エピローグへ"
+    },
+    {
+      "char": "建設局長",
+      "text": "git init から始まった路線が、ここまで育った。\n\n今章で学んだこと：\n― git worktree add で複数駅を同時並行作業\n― git stash で作業中の変更を一時退避\n― git stash pop で退避した変更を復元\n\nGit鉄道、全線開通。",
+      "terminal": "$ git log --oneline\n新橋駅 開業\n品川駅 開業\n川崎駅 開業\n横浜駅 開業（初代）\n桜木町駅 改称\n横浜駅 開業（二代目）\n関内駅 開業\n全駅 ホームドア設置完了",
+      "choices": null,
+      "graph": "ch8-complete",
+      "isLast": true,
+      "nextLabel": "完走！"
+    }
+  ]
+}

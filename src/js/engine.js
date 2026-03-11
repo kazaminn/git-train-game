@@ -17,7 +17,7 @@ const Engine = (() => {
   async function loadData() {
     const [chapRes, graphRes] = await Promise.all([
       fetch('data/chapters.json'),
-      fetch('data/graph-states.json')
+      fetch('data/graph-states.json'),
     ]);
     chapters = await chapRes.json();
     const graphStates = await graphRes.json();
@@ -29,18 +29,26 @@ const Engine = (() => {
     const data = { chapterIdx, sceneIdx, correctCount, totalQuestions };
     try {
       localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-    } catch (e) { /* 無視 */ }
+    } catch (e) {
+      /* 無視 */
+    }
   }
 
   function loadSave() {
     try {
       const raw = localStorage.getItem(SAVE_KEY);
       return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
+    } catch (e) {
+      return null;
+    }
   }
 
   function clearSave() {
-    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* 無視 */ }
+    try {
+      localStorage.removeItem(SAVE_KEY);
+    } catch (e) {
+      /* 無視 */
+    }
   }
 
   function hasSave() {
@@ -74,8 +82,12 @@ const Engine = (() => {
     start(false);
   }
 
-  function currentChapter() { return chapters[chapterIdx]; }
-  function currentScene() { return currentChapter().scenes[sceneIdx]; }
+  function currentChapter() {
+    return chapters[chapterIdx];
+  }
+  function currentScene() {
+    return currentChapter().scenes[sceneIdx];
+  }
 
   function totalSceneCount() {
     return chapters.reduce((sum, ch) => sum + ch.scenes.length, 0);
@@ -99,9 +111,14 @@ const Engine = (() => {
     answered = false;
 
     if (scene.choices) {
-      totalQuestions = Math.max(totalQuestions,
-        chapters.slice(0, chapterIdx).reduce((s, c) => s + c.scenes.filter(sc => sc.choices).length, 0)
-        + currentChapter().scenes.slice(0, sceneIdx + 1).filter(sc => sc.choices).length
+      totalQuestions = Math.max(
+        totalQuestions,
+        chapters
+          .slice(0, chapterIdx)
+          .reduce((s, c) => s + c.scenes.filter((sc) => sc.choices).length, 0) +
+          currentChapter()
+            .scenes.slice(0, sceneIdx + 1)
+            .filter((sc) => sc.choices).length
       );
     }
 
@@ -113,7 +130,7 @@ const Engine = (() => {
     answered = true;
 
     const scene = currentScene();
-    const correctIdx = scene.choices.findIndex(c => c.correct);
+    const correctIdx = scene.choices.findIndex((c) => c.correct);
 
     if (choice.correct) correctCount++;
 
@@ -150,7 +167,10 @@ const Engine = (() => {
 
   function showComplete() {
     clearSave();
-    const total = chapters.reduce((s, c) => s + c.scenes.filter(sc => sc.choices).length, 0);
+    const total = chapters.reduce(
+      (s, c) => s + c.scenes.filter((sc) => sc.choices).length,
+      0
+    );
     UI.showClear(correctCount, total);
   }
 

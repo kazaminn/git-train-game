@@ -1,0 +1,237 @@
+{
+  "id": 0,
+  "title": "第1章",
+  "subtitle": "git鉄道をつくろう",
+  "description": "新橋から川崎まで、最初の路線を開通させよう。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#ff9800", "label": "build/station-3 工事支線" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "我が社、GRはついに鉄道事業に参入することになった！\nあなたには路線開発部の担当者として、新路線の建設を指揮してもらう。\nまずは建設用地を確保するところから始めよう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "empty",
+      "nextLabel": "建設を始める"
+    },
+    {
+      "char": "建設局長",
+      "text": "鉄道を建設するには、まず用地を確保しなければならない。\nGitでは、この『建設用地』のことをリポジトリと呼ぶ。\nどのコマンドで用地を確保する？",
+      "terminal": null,
+      "choices": [
+        { "label": "git init", "correct": true },
+        { "label": "git start", "correct": false },
+        { "label": "git new", "correct": false },
+        { "label": "git create", "correct": false }
+      ],
+      "feedback": {
+        "ok": "用地確保完了！ git init でリポジトリが作られた。\nここがすべての記録の拠点になる。",
+        "ng": "git init が正しい。initialize（初期化）の略で、更地を整備するイメージだ。"
+      },
+      "graph": "ch1-init"
+    },
+    {
+      "char": "現場監督",
+      "text": "用地が確保できました！さっそく新橋駅の設計図が届いています。\nまずはこれを建設予定リストに登録してください。",
+      "terminal": "$ ls\nstation_shimbashi.html",
+      "choices": [
+        { "label": "git add station_shimbashi.html", "correct": true },
+        { "label": "git stage station_shimbashi.html", "correct": false },
+        { "label": "git register station_shimbashi.html", "correct": false },
+        { "label": "git commit station_shimbashi.html", "correct": false }
+      ],
+      "feedback": {
+        "ok": "登録完了。git add でファイルを建設予定リスト（ステージングエリア）に乗せた。\nまだ建設は始まっていない。『着工予定』の状態だ。",
+        "ng": "git add が正しい。コミットの前に、まず add で予定リストに登録する。"
+      },
+      "graph": "ch1-staging"
+    },
+    {
+      "char": "現場監督",
+      "text": "予定リストの確認が取れました。いよいよ着工です！\n記念すべき新橋駅、完成の記録を残しましょう。",
+      "terminal": "$ git status\nChanges to be committed:\n  new file: station_shimbashi.html",
+      "choices": [
+        { "label": "git commit -m \"新橋駅 完成\"", "correct": true },
+        { "label": "git save -m \"新橋駅 完成\"", "correct": false },
+        { "label": "git push -m \"新橋駅 完成\"", "correct": false },
+        { "label": "git build -m \"新橋駅 完成\"", "correct": false }
+      ],
+      "feedback": {
+        "ok": "新橋駅、完成！\ngit commit -m でメッセージ付きの記録を残した。これが路線図の最初の駅になる。",
+        "ng": "git commit -m \"メッセージ\" が正しい。完成記録には必ずメッセージを添えよう。"
+      },
+      "graph": "ch1-first-commit"
+    },
+    {
+      "char": "建設局長",
+      "text": "新橋駅の完成おめでとう。路線はまだ一駅だけだ。\n次は品川駅も建設して、路線を伸ばしていこう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch1-first-commit",
+      "nextLabel": "次の駅を建設する"
+    },
+    {
+      "char": "現場監督",
+      "text": "品川駅の設計図が届きました。登録してください。",
+      "terminal": "$ ls\nstation_shinagawa.html",
+      "choices": [
+        { "label": "git add station_shinagawa.html", "correct": true },
+        { "label": "git add .", "correct": false },
+        { "label": "git stage station_shinagawa.html", "correct": false },
+        { "label": "git register station_shinagawa.html", "correct": false }
+      ],
+      "feedback": {
+        "ok": "登録完了。今回は特定のファイルを指定して add した。\n必要なファイルだけ選んで登録することもできる。",
+        "ng": "git add station_shinagawa.html が正しい。ファイル名を指定して個別に登録できる。"
+      },
+      "graph": "ch1-staging"
+    },
+    {
+      "char": "現場監督",
+      "text": "品川駅も完成させましょう！",
+      "terminal": "$ git status\nChanges to be committed:\n  new file: station_shinagawa.html",
+      "choices": [
+        { "label": "git commit -m \"品川駅 完成\"", "correct": true },
+        { "label": "git commit \"品川駅 完成\"", "correct": false },
+        { "label": "git save -m \"品川駅 完成\"", "correct": false },
+        { "label": "git push -m \"品川駅 完成\"", "correct": false }
+      ],
+      "feedback": {
+        "ok": "品川駅、完成！路線が一駅分伸びた。\nコミットのたびに、路線図に新しい駅が刻まれていく。",
+        "ng": "git commit -m \"メッセージ\" が正しい。-m を忘れずに。"
+      },
+      "graph": "ch1-second-commit"
+    },
+    {
+      "char": "建設局長",
+      "text": "新橋から品川まで、2つの駅が繋がった。\n次は川崎駅だ。ただし、川崎駅の建設地は少し遠い。\nあなたを現地に派遣しよう。\n本線の運行を止めずに現地で工事できるよう、専用の作業支線を引く。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch1-second-commit",
+      "nextLabel": "現地に向かう"
+    },
+    {
+      "char": "現場監督",
+      "text": "現地作業用の支線を作って、そこに移動してください。\n支線を作りながら同時に移動するコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git switch -c build/station-kawasaki", "correct": true },
+        { "label": "git branch build/station-kawasaki", "correct": false },
+        { "label": "git checkout kawasaki", "correct": false },
+        { "label": "git new-branch build/station-kawasaki", "correct": false }
+      ],
+      "feedback": {
+        "ok": "支線に移動完了。git switch -c で支線を作り、同時にそこへ移動した。\n-c は create の略。本線はそのまま、現地での工事が始まる。",
+        "ng": "git switch -c が正しい。-c で支線を作りつつ、同時にそこへ移動できる。"
+      },
+      "graph": "ch1-branch-created"
+    },
+    {
+      "char": "現場監督",
+      "text": "現地に到着しました。まず線路を敷きましょう。\n設計図を登録して、記録を残してください。",
+      "terminal": "$ ls\ntrack_kawasaki.json",
+      "choices": [
+        { "label": "git add track_kawasaki.json", "correct": true },
+        { "label": "git add .", "correct": false },
+        { "label": "git stage track_kawasaki.json", "correct": false },
+        { "label": "git commit track_kawasaki.json", "correct": false }
+      ],
+      "feedback": {
+        "ok": "線路の設計図を登録。続けてコミットしよう。",
+        "ng": "git add track_kawasaki.json が正しい。まず add で予定リストに登録する。"
+      },
+      "graph": "ch1-branch-created"
+    },
+    {
+      "char": "現場監督",
+      "text": "線路の設計図を登録しました。記録を残しましょう。",
+      "terminal": "$ git status\nChanges to be committed:\n  new file: track_kawasaki.json",
+      "choices": [
+        { "label": "git commit -m \"川崎駅へ 線路を敷設\"", "correct": true },
+        { "label": "git commit \"線路を敷設\"", "correct": false },
+        { "label": "git save -m \"線路を敷設\"", "correct": false },
+        { "label": "git push -m \"線路を敷設\"", "correct": false }
+      ],
+      "feedback": {
+        "ok": "線路の敷設完了。現地作業の記録が一つ刻まれた。",
+        "ng": "git commit -m が正しい。"
+      },
+      "graph": "ch1-branch-commits"
+    },
+    {
+      "char": "現場監督",
+      "text": "次は駅舎の建設です。今回は設計図が2枚あります。\nまとめて登録してみましょう。",
+      "terminal": "$ ls\nstation_kawasaki.html\nstyle_kawasaki.css",
+      "choices": [
+        { "label": "git add station_kawasaki.html style_kawasaki.css", "correct": true },
+        { "label": "git add station_kawasaki.html", "correct": false },
+        { "label": "git add style_kawasaki.css", "correct": false },
+        { "label": "git add .", "correct": false }
+      ],
+      "feedback": {
+        "ok": "複数ファイルをまとめて登録できた。\nスペース区切りでファイルを並べれば、何個でも一度に add できる。",
+        "ng": "git add station_kawasaki.html style_kawasaki.css が正しい。スペース区切りで複数指定できる。"
+      },
+      "graph": "ch1-branch-commits"
+    },
+    {
+      "char": "現場監督",
+      "text": "2枚の設計図が登録されました。駅舎を完成させましょう。",
+      "terminal": "$ git status\nChanges to be committed:\n  new file: station_kawasaki.html\n  new file: style_kawasaki.css",
+      "choices": [
+        { "label": "git commit -m \"川崎駅 駅舎を建設\"", "correct": true },
+        { "label": "git commit -m \"kawasaki\"", "correct": false },
+        { "label": "git save -m \"川崎駅 駅舎を建設\"", "correct": false },
+        { "label": "git build -m \"川崎駅 駅舎を建設\"", "correct": false }
+      ],
+      "feedback": {
+        "ok": "駅舎の建設完了！現地での工事がすべて終わった。",
+        "ng": "git commit -m が正しい。"
+      },
+      "graph": "ch1-branch-commits"
+    },
+    {
+      "char": "建設局長",
+      "text": "現地工事が完了した。本線に戻って、成果を統合しよう。\n本線（main）に戻るコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git switch main", "correct": true },
+        { "label": "git back main", "correct": false },
+        { "label": "git return main", "correct": false },
+        { "label": "git move main", "correct": false }
+      ],
+      "feedback": {
+        "ok": "本線に帰還。git switch main でいつでも本線に戻れる。",
+        "ng": "git switch main が正しい。ブランチの移動は switch を使う。"
+      },
+      "graph": "ch1-branch-commits"
+    },
+    {
+      "char": "建設局長",
+      "text": "現地での工事成果を本線に統合しよう。\nどのコマンドで統合する？",
+      "terminal": "$ git branch\n  build/station-kawasaki\n* main",
+      "choices": [
+        { "label": "git merge build/station-kawasaki", "correct": true },
+        { "label": "git combine build/station-kawasaki", "correct": false },
+        { "label": "git join build/station-kawasaki", "correct": false },
+        { "label": "git integrate build/station-kawasaki", "correct": false }
+      ],
+      "feedback": {
+        "ok": "統合完了！川崎駅が本線に組み込まれた。\n線路と駅舎、2つの工事成果がまとめて本線に反映された。",
+        "ng": "git merge build/station-kawasaki が正しい。今いるブランチ（main）に、指定した支線の内容を統合する。"
+      },
+      "graph": "ch1-merged"
+    },
+    {
+      "char": "建設局長",
+      "text": "川崎駅、完成おめでとう！新橋から川崎まで、3つの駅が繋がった。\n\n今章で学んだこと：\n― git init で建設用地を確保\n― git add でファイルを建設予定リストに登録（個別指定・複数指定）\n― git commit で記録を刻む\n― git switch -c で作業支線を作成・移動\n― git merge で工事成果を本線に統合\n\n次の章では、この路線を鉄道管理局に申請して、正式に開通させる。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch1-merged",
+      "isLast": true,
+      "nextLabel": "第1章 完了"
+    }
+  ]
+}

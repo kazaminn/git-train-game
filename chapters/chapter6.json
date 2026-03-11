@@ -1,0 +1,223 @@
+{
+  "id": 5,
+  "title": "第6章",
+  "subtitle": "開発環境を整えよう",
+  "description": "GRに新人・田中くんが入社した。やらかしが続くが、おかげで開発環境が整っていく。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#ff9800", "label": "feature ブランチ" },
+    { "color": "#ff5252", "label": "⚠ やらかし" },
+    { "color": "#00e676", "label": "✓ 対策済み" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "今日からGRに新しいメンバーが加わった。\n田中くん、よろしく頼む。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-start",
+      "nextLabel": "田中くんに会う"
+    },
+    {
+      "char": "田中くん",
+      "text": "田中です！よろしくお願いします！\nGitは……まあ、なんとなく使ってました！",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-start",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "現場監督",
+      "text": "……『なんとなく』が一番怖い。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-start",
+      "nextLabel": "仕事を始める"
+    },
+    {
+      "char": "田中くん",
+      "text": "では早速、新橋駅の改修コミットをRailHubに送ります！",
+      "terminal": "$ git push origin main\nEnumerating objects: done.\nTo https://railhub.com/gr/train-line.git\n  a1b2c3d..e4f5g6h main -> main",
+      "choices": null,
+      "graph": "ch6-danger",
+      "nextLabel": "……？"
+    },
+    {
+      "char": "建設局長",
+      "text": "待て！！\nmainに直接pushした？！\nレビューなしで本線に直接反映されてしまった。\nこれは危険だ。\n\nmainへの直接pushを禁止するルールを設定しよう。\nRailHubのこの機能を何と呼ぶ？",
+      "terminal": null,
+      "choices": [
+        { "label": "ブランチ保護ルール", "correct": true },
+        { "label": "ブランチロック", "correct": false },
+        { "label": "プッシュ制限", "correct": false },
+        { "label": "アクセス制御", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ ブランチ保護ルールを設定すると、指定ブランチへの直接pushを禁止できる。\nPR経由のマージのみ許可することで、必ず管理局のレビューを通る仕組みになる。",
+        "ng": "ブランチ保護ルール（Branch Protection Rules）が正しい。RailHubの設定画面で main への直接pushを禁止できる。"
+      },
+      "graph": "ch6-danger"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "設定しました。これで main への直接pushはエラーになります。\n以後、作業は必ずfeatureブランチで行い、PRを出して管理局の承認を得ること。\nよろしいですね、田中くん。",
+      "terminal": "RailHub > Settings > Branches\n✓ Require pull request before merging\n✓ Require approvals: 1（管理局審査官）\n✓ Do not allow bypassing the above settings",
+      "choices": null,
+      "graph": "ch6-protected",
+      "nextLabel": "翌日……"
+    },
+    {
+      "char": "田中くん",
+      "text": "わかりました！featureブランチで作業します！\n\n……あ、社内システムへの接続情報が書いてあるファイルも一緒にコミットしてもいいですか？",
+      "terminal": "$ git status\nUntracked files:\n  feature/station-update.html\n  .env                    ← 社内システムへの接続情報などが記載",
+      "choices": null,
+      "graph": "ch6-danger",
+      "nextLabel": "止める"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "ダメです！！\n.env には社内システムへの接続情報が入っている。\nRailHubに上げると社外に漏れる可能性がある。\n環境ごとに値も違うから、そもそもリポジトリで管理するものではない。\n\nGitが追跡しないファイルを指定する仕組みを使いましょう。\n何というファイルに設定しますか？",
+      "terminal": null,
+      "choices": [
+        { "label": ".gitignore", "correct": true },
+        { "label": ".gitexclude", "correct": false },
+        { "label": ".gitskip", "correct": false },
+        { "label": ".gitsecret", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ .gitignore に記載したファイルはGitが追跡しなくなる。\n.env や node_modules など、リポジトリに含めてはいけないものを列挙しておこう。",
+        "ng": ".gitignore が正しい。このファイルに記載したパターンに一致するファイルはGitに無視される。"
+      },
+      "graph": "ch6-danger"
+    },
+    {
+      "char": "佐藤さん",
+      "text": ".gitignore を作成しました。\n.env が追跡対象から外れました。",
+      "terminal": "$ cat .gitignore\n.env\n.env.*\nnode_modules/\n*.log\n\n$ git status\nUntracked files:\n  feature/station-update.html\n  （.envは表示されなくなった）",
+      "choices": null,
+      "graph": "ch6-protected",
+      "nextLabel": "数日後……"
+    },
+    {
+      "char": "現場監督",
+      "text": "田中くんのPRが届きました。\nコミット履歴を確認してみましょう。",
+      "terminal": "$ git log --oneline feature/tanaka-update\na1b2c3d あ\nb2c3d4e うーん\nc3d4e5f 修正\nd4e5f6g 最終\ne5f6g7h 最終2\nf6g7h8i 最終3（本当に）",
+      "choices": null,
+      "graph": "ch6-danger",
+      "nextLabel": "……"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "田中くん、コミットメッセージが意味をなしていません。\n『あ』とか『修正』では、何を変えたか後から分かりません。\n\nコミットメッセージのフォーマットを検証するツールを導入しましょう。\nどれですか？",
+      "terminal": null,
+      "choices": [
+        { "label": "commitlint", "correct": true },
+        { "label": "Prettier", "correct": false },
+        { "label": "ESLint", "correct": false },
+        { "label": "Husky", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ commitlint はコミットメッセージのフォーマットを検証するツールだ。\n『feat: 新橋駅のホームを改修』のように、種別と説明を書くルールを強制できる。",
+        "ng": "commitlint が正しい。Prettier や ESLint はコードの整形・検証用。commitlint はコミットメッセージ専用だ。"
+      },
+      "graph": "ch6-danger"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "commitlint を設定しました。\n以後、このフォーマット以外のコミットはエラーになります。",
+      "terminal": "$ cat commitlint.config.js\nmodule.exports = { extends: ['@commitlint/config-conventional'] };\n\n$ git commit -m \"あ\"\n✗ subject may not be empty\n✗ type must be one of [feat, fix, docs, refactor, ...]",
+      "choices": null,
+      "graph": "ch6-protected",
+      "nextLabel": "さらに数日後……"
+    },
+    {
+      "char": "現場監督",
+      "text": "また田中くんのPRが来ました……\n差分を見ると、インデントがバラバラです。",
+      "terminal": "$ git diff feature/tanaka-update\n-    const station = '新橋';\n+  const station = '新橋';\n-      name: '新橋駅',\n+    name:  '新橋駅',",
+      "choices": null,
+      "graph": "ch6-danger",
+      "nextLabel": "確認する"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "スペースの数がバラバラです。\nこの状況、どんな種類のツールを導入すれば解決できますか？",
+      "terminal": null,
+      "choices": [
+        { "label": "フォーマッター（コードの見た目を自動統一するツール）", "correct": true },
+        { "label": "リンター（コードの問題点を検出するツール）", "correct": false },
+        { "label": "コミットリント（メッセージのフォーマットを検証するツール）", "correct": false },
+        { "label": "トランスパイラー（コードを変換するツール）", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ フォーマッターはインデント・クォート・セミコロンなど、コードの見た目を自動で統一するツールだ。\nJavaScriptならPrettier、PythonならBlackなど、言語ごとに定番がある。",
+        "ng": "フォーマッターが正しい。見た目の統一はフォーマッターの役割。リンターは別の問題を担当する。"
+      },
+      "graph": "ch6-danger"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "フォーマッターを設定しました。\nコミット前に自動でフォーマットが適用されます。",
+      "terminal": "# フォーマッターの設定例（言語によって異なる）\n# JavaScript: Prettier\n# Python: Black / autopep8\n# Go: gofmt（標準搭載）\n\n$ git commit -m \"feat: 新橋駅ホームを改修\"\n✓ formatter: フォーマット適用済み\n→ コミット完了",
+      "choices": null,
+      "graph": "ch6-protected",
+      "nextLabel": "またまた数日後……"
+    },
+    {
+      "char": "現場監督",
+      "text": "今度は田中くんのコードに問題のある書き方が見つかりました。",
+      "terminal": "$ git diff feature/tanaka-update\n+ var stationName = '新橋';   // varは使わない\n+ if (stationName == '新橋') { // ==は型変換が起きて危険",
+      "choices": null,
+      "graph": "ch6-danger",
+      "nextLabel": "確認する"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "バグを生みやすい書き方をしています。\nこの状況、どんな種類のツールを導入すれば解決できますか？",
+      "terminal": null,
+      "choices": [
+        { "label": "リンター（コードの問題点を検出するツール）", "correct": true },
+        { "label": "フォーマッター（コードの見た目を自動統一するツール）", "correct": false },
+        { "label": "コミットリント（メッセージのフォーマットを検証するツール）", "correct": false },
+        { "label": "トランスパイラー（コードを変換するツール）", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ リンターはバグや問題のある書き方を検出するツールだ。\nフォーマッターが『見た目』を整えるのに対して、リンターは『品質』を守る役割を担う。\nJavaScriptならESLint、PythonならFlake8やRuffなどが定番だ。",
+        "ng": "リンターが正しい。コードの問題点を検出するのがリンターの役割。フォーマッターとは担当が違う。"
+      },
+      "graph": "ch6-danger"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "リンターを設定しました。\nこれでコミット前にコードの品質もチェックされます。",
+      "terminal": "# リンターの設定例（言語によって異なる）\n# JavaScript: ESLint\n# Python: Flake8 / Ruff\n# Go: staticcheck\n\n$ git commit -m \"feat: 新橋駅ホームを改修\"\n✓ formatter: フォーマット適用済み\n✓ linter: 問題なし\n✓ commitlint: フォーマット適合\n→ コミット完了",
+      "choices": null,
+      "graph": "ch6-safe",
+      "nextLabel": "田中くんの感想を聞く"
+    },
+    {
+      "char": "田中くん",
+      "text": "いやー、なんか気づいたら環境がめちゃくちゃ整いましたね。\n僕のおかげですかね？",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-safe",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "佐藤さん",
+      "text": "……あなたが引き金を引いただけです。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-safe",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "まあ、結果的に環境が整ったのは事実だ。\n\n今章で学んだこと：\n― ブランチ保護ルールで main への直接pushを禁止（管理局レビュー必須）\n― .gitignore で社内の接続情報をGitの追跡対象から除外\n― commitlint でコミットメッセージのフォーマットを強制\n― フォーマッター：コードの見た目を自動統一するツール\n― リンター：コードの品質問題を自動検出するツール\n\n次の章では、この環境をさらに発展させて自動化する。\n田中くん、まだ活躍（？）が続く。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch6-safe",
+      "isLast": true,
+      "nextLabel": "第6章 完了"
+    }
+  ]
+}

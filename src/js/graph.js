@@ -22,12 +22,13 @@ const Graph = (() => {
     currentState = stateKey;
 
     // SVGサイズ計算
-    let maxX = 200, maxY = 160;
-    state.nodes.forEach(n => {
+    let maxX = 200,
+      maxY = 160;
+    state.nodes.forEach((n) => {
       maxX = Math.max(maxX, n.x + 100);
       maxY = Math.max(maxY, n.y + 60);
     });
-    (state.labels || []).forEach(l => {
+    (state.labels || []).forEach((l) => {
       maxX = Math.max(maxX, l.x + 80);
       maxY = Math.max(maxY, l.y + 20);
     });
@@ -38,16 +39,31 @@ const Graph = (() => {
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
 
     // グローフィルター
-    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    const filter = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'filter'
+    );
     filter.setAttribute('id', 'glow');
-    const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+    const blur = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feGaussianBlur'
+    );
     blur.setAttribute('stdDeviation', '3');
     blur.setAttribute('result', 'glow');
     filter.appendChild(blur);
-    const merge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
-    const m1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+    const merge = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMerge'
+    );
+    const m1 = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
     m1.setAttribute('in', 'glow');
-    const m2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+    const m2 = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
     m2.setAttribute('in', 'SourceGraphic');
     merge.appendChild(m1);
     merge.appendChild(m2);
@@ -61,7 +77,9 @@ const Graph = (() => {
       if (animate) {
         line.style.opacity = '0';
         line.style.transition = `opacity 0.4s ease ${i * 0.1}s`;
-        requestAnimationFrame(() => { line.style.opacity = '1'; });
+        requestAnimationFrame(() => {
+          line.style.opacity = '1';
+        });
       }
       svg.appendChild(line);
     });
@@ -71,15 +89,20 @@ const Graph = (() => {
       const g = _createNode(n);
       if (animate) {
         g.style.opacity = '0';
-        g.style.transition = `opacity 0.4s ease ${(state.lines.length * 0.1) + i * 0.12}s`;
-        requestAnimationFrame(() => { g.style.opacity = '1'; });
+        g.style.transition = `opacity 0.4s ease ${state.lines.length * 0.1 + i * 0.12}s`;
+        requestAnimationFrame(() => {
+          g.style.opacity = '1';
+        });
       }
       svg.appendChild(g);
     });
 
     // ブランチラベル描画
     (state.labels || []).forEach((l, i) => {
-      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      const text = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'text'
+      );
       text.setAttribute('x', l.x);
       text.setAttribute('y', l.y);
       text.setAttribute('text-anchor', 'middle');
@@ -92,7 +115,9 @@ const Graph = (() => {
       if (animate) {
         text.style.opacity = '0';
         text.style.transition = `opacity 0.5s ease ${0.5 + i * 0.1}s`;
-        requestAnimationFrame(() => { text.style.opacity = '0.7'; });
+        requestAnimationFrame(() => {
+          text.style.opacity = '0.7';
+        });
       }
       svg.appendChild(text);
     });
@@ -116,7 +141,10 @@ const Graph = (() => {
 
     // 発光エフェクト（glowノード）
     if (n.glow) {
-      const glowCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      const glowCircle = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'circle'
+      );
       glowCircle.setAttribute('cx', n.x);
       glowCircle.setAttribute('cy', n.y);
       glowCircle.setAttribute('r', '16');
@@ -128,7 +156,10 @@ const Graph = (() => {
 
     // 外枠（破線ノード）
     if (n.dashed) {
-      const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      const outer = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'circle'
+      );
       outer.setAttribute('cx', n.x);
       outer.setAttribute('cy', n.y);
       outer.setAttribute('r', '12');
@@ -141,7 +172,10 @@ const Graph = (() => {
     }
 
     // メインの丸
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const circle = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'circle'
+    );
     circle.setAttribute('cx', n.x);
     circle.setAttribute('cy', n.y);
     circle.setAttribute('r', n.dashed ? '6' : '8');
@@ -166,12 +200,15 @@ const Graph = (() => {
   }
 
   function drawLegend(container, items) {
-    container.innerHTML = items.map(item =>
-      `<div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:${item.color};font-family:'Share Tech Mono',monospace">
+    container.innerHTML = items
+      .map(
+        (item) =>
+          `<div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:${item.color};font-family:'Share Tech Mono',monospace">
         <div style="width:20px;height:3px;background:${item.color};border-radius:2px"></div>
         ${item.label}
       </div>`
-    ).join('');
+      )
+      .join('');
   }
 
   return { init, loadStates, draw, drawLegend };

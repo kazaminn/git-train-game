@@ -1,0 +1,134 @@
+{
+  "id": 4,
+  "title": "第5章",
+  "subtitle": "みなとみらい線を迎え入れよう",
+  "description": "横浜マリン鉄道との相互乗り入れが決まった。独立した路線をGRの管理下に取り込む方法を学ぼう。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線（GR）" },
+    { "color": "#a855f7", "label": "minatomiral 横浜マリン鉄道" },
+    { "color": "#00e676", "label": "cherry-pick" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "横浜駅の乗降客数が急増している。\nみなとみらい方面へのアクセス需要に応えるため、\n横浜マリン鉄道という新会社を設立することになった。\n\nGRとは独立した路線だが、横浜駅で相互乗り入れをする。\nGRの路線図の中に、マリン鉄道の路線図を取り込もう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch5-start",
+      "nextLabel": "取り込み方を学ぶ"
+    },
+    {
+      "char": "建設局長",
+      "text": "別会社（別リポジトリ）の路線図を、自社の路線図の中に組み込む仕組みがある。\nどのコマンドで取り込む？",
+      "terminal": "横浜マリン鉄道のリポジトリURL:\nhttps://railhub.com/marina/minatomiral-line.git",
+      "choices": [
+        { "label": "git submodule add https://railhub.com/marina/minatomiral-line.git", "correct": true },
+        { "label": "git import https://railhub.com/marina/minatomiral-line.git", "correct": false },
+        { "label": "git merge https://railhub.com/marina/minatomiral-line.git", "correct": false },
+        { "label": "git clone https://railhub.com/marina/minatomiral-line.git", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git submodule add で別リポジトリを子リポジトリとして取り込める。\nclone と違い、元のリポジトリとの繋がりを保ったまま取り込むのが特徴だ。",
+        "ng": "git submodule add が正しい。clone は独立したコピーを作るが、submodule は元のリポジトリとの繋がりを保つ。"
+      },
+      "graph": "ch5-submodule-added"
+    },
+    {
+      "char": "現場監督",
+      "text": "submodule を追加すると、.gitmodules というファイルが自動で作られました。\n中身を見てみましょう。",
+      "terminal": "$ cat .gitmodules\n[submodule \"minatomiral-line\"]\n  path = minatomiral-line\n  url = https://railhub.com/marina/minatomiral-line.git",
+      "choices": null,
+      "graph": "ch5-submodule-added",
+      "nextLabel": "協定書を確認する"
+    },
+    {
+      "char": "建設局長",
+      "text": ".gitmodules は2社の乗り入れ協定書のようなものだ。\n『どの路線を、どこから取り込むか』が記録されている。\nこれをコミットして、RailHubに登録しよう。",
+      "terminal": "$ git add .gitmodules minatomiral-line\n$ git commit -m \"横浜マリン鉄道との乗り入れ協定を締結\"",
+      "choices": null,
+      "graph": "ch5-submodule-added",
+      "nextLabel": "しばらく後……"
+    },
+    {
+      "char": "現場監督",
+      "text": "横浜マリン鉄道が新しい駅を追加したようです。\n確認してみましょう。",
+      "terminal": "$ ls minatomiral-line/\nstation_minatomirai.html\nstation_bashamichi.html\n station_nihon-odori.html\nstation_motomachi.html  ← 新しく追加された\n\n$ git log minatomiral-line\n（変更が表示されない）",
+      "choices": null,
+      "graph": "ch5-submodule-added",
+      "nextLabel": "なぜ反映されない？"
+    },
+    {
+      "char": "建設局長",
+      "text": "submodule は自動では更新されない。\n取り込んだ時点のバージョンで止まっている。\n\n子会社の最新状態を取り込むには、明示的に更新を指示する必要がある。\nどのコマンドを使う？",
+      "terminal": null,
+      "choices": [
+        { "label": "git submodule update --remote", "correct": true },
+        { "label": "git submodule sync", "correct": false },
+        { "label": "git pull submodule", "correct": false },
+        { "label": "git fetch --submodules", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git submodule update --remote で子会社の最新状態を取り込める。\n--remote がないと『登録時点のバージョン』に戻ってしまうので注意だ。",
+        "ng": "git submodule update --remote が正しい。submodule は自動更新されないため、明示的に指示が必要だ。"
+      },
+      "graph": "ch5-submodule-updated"
+    },
+    {
+      "char": "現場監督",
+      "text": "元町・中華街駅が取り込まれました！\n\n今度はGR側が関内駅を追加します。\n関内には野球場があるので、需要が見込めます。",
+      "terminal": "$ git add station_kannai.html\n$ git commit -m \"関内駅 開業（野球場最寄り）\"",
+      "choices": null,
+      "graph": "ch5-gr-added",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "GRが関内駅を追加したが、横浜マリン鉄道側のリポジトリには関内駅は見えない。\n\nsubmodule の関係は一方向だ。\n― GRはマリン鉄道の変更を取り込める（submodule update --remote）\n― マリン鉄道はGRの変更を自動では受け取れない\n\nこれは実際の路線でも同じだ。\n相互乗り入れでも、それぞれの路線は独立して管理されている。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch5-gr-added",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "現場監督",
+      "text": "マリン鉄道側から連絡がありました。\n『みなとみらい駅でバリアフリー工事をしました。\n他の駅にも同じ工事を適用してほしい』とのことです。\n\nこのバリアフリー工事のコミットだけをGR本線に取り込みたい。\nどのコマンドを使いますか？",
+      "terminal": "横浜マリン鉄道のコミット:\na1b2c3d バリアフリー設備を設置（みなとみらい駅）",
+      "choices": [
+        { "label": "git cherry-pick a1b2c3d", "correct": true },
+        { "label": "git merge a1b2c3d", "correct": false },
+        { "label": "git pick a1b2c3d", "correct": false },
+        { "label": "git apply a1b2c3d", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git cherry-pick で特定のコミットだけを選んで取り込める。\nサクランボを一粒だけ摘む（pick）イメージだ。ブランチ全体ではなく、特定の変更だけが欲しい時に使う。",
+        "ng": "git cherry-pick が正しい。特定のコミットだけをつまみ食いする操作だ。merge はブランチ全体を統合するが、cherry-pick は1つを選べる。"
+      },
+      "graph": "ch5-cherry-pick"
+    },
+    {
+      "char": "建設局長",
+      "text": "バリアフリー設備がGR全駅に適用された。\n\nところで、新しくGRに参加するメンバーのために確認しておこう。\nsubmodule を含むリポジトリを clone する場合、submodule も一緒に取り込むオプションは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git clone --recurse-submodules https://railhub.com/gr/train-line.git", "correct": true },
+        { "label": "git clone --with-submodules https://railhub.com/gr/train-line.git", "correct": false },
+        { "label": "git clone --include-all https://railhub.com/gr/train-line.git", "correct": false },
+        { "label": "git clone --deep https://railhub.com/gr/train-line.git", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ --recurse-submodules を付けると、submodule のリポジトリも一緒に取り込まれる。\nこれを忘れると submodule のフォルダが空のまま になるので注意だ。",
+        "ng": "--recurse-submodules が正しい。忘れると submodule のフォルダが空のままになる。後から git submodule update --init で補完することもできる。"
+      },
+      "graph": "ch5-cherry-pick"
+    },
+    {
+      "char": "建設局長",
+      "text": "みなとみらい線との相互乗り入れが正式に開始された。\n\n今章で学んだこと：\n― git submodule add で別リポジトリを子として取り込む\n― .gitmodules が乗り入れ協定書の役割を果たす\n― submodule は自動更新されない\n― git submodule update --remote で最新を取り込む\n― git cherry-pick で特定のコミットだけを選んで流用する\n― git clone --recurse-submodules で submodule ごと取得する\n\n次の章では、GRに新しいメンバーが加わる。\n……なかなかのやらかしっぷりを発揮してくれる。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch5-cherry-pick",
+      "isLast": true,
+      "nextLabel": "第5章 完了"
+    }
+  ]
+}

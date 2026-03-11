@@ -1,0 +1,165 @@
+{
+  "id": 1,
+  "title": "第2章",
+  "subtitle": "鉄道管理局の承認を得よう",
+  "description": "新橋から川崎まで3つの駅が完成した。電車を走らせるには鉄道管理局の承認が必要だ。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#a855f7", "label": "origin/main 管理局" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "新橋から川崎まで、3つの駅が完成した。路線が形になってきた。\nしかし、電車を走らせるには鉄道管理局の承認が必要だ。\nまずは管理局に連絡をとりましょう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch2-local-only",
+      "nextLabel": "管理局へ向かう"
+    },
+    {
+      "char": "建設局長",
+      "text": "鉄道管理局との接続を確立します。\n管理局のアドレス（URL）を登録して、直通運転協定を結ぶコマンドは？",
+      "terminal": "管理局アドレス:\nhttps://github.com/gr/train-line.git",
+      "choices": [
+        { "label": "git remote add origin https://github.com/gr/train-line.git", "correct": true },
+        { "label": "git connect origin https://github.com/gr/train-line.git", "correct": false },
+        { "label": "git link origin https://github.com/gr/train-line.git", "correct": false },
+        { "label": "git register origin https://github.com/gr/train-line.git", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git remote add origin で管理局との接続が確立された。\n「origin」は接続先の名前だ。慣例として最初のリモートに origin と名付ける。",
+        "ng": "git remote add origin URL が正しい。remote add で接続先を登録する。origin は接続先のニックネームだ。"
+      },
+      "graph": "ch2-remote-added"
+    },
+    {
+      "char": "建設局長",
+      "text": "接続が確立した。しかし、まだ管理局には路線情報が届いていない。\nローカルの記録（コミット履歴）を管理局に送る必要がある。",
+      "terminal": "$ git remote -v\norigin  https://github.com/gr/train-line.git (fetch)\norigin  https://github.com/gr/train-line.git (push)",
+      "choices": null,
+      "graph": "ch2-remote-added",
+      "nextLabel": "路線図を送る"
+    },
+    {
+      "char": "建設局長",
+      "text": "ローカルの路線図（コミット履歴）を管理局に送りましょう。\n本線（main）を origin に送るコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git push origin main", "correct": true },
+        { "label": "git send origin main", "correct": false },
+        { "label": "git upload origin main", "correct": false },
+        { "label": "git deploy origin main", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git push origin main で、本線の記録が管理局に送信された。\npush は『押し出す』＝自分の変更を相手に送ること。origin が送り先、main が送る路線だ。",
+        "ng": "git push origin main が正しい。push は自分のコミットをリモートに送るコマンドだ。"
+      },
+      "graph": "ch2-pushed"
+    },
+    {
+      "char": "現場監督",
+      "text": "あ、大変です！ push する前に気づいたんですが……\n川崎駅のコミットに、時刻表ファイルを追加し忘れていました。",
+      "terminal": "$ git log --oneline -1\na1b2c3d 川崎駅 駅舎を建設\n\n追加し忘れたファイル: timetable_kawasaki.json",
+      "choices": null,
+      "graph": "ch2-pushed",
+      "nextLabel": "修正する"
+    },
+    {
+      "char": "現場監督",
+      "text": "直前のコミットにファイルを追加し忘れました。\nもう一度コミットし直さなくても、直前のコミットを修正できるコマンドがあります。\nどれですか？",
+      "terminal": "$ git add timetable_kawasaki.json\n# ステージングに追加済み",
+      "choices": [
+        { "label": "git commit --amend", "correct": true },
+        { "label": "git commit --fix", "correct": false },
+        { "label": "git commit --edit", "correct": false },
+        { "label": "git commit --redo", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git commit --amend で直前のコミットを修正できる。\nファイルの追加忘れだけでなく、コミットメッセージの修正にも使える。\npush前ならこれで安全に修正できる。",
+        "ng": "git commit --amend が正しい。amend は『修正する』という意味。直前のコミットを上書き修正できる。"
+      },
+      "graph": "ch2-pushed"
+    },
+    {
+      "char": "建設局長",
+      "text": "修正完了。では改めて push しよう。\n管理局に路線図が届いたら、次は正式な承認申請（プルリクエスト）を出す。",
+      "terminal": "$ git push origin main\nEnumerating objects: done.\nTo https://github.com/gr/train-line.git\n  * [new branch] main -> main",
+      "choices": null,
+      "graph": "ch2-pushed",
+      "nextLabel": "承認申請を出す"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "管理局の審査官です。路線図は受理しました。\n正式な運行認可を得るには『運行申請書』を提出してもらう必要があります。\nGitHubでは、これを何と呼びますか？",
+      "terminal": null,
+      "choices": [
+        { "label": "Pull Request（プルリクエスト）", "correct": true },
+        { "label": "Push Request（プッシュリクエスト）", "correct": false },
+        { "label": "Merge Request（マージリクエスト）", "correct": false },
+        { "label": "Review Request（レビューリクエスト）", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ Pull Request（PR）は、変更の取り込みを依頼する仕組みだ。\n『自分の変更を pull（取り込んで）ください』というお願い。運行申請書のようなものだ。\n※ GitLabでは Merge Request と呼ぶが、仕組みは同じだ。",
+        "ng": "GitHubでは Pull Request（PR）と呼ぶ。『この変更を取り込んでほしい』という依頼の仕組みだ。"
+      },
+      "graph": "ch2-pr-created"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "運行申請書（プルリクエスト）を受理しました。\nレビューを行います。\n\n……確認しました。1点指摘があります。\n川崎駅の安全設備の説明が不足しています。修正して再提出してください。",
+      "terminal": "Review comment:\n「川崎駅の安全設備について\n 具体的な記載をお願いします。」",
+      "choices": null,
+      "graph": "ch2-review",
+      "nextLabel": "修正する"
+    },
+    {
+      "char": "現場監督",
+      "text": "指摘を受けて修正しました。\n修正をコミットして push すれば、プルリクエストに自動で反映されます。\n修正後の変更を管理局に再送するコマンドは？",
+      "terminal": "$ git add .\n$ git commit -m \"fix: 川崎駅の安全設備の説明を追記\"",
+      "choices": [
+        { "label": "git push origin main", "correct": true },
+        { "label": "git push --force origin main", "correct": false },
+        { "label": "git pr update", "correct": false },
+        { "label": "git resubmit origin main", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ 修正を push すれば、PRに自動反映される。\n新しいPRを作り直す必要はない。同じブランチに push するだけだ。",
+        "ng": "git push origin main が正しい。同じブランチに push すれば、既存のPRに修正が自動反映される。"
+      },
+      "graph": "ch2-review-fixed"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "修正を確認しました。問題ありません。\n承認（Approve）します。マージを実行して、正式に路線を登録しましょう！",
+      "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+      "choices": null,
+      "graph": "ch2-pr-merged",
+      "nextLabel": "マージを実行"
+    },
+    {
+      "char": "建設局長",
+      "text": "路線が正式に登録された！\n開業記念に『バージョンタグ』を打っておこう。\n特定のコミットに名前を付けるコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git tag v1.0", "correct": true },
+        { "label": "git mark v1.0", "correct": false },
+        { "label": "git label v1.0", "correct": false },
+        { "label": "git version v1.0", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git tag v1.0 で開業記念のタグが付いた。\nタグはコミットに『名札』を付ける機能だ。リリースや重要なマイルストーンの目印になる。",
+        "ng": "git tag v1.0 が正しい。タグは特定のコミットに名前を付ける機能だ。"
+      },
+      "graph": "ch2-tagged"
+    },
+    {
+      "char": "建設局長",
+      "text": "GR、正式に開業！新橋から川崎まで、電車が走り始めた。\n\n今章で学んだこと：\n― git remote add で管理局との接続を確立\n― git push で路線図を管理局に送信\n― git commit --amend で直前のコミットを修正\n― Pull Request で変更のレビューを依頼\n― レビュー指摘を修正して再 push\n― git tag でバージョンを記録\n\n次の章では、利用者が増えてきた路線をさらに延伸する。\nしかし……新駅の名前をめぐって、ひと騒動が起きるようだ。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch2-tagged",
+      "isLast": true,
+      "nextLabel": "第2章 完了"
+    }
+  ]
+}

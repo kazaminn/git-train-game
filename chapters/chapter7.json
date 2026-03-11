@@ -1,0 +1,151 @@
+{
+  "id": 6,
+  "title": "第7章",
+  "subtitle": "自動化しよう",
+  "description": "新型検測車が導入された。保線作業のチェックが一気に自動化される。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#ff9800", "label": "maintenance 保線作業" },
+    { "color": "#00e676", "label": "検測 通過" },
+    { "color": "#ff5252", "label": "検測 異常検知" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "今日はいい知らせがある。\nGRに新型検測車が導入された。\n\nこれまでは保線作業のあと、担当者が目視で確認してからでないと\n始発を出せなかった。\nこの新型検測車は、PRを出すだけで自動でチェックしてくれる。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch7-maintenance",
+      "nextLabel": "新型検測車を見に行く"
+    },
+    {
+      "char": "現場監督",
+      "text": "すごい……！PRを出すたびに自動で走るんですか？\nこれまでは作業のたびに人を呼んで確認してもらってたのに。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch7-maintenance",
+      "nextLabel": "設定を見る"
+    },
+    {
+      "char": "建設局長",
+      "text": "RailHub（GitHub）に内蔵されたCI機能を使う。\nリポジトリに設定ファイルを置くだけで動く。\nこのサービスを何と呼ぶ？",
+      "terminal": null,
+      "choices": [
+        { "label": "RailHub Actions（GitHub Actions）", "correct": true },
+        { "label": "RailHub CI", "correct": false },
+        { "label": "RailHub Runner", "correct": false },
+        { "label": "RailHub Inspector", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ RailHub Actions はリポジトリに設定ファイルを置くだけで、\nPRを検知して自動でジョブを実行できる。",
+        "ng": "RailHub Actions（GitHub Actions）が正しい。設定ファイルを置くだけで新型検測車が自動で走り始める。"
+      },
+      "graph": "ch7-maintenance"
+    },
+    {
+      "char": "建設局長",
+      "text": "設定ファイルはこうなっている。\nPRが出るたびに、レール締結・ゲージ・信号設備を自動でチェックする。",
+      "terminal": "$ cat .github/workflows/inspection.yml\nname: 新型検測\non: [pull_request]\njobs:\n  inspect:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: レール締結確認\n        run: check-rail-fastening .\n      - name: ゲージ（軌間）確認\n        run: check-gauge .\n      - name: 信号設備確認\n        run: check-signal .",
+      "choices": null,
+      "graph": "ch7-maintenance",
+      "nextLabel": "さっそく使ってみる"
+    },
+    {
+      "char": "現場監督",
+      "text": "川崎〜横浜間の保線作業が完了しました。\nPRを出してみましょう。",
+      "terminal": "$ git switch -c maintenance/track-adjustment-kawasaki\n$ git add .\n$ git commit -m \"fix: 川崎〜横浜間 軌道を調整\"\n$ git push origin maintenance/track-adjustment-kawasaki\n\n新型検測車、発車……",
+      "choices": null,
+      "graph": "ch7-ci-fail",
+      "nextLabel": "結果を待つ"
+    },
+    {
+      "char": "現場監督",
+      "text": "異常を検知しました。\nログを確認してみましょう。",
+      "terminal": "✗ 検測異常\n  ステップ: ゲージ（軌間）確認\n  詳細はログを確認してください",
+      "choices": null,
+      "graph": "ch7-ci-fail",
+      "nextLabel": "ログを確認する"
+    },
+    {
+      "char": "建設局長",
+      "text": "どこで異常が出たか特定しよう。\nコミット履歴を確認するコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git log", "correct": true },
+        { "label": "git status", "correct": false },
+        { "label": "git diff", "correct": false },
+        { "label": "git show", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git log でコミット履歴を確認できる。\n--oneline を付けると1行で見やすくなる。",
+        "ng": "git log が正しい。--oneline オプションで1行表示にすると見やすい。"
+      },
+      "graph": "ch7-ci-fail"
+    },
+    {
+      "char": "現場監督",
+      "text": "履歴を確認すると、軌道調整のコミットが怪しそうです。\n中身を詳しく見てみましょう。",
+      "terminal": "$ git log --oneline\na1b2c3d fix: 川崎〜横浜間 軌道を調整   ← これを確認する\nb2c3d4e fix: 川崎〜横浜間 レールを交換",
+      "choices": [
+        { "label": "git show a1b2c3d", "correct": true },
+        { "label": "git log a1b2c3d", "correct": false },
+        { "label": "git status a1b2c3d", "correct": false },
+        { "label": "git diff a1b2c3d", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git show でそのコミットの変更内容を詳細に確認できる。",
+        "ng": "git show コミットID が正しい。そのコミットで何が変わったかを詳細に確認できる。"
+      },
+      "graph": "ch7-ci-fail"
+    },
+    {
+      "char": "現場監督",
+      "text": "わかりました。レールの間隔が基準値からずれています。\n調整が必要です。",
+      "terminal": "$ git show a1b2c3d\n- gauge: 1067,  // mm（正常）\n+ gauge: 1052,  // mm（← 15mm狭い）\n\n基準値: 1067mm（狭軌）\n実測値: 1052mm",
+      "choices": null,
+      "graph": "ch7-ci-fail",
+      "nextLabel": "修正する"
+    },
+    {
+      "char": "現場監督",
+      "text": "軌間を修正しました。pushすると検測が自動で再実行されます。",
+      "terminal": "$ git add .\n$ git commit -m \"fix: 川崎〜横浜間 軌間を修正（1052mm→1067mm）\"\n$ git push origin maintenance/track-adjustment-kawasaki\n\n新型検測車、再発車……",
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "nextLabel": "結果を待つ"
+    },
+    {
+      "char": "現場監督",
+      "text": "通過！",
+      "terminal": "✓ 検測通過\n  レール締結確認: 正常\n  ゲージ（軌間）: 正常（1067mm）\n  信号設備確認: 正常\n\n→ マージ可能",
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "nextLabel": "管理局の承認へ"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "検測結果を確認しました。問題ありません。承認します。",
+      "terminal": "✓ 検測: 通過\n✓ 管理局審査官: 承認\n→ マージ実行",
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "現場監督",
+      "text": "これまでは人が目視で確認していたチェックが、全部自動になった。\nPRを出せば検測車が走り、問題があればログに記録される。\n修正してpushすれば、また自動で走ってくれる。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "一気に現代化した。\n\n今章で学んだこと：\n― CI（継続的インテグレーション）でPR時に自動検測\n― RailHub Actions でワークフローを設定\n― git log でコミット履歴を確認\n― git show でコミットの変更内容を詳細確認\n― CIが落ちたら修正してpush、自動で再実行される\n\n次の章は最終章だ。\n今夜は、全駅に一斉ホームドアを設置する。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch7-ci-pass",
+      "isLast": true,
+      "nextLabel": "第7章 完了"
+    }
+  ]
+}

@@ -30,7 +30,7 @@ const UI = (() => {
   }
 
   function setProgress(ratio) {
-    els.progressFill.style.width = (ratio * 100) + '%';
+    els.progressFill.style.width = ratio * 100 + '%';
   }
 
   function renderScene(scene, onChoice, onNext) {
@@ -75,7 +75,13 @@ const UI = (() => {
     }
   }
 
-  function showChoiceResult(choiceIdx, isCorrect, correctIdx, feedback, onNext) {
+  function showChoiceResult(
+    choiceIdx,
+    isCorrect,
+    correctIdx,
+    feedback,
+    onNext
+  ) {
     const buttons = els.choicesBox.querySelectorAll('.choice-btn');
     buttons.forEach((btn, i) => {
       if (i === choiceIdx) {
@@ -89,7 +95,8 @@ const UI = (() => {
     });
 
     els.feedbackBox.textContent = feedback;
-    els.feedbackBox.className = 'feedback-box show ' + (isCorrect ? 'ok' : 'ng');
+    els.feedbackBox.className =
+      'feedback-box show ' + (isCorrect ? 'ok' : 'ng');
 
     els.nextBtn.classList.add('show');
     els.nextBtn.textContent = '次の駅へ';
@@ -123,8 +130,20 @@ const UI = (() => {
     // シンプルにフェードインで代用（HTML構造を壊さないため）
     el.style.opacity = '0';
     el.style.transition = 'opacity 0.4s ease';
-    requestAnimationFrame(() => { el.style.opacity = '1'; });
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+    });
   }
 
-  return { init, setChapter, setProgress, renderScene, showChoiceResult, showTitle, hideTitle, showClear, hideClear };
+  return {
+    init,
+    setChapter,
+    setProgress,
+    renderScene,
+    showChoiceResult,
+    showTitle,
+    hideTitle,
+    showClear,
+    hideClear,
+  };
 })();

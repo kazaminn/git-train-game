@@ -1,0 +1,2196 @@
+[
+  {
+    "id": 0,
+    "title": "第1章",
+    "subtitle": "git鉄道をつくろう",
+    "description": "新橋から川崎まで、最初の路線を開通させよう。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "build/station-3 工事支線"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "我が社、GRはついに鉄道事業に参入することになった！\nあなたには路線開発部の担当者として、新路線の建設を指揮してもらう。\nまずは建設用地を確保するところから始めよう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "empty",
+        "nextLabel": "建設を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道を建設するには、まず用地を確保しなければならない。\nGitでは、この『建設用地』のことをリポジトリと呼ぶ。\nどのコマンドで用地を確保する？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git init",
+            "correct": true
+          },
+          {
+            "label": "git start",
+            "correct": false
+          },
+          {
+            "label": "git new",
+            "correct": false
+          },
+          {
+            "label": "git create",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "用地確保完了！ git init でリポジトリが作られた。\nここがすべての記録の拠点になる。",
+          "ng": "git init が正しい。initialize（初期化）の略で、更地を整備するイメージだ。"
+        },
+        "graph": "ch1-init"
+      },
+      {
+        "char": "現場監督",
+        "text": "用地が確保できました！さっそく新橋駅の設計図が届いています。\nまずはこれを建設予定リストに登録してください。",
+        "terminal": "$ ls\nstation_shimbashi.html",
+        "choices": [
+          {
+            "label": "git add station_shimbashi.html",
+            "correct": true
+          },
+          {
+            "label": "git stage station_shimbashi.html",
+            "correct": false
+          },
+          {
+            "label": "git register station_shimbashi.html",
+            "correct": false
+          },
+          {
+            "label": "git commit station_shimbashi.html",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "登録完了。git add でファイルを建設予定リスト（ステージングエリア）に乗せた。\nまだ建設は始まっていない。『着工予定』の状態だ。",
+          "ng": "git add が正しい。コミットの前に、まず add で予定リストに登録する。"
+        },
+        "graph": "ch1-staging"
+      },
+      {
+        "char": "現場監督",
+        "text": "予定リストの確認が取れました。いよいよ着工です！\n記念すべき新橋駅、完成の記録を残しましょう。",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: station_shimbashi.html",
+        "choices": [
+          {
+            "label": "git commit -m \"新橋駅 完成\"",
+            "correct": true
+          },
+          {
+            "label": "git save -m \"新橋駅 完成\"",
+            "correct": false
+          },
+          {
+            "label": "git push -m \"新橋駅 完成\"",
+            "correct": false
+          },
+          {
+            "label": "git build -m \"新橋駅 完成\"",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "新橋駅、完成！\ngit commit -m でメッセージ付きの記録を残した。これが路線図の最初の駅になる。",
+          "ng": "git commit -m \"メッセージ\" が正しい。完成記録には必ずメッセージを添えよう。"
+        },
+        "graph": "ch1-first-commit"
+      },
+      {
+        "char": "建設局長",
+        "text": "新橋駅の完成おめでとう。路線はまだ一駅だけだ。\n次は品川駅も建設して、路線を伸ばしていこう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-first-commit",
+        "nextLabel": "次の駅を建設する"
+      },
+      {
+        "char": "現場監督",
+        "text": "品川駅の設計図が届きました。登録してください。",
+        "terminal": "$ ls\nstation_shinagawa.html",
+        "choices": [
+          {
+            "label": "git add station_shinagawa.html",
+            "correct": true
+          },
+          {
+            "label": "git add .",
+            "correct": false
+          },
+          {
+            "label": "git stage station_shinagawa.html",
+            "correct": false
+          },
+          {
+            "label": "git register station_shinagawa.html",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "登録完了。今回は特定のファイルを指定して add した。\n必要なファイルだけ選んで登録することもできる。",
+          "ng": "git add station_shinagawa.html が正しい。ファイル名を指定して個別に登録できる。"
+        },
+        "graph": "ch1-staging"
+      },
+      {
+        "char": "現場監督",
+        "text": "品川駅も完成させましょう！",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: station_shinagawa.html",
+        "choices": [
+          {
+            "label": "git commit -m \"品川駅 完成\"",
+            "correct": true
+          },
+          {
+            "label": "git commit \"品川駅 完成\"",
+            "correct": false
+          },
+          {
+            "label": "git save -m \"品川駅 完成\"",
+            "correct": false
+          },
+          {
+            "label": "git push -m \"品川駅 完成\"",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "品川駅、完成！路線が一駅分伸びた。\nコミットのたびに、路線図に新しい駅が刻まれていく。",
+          "ng": "git commit -m \"メッセージ\" が正しい。-m を忘れずに。"
+        },
+        "graph": "ch1-second-commit"
+      },
+      {
+        "char": "建設局長",
+        "text": "新橋から品川まで、2つの駅が繋がった。\n次は川崎駅だ。ただし、川崎駅の建設地は少し遠い。\nあなたを現地に派遣しよう。\n本線の運行を止めずに現地で工事できるよう、専用の作業支線を引く。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-second-commit",
+        "nextLabel": "現地に向かう"
+      },
+      {
+        "char": "現場監督",
+        "text": "現地作業用の支線を作って、そこに移動してください。\n支線を作りながら同時に移動するコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git switch -c build/station-kawasaki",
+            "correct": true
+          },
+          {
+            "label": "git branch build/station-kawasaki",
+            "correct": false
+          },
+          {
+            "label": "git checkout kawasaki",
+            "correct": false
+          },
+          {
+            "label": "git new-branch build/station-kawasaki",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "支線に移動完了。git switch -c で支線を作り、同時にそこへ移動した。\n-c は create の略。本線はそのまま、現地での工事が始まる。",
+          "ng": "git switch -c が正しい。-c で支線を作りつつ、同時にそこへ移動できる。"
+        },
+        "graph": "ch1-branch-created"
+      },
+      {
+        "char": "現場監督",
+        "text": "現地に到着しました。まず線路を敷きましょう。\n設計図を登録して、記録を残してください。",
+        "terminal": "$ ls\ntrack_kawasaki.json",
+        "choices": [
+          {
+            "label": "git add track_kawasaki.json",
+            "correct": true
+          },
+          {
+            "label": "git add .",
+            "correct": false
+          },
+          {
+            "label": "git stage track_kawasaki.json",
+            "correct": false
+          },
+          {
+            "label": "git commit track_kawasaki.json",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "線路の設計図を登録。続けてコミットしよう。",
+          "ng": "git add track_kawasaki.json が正しい。まず add で予定リストに登録する。"
+        },
+        "graph": "ch1-branch-created"
+      },
+      {
+        "char": "現場監督",
+        "text": "線路の設計図を登録しました。記録を残しましょう。",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: track_kawasaki.json",
+        "choices": [
+          {
+            "label": "git commit -m \"川崎駅へ 線路を敷設\"",
+            "correct": true
+          },
+          {
+            "label": "git commit \"線路を敷設\"",
+            "correct": false
+          },
+          {
+            "label": "git save -m \"線路を敷設\"",
+            "correct": false
+          },
+          {
+            "label": "git push -m \"線路を敷設\"",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "線路の敷設完了。現地作業の記録が一つ刻まれた。",
+          "ng": "git commit -m が正しい。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "現場監督",
+        "text": "次は駅舎の建設です。今回は設計図が2枚あります。\nまとめて登録してみましょう。",
+        "terminal": "$ ls\nstation_kawasaki.html\nstyle_kawasaki.css",
+        "choices": [
+          {
+            "label": "git add station_kawasaki.html style_kawasaki.css",
+            "correct": true
+          },
+          {
+            "label": "git add station_kawasaki.html",
+            "correct": false
+          },
+          {
+            "label": "git add style_kawasaki.css",
+            "correct": false
+          },
+          {
+            "label": "git add .",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "複数ファイルをまとめて登録できた。\nスペース区切りでファイルを並べれば、何個でも一度に add できる。",
+          "ng": "git add station_kawasaki.html style_kawasaki.css が正しい。スペース区切りで複数指定できる。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "現場監督",
+        "text": "2枚の設計図が登録されました。駅舎を完成させましょう。",
+        "terminal": "$ git status\nChanges to be committed:\n  new file: station_kawasaki.html\n  new file: style_kawasaki.css",
+        "choices": [
+          {
+            "label": "git commit -m \"川崎駅 駅舎を建設\"",
+            "correct": true
+          },
+          {
+            "label": "git commit -m \"kawasaki\"",
+            "correct": false
+          },
+          {
+            "label": "git save -m \"川崎駅 駅舎を建設\"",
+            "correct": false
+          },
+          {
+            "label": "git build -m \"川崎駅 駅舎を建設\"",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "駅舎の建設完了！現地での工事がすべて終わった。",
+          "ng": "git commit -m が正しい。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "建設局長",
+        "text": "現地工事が完了した。本線に戻って、成果を統合しよう。\n本線（main）に戻るコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git switch main",
+            "correct": true
+          },
+          {
+            "label": "git back main",
+            "correct": false
+          },
+          {
+            "label": "git return main",
+            "correct": false
+          },
+          {
+            "label": "git move main",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "本線に帰還。git switch main でいつでも本線に戻れる。",
+          "ng": "git switch main が正しい。ブランチの移動は switch を使う。"
+        },
+        "graph": "ch1-branch-commits"
+      },
+      {
+        "char": "建設局長",
+        "text": "現地での工事成果を本線に統合しよう。\nどのコマンドで統合する？",
+        "terminal": "$ git branch\n  build/station-kawasaki\n* main",
+        "choices": [
+          {
+            "label": "git merge build/station-kawasaki",
+            "correct": true
+          },
+          {
+            "label": "git combine build/station-kawasaki",
+            "correct": false
+          },
+          {
+            "label": "git join build/station-kawasaki",
+            "correct": false
+          },
+          {
+            "label": "git integrate build/station-kawasaki",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "統合完了！川崎駅が本線に組み込まれた。\n線路と駅舎、2つの工事成果がまとめて本線に反映された。",
+          "ng": "git merge build/station-kawasaki が正しい。今いるブランチ（main）に、指定した支線の内容を統合する。"
+        },
+        "graph": "ch1-merged"
+      },
+      {
+        "char": "建設局長",
+        "text": "川崎駅、完成おめでとう！新橋から川崎まで、3つの駅が繋がった。\n\n今章で学んだこと：\n― git init で建設用地を確保\n― git add でファイルを建設予定リストに登録（個別指定・複数指定）\n― git commit で記録を刻む\n― git switch -c で作業支線を作成・移動\n― git merge で工事成果を本線に統合\n\n次の章では、この路線を鉄道管理局に申請して、正式に開通させる。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch1-merged",
+        "isLast": true,
+        "nextLabel": "第1章 完了"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "第2章",
+    "subtitle": "鉄道管理局の承認を得よう",
+    "description": "新橋から川崎まで3つの駅が完成した。電車を走らせるには鉄道管理局の承認が必要だ。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#a855f7",
+        "label": "origin/main 管理局"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "新橋から川崎まで、3つの駅が完成した。路線が形になってきた。\nしかし、電車を走らせるには鉄道管理局の承認が必要だ。\nまずは管理局に連絡をとりましょう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-local-only",
+        "nextLabel": "管理局へ向かう"
+      },
+      {
+        "char": "建設局長",
+        "text": "鉄道管理局との接続を確立します。\n管理局のアドレス（URL）を登録して、直通運転協定を結ぶコマンドは？",
+        "terminal": "管理局アドレス:\nhttps://github.com/gr/train-line.git",
+        "choices": [
+          {
+            "label": "git remote add origin https://github.com/gr/train-line.git",
+            "correct": true
+          },
+          {
+            "label": "git connect origin https://github.com/gr/train-line.git",
+            "correct": false
+          },
+          {
+            "label": "git link origin https://github.com/gr/train-line.git",
+            "correct": false
+          },
+          {
+            "label": "git register origin https://github.com/gr/train-line.git",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git remote add origin で管理局との接続が確立された。\n「origin」は接続先の名前だ。慣例として最初のリモートに origin と名付ける。",
+          "ng": "git remote add origin URL が正しい。remote add で接続先を登録する。origin は接続先のニックネームだ。"
+        },
+        "graph": "ch2-remote-added"
+      },
+      {
+        "char": "建設局長",
+        "text": "接続が確立した。しかし、まだ管理局には路線情報が届いていない。\nローカルの記録（コミット履歴）を管理局に送る必要がある。",
+        "terminal": "$ git remote -v\norigin  https://github.com/gr/train-line.git (fetch)\norigin  https://github.com/gr/train-line.git (push)",
+        "choices": null,
+        "graph": "ch2-remote-added",
+        "nextLabel": "路線図を送る"
+      },
+      {
+        "char": "建設局長",
+        "text": "ローカルの路線図（コミット履歴）を管理局に送りましょう。\n本線（main）を origin に送るコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git push origin main",
+            "correct": true
+          },
+          {
+            "label": "git send origin main",
+            "correct": false
+          },
+          {
+            "label": "git upload origin main",
+            "correct": false
+          },
+          {
+            "label": "git deploy origin main",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git push origin main で、本線の記録が管理局に送信された。\npush は『押し出す』＝自分の変更を相手に送ること。origin が送り先、main が送る路線だ。",
+          "ng": "git push origin main が正しい。push は自分のコミットをリモートに送るコマンドだ。"
+        },
+        "graph": "ch2-pushed"
+      },
+      {
+        "char": "現場監督",
+        "text": "あ、大変です！ push する前に気づいたんですが……\n川崎駅のコミットに、時刻表ファイルを追加し忘れていました。",
+        "terminal": "$ git log --oneline -1\na1b2c3d 川崎駅 駅舎を建設\n\n追加し忘れたファイル: timetable_kawasaki.json",
+        "choices": null,
+        "graph": "ch2-pushed",
+        "nextLabel": "修正する"
+      },
+      {
+        "char": "現場監督",
+        "text": "直前のコミットにファイルを追加し忘れました。\nもう一度コミットし直さなくても、直前のコミットを修正できるコマンドがあります。\nどれですか？",
+        "terminal": "$ git add timetable_kawasaki.json\n# ステージングに追加済み",
+        "choices": [
+          {
+            "label": "git commit --amend",
+            "correct": true
+          },
+          {
+            "label": "git commit --fix",
+            "correct": false
+          },
+          {
+            "label": "git commit --edit",
+            "correct": false
+          },
+          {
+            "label": "git commit --redo",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git commit --amend で直前のコミットを修正できる。\nファイルの追加忘れだけでなく、コミットメッセージの修正にも使える。\npush前ならこれで安全に修正できる。",
+          "ng": "git commit --amend が正しい。amend は『修正する』という意味。直前のコミットを上書き修正できる。"
+        },
+        "graph": "ch2-pushed"
+      },
+      {
+        "char": "建設局長",
+        "text": "修正完了。では改めて push しよう。\n管理局に路線図が届いたら、次は正式な承認申請（プルリクエスト）を出す。",
+        "terminal": "$ git push origin main\nEnumerating objects: done.\nTo https://github.com/gr/train-line.git\n  * [new branch] main -> main",
+        "choices": null,
+        "graph": "ch2-pushed",
+        "nextLabel": "承認申請を出す"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "管理局の審査官です。路線図は受理しました。\n正式な運行認可を得るには『運行申請書』を提出してもらう必要があります。\nGitHubでは、これを何と呼びますか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "Pull Request（プルリクエスト）",
+            "correct": true
+          },
+          {
+            "label": "Push Request（プッシュリクエスト）",
+            "correct": false
+          },
+          {
+            "label": "Merge Request（マージリクエスト）",
+            "correct": false
+          },
+          {
+            "label": "Review Request（レビューリクエスト）",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ Pull Request（PR）は、変更の取り込みを依頼する仕組みだ。\n『自分の変更を pull（取り込んで）ください』というお願い。運行申請書のようなものだ。\n※ GitLabでは Merge Request と呼ぶが、仕組みは同じだ。",
+          "ng": "GitHubでは Pull Request（PR）と呼ぶ。『この変更を取り込んでほしい』という依頼の仕組みだ。"
+        },
+        "graph": "ch2-pr-created"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "運行申請書（プルリクエスト）を受理しました。\nレビューを行います。\n\n……確認しました。1点指摘があります。\n川崎駅の安全設備の説明が不足しています。修正して再提出してください。",
+        "terminal": "Review comment:\n「川崎駅の安全設備について\n 具体的な記載をお願いします。」",
+        "choices": null,
+        "graph": "ch2-review",
+        "nextLabel": "修正する"
+      },
+      {
+        "char": "現場監督",
+        "text": "指摘を受けて修正しました。\n修正をコミットして push すれば、プルリクエストに自動で反映されます。\n修正後の変更を管理局に再送するコマンドは？",
+        "terminal": "$ git add .\n$ git commit -m \"fix: 川崎駅の安全設備の説明を追記\"",
+        "choices": [
+          {
+            "label": "git push origin main",
+            "correct": true
+          },
+          {
+            "label": "git push --force origin main",
+            "correct": false
+          },
+          {
+            "label": "git pr update",
+            "correct": false
+          },
+          {
+            "label": "git resubmit origin main",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ 修正を push すれば、PRに自動反映される。\n新しいPRを作り直す必要はない。同じブランチに push するだけだ。",
+          "ng": "git push origin main が正しい。同じブランチに push すれば、既存のPRに修正が自動反映される。"
+        },
+        "graph": "ch2-review-fixed"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "修正を確認しました。問題ありません。\n承認（Approve）します。マージを実行して、正式に路線を登録しましょう！",
+        "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+        "choices": null,
+        "graph": "ch2-pr-merged",
+        "nextLabel": "マージを実行"
+      },
+      {
+        "char": "建設局長",
+        "text": "路線が正式に登録された！\n開業記念に『バージョンタグ』を打っておこう。\n特定のコミットに名前を付けるコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git tag v1.0",
+            "correct": true
+          },
+          {
+            "label": "git mark v1.0",
+            "correct": false
+          },
+          {
+            "label": "git label v1.0",
+            "correct": false
+          },
+          {
+            "label": "git version v1.0",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git tag v1.0 で開業記念のタグが付いた。\nタグはコミットに『名札』を付ける機能だ。リリースや重要なマイルストーンの目印になる。",
+          "ng": "git tag v1.0 が正しい。タグは特定のコミットに名前を付ける機能だ。"
+        },
+        "graph": "ch2-tagged"
+      },
+      {
+        "char": "建設局長",
+        "text": "GR、正式に開業！新橋から川崎まで、電車が走り始めた。\n\n今章で学んだこと：\n― git remote add で管理局との接続を確立\n― git push で路線図を管理局に送信\n― git commit --amend で直前のコミットを修正\n― Pull Request で変更のレビューを依頼\n― レビュー指摘を修正して再 push\n― git tag でバージョンを記録\n\n次の章では、利用者が増えてきた路線をさらに延伸する。\nしかし……新駅の名前をめぐって、ひと騒動が起きるようだ。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch2-tagged",
+        "isLast": true,
+        "nextLabel": "第2章 完了"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "第3章",
+    "subtitle": "新しい駅を作ろう",
+    "description": "利用者が増え、新駅のニーズが高まってきた。しかし駅名をめぐって大騒動が起きる。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "feature/new-station 延伸工事"
+      },
+      {
+        "color": "#ff5252",
+        "label": "コンフリクト（衝突）"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "開業以来、利用者が増え続けている。\n沿線住民からは『川崎の先にも駅を作ってほしい』という声が高まってきた。\n次の駅を建設しよう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-start",
+        "nextLabel": "延伸計画を始める"
+      },
+      {
+        "char": "建設局長",
+        "text": "住民からの要望を整理する必要がある。\nRailHubには、こういった問題提起や要望を記録・管理する仕組みがある。\nこれを何と呼ぶ？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "Issue（イシュー）",
+            "correct": true
+          },
+          {
+            "label": "Ticket（チケット）",
+            "correct": false
+          },
+          {
+            "label": "Report（レポート）",
+            "correct": false
+          },
+          {
+            "label": "Thread（スレッド）",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ Issue は問題提起・要望・議論を記録する仕組みだ。\n住民の声を整理して議論するための『公聴会の議事録』のようなものだ。",
+          "ng": "RailHub（GitHub）では Issue と呼ぶ。問題提起や要望を記録し、チームで議論できる。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "Issue を立てました！\n『川崎の先に新駅を建設してください』\nこの要望に適切なラベルはどれですか？",
+        "terminal": "Issue #7: 川崎以南への路線延伸を要望\nStatus: Open\nComments: 3",
+        "choices": [
+          {
+            "label": "enhancement（機能改善・新機能）",
+            "correct": true
+          },
+          {
+            "label": "bug（バグ）",
+            "correct": false
+          },
+          {
+            "label": "discussion（議論）",
+            "correct": false
+          },
+          {
+            "label": "wontfix（対応しない）",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ enhancement は『新しい機能・改善の要望』に使うラベルだ。\n新駅の建設は新機能の追加と同じ扱いになる。",
+          "ng": "enhancement が適切だ。新駅の建設は新機能の追加と同じ扱いになる。"
+        },
+        "graph": "ch3-start"
+      },
+      {
+        "char": "建設局長",
+        "text": "Issueでの議論の結果、新駅の建設が決定した。\n工事用の支線を作って作業しよう。",
+        "terminal": "$ git switch -c feature/new-station\nSwitched to a new branch 'feature/new-station'",
+        "choices": null,
+        "graph": "ch3-branch-created",
+        "nextLabel": "工事を進める"
+      },
+      {
+        "char": "現場監督",
+        "text": "駅舎の建設が進んでいます。\nところで、新駅の名前を決めなければなりません。\n会社側から案が提出されました。",
+        "terminal": "$ cat station-name.txt\nみなとみらいイノベーションゲートウェイ",
+        "choices": null,
+        "graph": "ch3-branch-created",
+        "nextLabel": "名前を確認する"
+      },
+      {
+        "char": "建設局長",
+        "text": "国際都市にふさわしい、未来感あふれる名称だ。\nこれで決まりだな。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-branch-created",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "ちょっと待ってください！\nIssue に住民の声が殺到しています。",
+        "terminal": "Issue #8: 新駅の名称について\n---\n会社側:  「みなとみらいイノベーションゲートウェイ」を提案します。\n          国際都市横浜にふさわしい、未来感あふれる名称です。\n\n住民A:   反対！長すぎて看板に入らない\n住民B:   そもそも読めない\n住民C:   「横浜」でいいじゃないか！\n住民D:   +1\n\nComments: 42  👎 38",
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "状況を確認する"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "黙って見ていられず、住民側でも station-name.txt を編集しました。\n会社側と住民側が同じファイルを別々に編集してしまっています。",
+        "terminal": "$ git merge feature/new-station\nCONFLICT (content): Merge conflict in station-name.txt\nAutomatic merge failed; fix conflicts and then commit.",
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "コンフリクトを確認する"
+      },
+      {
+        "char": "現場監督",
+        "text": "コンフリクトが発生しました！\nどこが衝突しているか確認しましょう。\n衝突箇所の詳細を表示するコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git diff",
+            "correct": true
+          },
+          {
+            "label": "git status",
+            "correct": false
+          },
+          {
+            "label": "git log",
+            "correct": false
+          },
+          {
+            "label": "git show",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git diff でコンフリクトの詳細が確認できる。\nどの行が衝突しているか、双方の変更内容が表示される。",
+          "ng": "git diff が最適だ。status は衝突ファイル名だけだが、diff は具体的な内容を見られる。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "現場監督",
+        "text": "ファイルの中を見てみましょう。\nGitは衝突箇所に特別なマーカーを挿入します。\n『自分の変更』と『相手の変更』を区切る記号はどれですか？",
+        "terminal": "<<<<<<< HEAD\nみなとみらいイノベーションゲートウェイ\n=======\n横浜\n>>>>>>> feature/new-station",
+        "choices": [
+          {
+            "label": "<<<<<<< と ======= と >>>>>>>",
+            "correct": true
+          },
+          {
+            "label": "### と --- と ###",
+            "correct": false
+          },
+          {
+            "label": "/* と */ と //",
+            "correct": false
+          },
+          {
+            "label": "{{ と }} と ||",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ <<<<<<< が自分の変更の開始、======= が区切り、>>>>>>> が相手の変更の終了だ。\nこのマーカーを手動で編集して、最終的な内容を決める。",
+          "ng": "<<<<<<< ======= >>>>>>> がコンフリクトマーカーだ。Gitが自動で挿入する。手動で解消する必要がある。"
+        },
+        "graph": "ch3-conflict"
+      },
+      {
+        "char": "社員A",
+        "text": "社内でも『さすがに住民の声を無視できない』という意見が広がっています……",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "社員B",
+        "text": "看板の製作コストも試算しましたが、あの駅名、フォントサイズを限界まで下げないと入りません。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-conflict",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "社長",
+        "text": "……横浜、でいいだろう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-resolving",
+        "nextLabel": "コンフリクトを解消する"
+      },
+      {
+        "char": "建設局長",
+        "text": "方針が決まった。ファイルを『横浜』に書き換えた。\n解消後、Gitに『解決済み』と伝えるために何をする？",
+        "terminal": "（編集後の station-name.txt）\n横浜",
+        "choices": [
+          {
+            "label": "git add station-name.txt",
+            "correct": true
+          },
+          {
+            "label": "git resolve station-name.txt",
+            "correct": false
+          },
+          {
+            "label": "git fix station-name.txt",
+            "correct": false
+          },
+          {
+            "label": "git merge --continue",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ 解消したファイルを git add するとGitは『解決済み』と認識する。\n続けて commit してマージを完了させよう。",
+          "ng": "git add が正しい。衝突を解消したファイルを add することで、解決済みと宣言できる。"
+        },
+        "graph": "ch3-resolving"
+      },
+      {
+        "char": "現場監督",
+        "text": "工事ブランチをコミットして、RailHubに送りましょう。",
+        "terminal": "$ git status\nAll conflicts fixed but you are still merging.\n  (use \"git commit\" to conclude merge)",
+        "choices": [
+          {
+            "label": "git commit -m \"駅名を横浜に決定\" → git push origin feature/new-station",
+            "correct": true
+          },
+          {
+            "label": "git commit → git push origin main",
+            "correct": false
+          },
+          {
+            "label": "git merge --finish → git push",
+            "correct": false
+          },
+          {
+            "label": "git commit --merge → git send",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ 工事ブランチをコミットして push した。\n次は管理局に正式な承認申請を出そう。",
+          "ng": "工事ブランチを commit して push するのが正しい。mainへの push は管理局の承認後だ。"
+        },
+        "graph": "ch3-resolved"
+      },
+      {
+        "char": "建設局長",
+        "text": "工事ブランチをRailHubに送った。\n次は正式な承認申請（プルリクエスト）を出そう。\nIssue #8 と紐付けて申請する。",
+        "terminal": "PR #9: 横浜駅を建設\nbase: main ← compare: feature/new-station\nCloses #8\n\n工事内容：\n- station-name.txt: 駅名を「横浜」に決定\n- station_yokohama.html: 駅舎を建設",
+        "choices": null,
+        "graph": "ch3-resolved",
+        "nextLabel": "PRを提出する"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "PRを確認しました。\n駅名『横浜』、問題ありません。承認します。",
+        "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+        "choices": null,
+        "graph": "ch3-resolved",
+        "nextLabel": "マージを実行"
+      },
+      {
+        "char": "地元住民代表",
+        "text": "駅名が『横浜』に決まりました！\nPRがマージされたので、Issue #8 も自動でクローズされました。",
+        "terminal": "Issue #8: 新駅の名称について\nStatus: Closed ✓\nClosed by PR #9",
+        "choices": null,
+        "graph": "ch3-resolved",
+        "nextLabel": "Issue をクローズ"
+      },
+      {
+        "char": "建設局長",
+        "text": "横浜駅、営業運転開始！新橋から横浜まで、4つの駅が繋がった。\nなお、川崎〜横浜間には、その後神奈川駅も開業し、路線はさらに充実した。\n\n今章で学んだこと：\n― Issue で要望・議論を管理\n― ラベルで Issue を分類\n― git diff でコンフリクト箇所を確認\n― コンフリクトマーカーの読み方（<<<<<<< ======= >>>>>>>）\n― git add で解決済みを宣言\n― PRとIssueを紐付けて管理局の承認を得る\n\n……ところで、この『横浜』という駅名。\n将来また変わることになるとは、このとき誰も知らなかった。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch3-resolved",
+        "isLast": true,
+        "nextLabel": "第3章 完了"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "第4章",
+    "subtitle": "横浜駅移転計画",
+    "description": "1915年8月15日、横浜駅の移転計画が発動。しかしその夜、前代未聞の事件が起きる。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "変更中の履歴"
+      },
+      {
+        "color": "#ff5252",
+        "label": "⚠ 異常事態"
+      },
+      {
+        "color": "#00e676",
+        "label": "復旧"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "1915年8月15日。本日、横浜駅の移転計画が発動する。\n\n現在の横浜駅は場所が不便だという声が上がっている。\n新しい場所に横浜駅を移転し、旧横浜駅は『桜木町駅』に改名する。\n\n2つの作業を同じ日に完了させなければならない。\n― 旧横浜駅を桜木町駅に改名\n― 新しい場所に横浜駅を建設",
+        "terminal": "$ git log --oneline\nf1a2b3c 横浜駅 開業\ne2b3c4d 神奈川駅 開業\nd3c4d5e 川崎駅 開業\nc4d5e6f 品川駅 開業\nb5e6f7g 新橋駅 開業",
+        "choices": null,
+        "graph": "ch4-start",
+        "nextLabel": "作業を開始する"
+      },
+      {
+        "char": "現場監督",
+        "text": "まず横浜駅のコミットメッセージを『桜木町駅 開業』に変えましょう。\n直前のコミットを修正するコマンドを使ってみましょう。",
+        "terminal": "$ git log --oneline -1\nf1a2b3c 横浜駅 開業   ← これを変えたい",
+        "choices": [
+          {
+            "label": "git commit --amend",
+            "correct": true
+          },
+          {
+            "label": "git commit --fix",
+            "correct": false
+          },
+          {
+            "label": "git commit --edit",
+            "correct": false
+          },
+          {
+            "label": "git commit --redo",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "git commit --amend を実行した。\n横浜駅のコミットは一番上にあるから、今回はたまたま使えた。\nでは神奈川駅のコミットはどうだろう？　git log を見ると横浜駅の下にある。",
+          "ng": "git commit --amend が直前のコミットを修正するコマンドだ。"
+        },
+        "graph": "ch4-amend"
+      },
+      {
+        "char": "現場監督",
+        "text": "では神奈川駅のコミットも確認しましょう。\ngit log を見ると、横浜駅の下にあります。\nもう一度 --amend を使ってみましょう。",
+        "terminal": "$ git log --oneline\nf1a2b3c 桜木町駅 開業   ← 修正済み\ne2b3c4d 神奈川駅 開業   ← これも変えたい場合は？\nd3c4d5e 川崎駅 開業",
+        "choices": null,
+        "graph": "ch4-amend",
+        "nextLabel": "--amend を試す"
+      },
+      {
+        "char": "建設局長",
+        "text": "実は今回、神奈川駅は変更しない。\nしかし、もし桜木町駅の下にあるコミットを変えたくなった場合、\n--amend では修正できない。\n--amend は『直前のコミット』にしか使えないからだ。\n\n2つ以上前のコミットを変えるには、別の方法が必要だ。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-amend",
+        "nextLabel": "別の方法を学ぶ"
+      },
+      {
+        "char": "現場監督",
+        "text": "過去のコミットを遡って編集するコマンドがあります。\nどれだと思いますか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git rebase -i HEAD~3",
+            "correct": true
+          },
+          {
+            "label": "git edit HEAD~3",
+            "correct": false
+          },
+          {
+            "label": "git amend HEAD~3",
+            "correct": false
+          },
+          {
+            "label": "git history --edit 3",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git rebase -i で過去のコミットを対話的に編集できる。\nHEAD~3 は『3つ前まで遡る』という意味。\n-i は interactive（対話的）の略だ。",
+          "ng": "git rebase -i HEAD~3 が正しい。-i で対話モードになり、過去のコミット履歴を自由に編集できる。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "現場監督",
+        "text": "git rebase -i を実行するとエディタが開きます。\nこんな画面が表示されます。まず内容を確認しましょう。",
+        "terminal": "pick e2b3c4d 神奈川駅 開業\npick f1a2b3c 桜木町駅 開業\n\n# Commands:\n# p, pick   = そのまま使う\n# r, reword = メッセージを変更する\n# e, edit   = コミット自体を編集する\n# s, squash = 前のコミットと統合する\n# d, drop   = コミットを削除する",
+        "choices": null,
+        "graph": "ch4-rebase",
+        "nextLabel": "操作を指定する"
+      },
+      {
+        "char": "建設局長",
+        "text": "各コミットの先頭に『pick』と書いてある。\n『このコミットをそのまま使う』という意味だ。\nここを書き換えることで操作を指定できる。\n\n今回は桜木町駅のメッセージを変更したい。\npick を何に変えればいい？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "reword",
+            "correct": true
+          },
+          {
+            "label": "edit",
+            "correct": false
+          },
+          {
+            "label": "squash",
+            "correct": false
+          },
+          {
+            "label": "drop",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ reword でコミットメッセージだけを変更できる。\nedit はファイル内容も変えたい時、squash は複数コミットを1つにまとめる時に使う。",
+          "ng": "reword が正しい。メッセージだけ変えたい → reword、内容も変えたい → edit だ。"
+        },
+        "graph": "ch4-rebase"
+      },
+      {
+        "char": "現場監督",
+        "text": "rebase が完了しました。git log で確認してみましょう。",
+        "terminal": "$ git log --oneline\nf1a2b3c 桜木町駅 開業   ← 書き換わった！\ne2b3c4d 神奈川駅 開業\nd3c4d5e 川崎駅 開業\nc4d5e6f 品川駅 開業\nb5e6f7g 新橋駅 開業",
+        "choices": null,
+        "graph": "ch4-rebase",
+        "nextLabel": "新横浜駅を建設する"
+      },
+      {
+        "char": "建設局長",
+        "text": "路線図の記録が修正された。\n次は新しい場所に横浜駅を建設しよう。",
+        "terminal": "$ git add station_yokohama_new.html\n$ git status\nChanges to be committed:\n  new file: station_yokohama_new.html",
+        "choices": [
+          {
+            "label": "git commit -m \"横浜駅 開業（二代目）1915/8/15\"",
+            "correct": true
+          },
+          {
+            "label": "git commit -m \"横浜駅\"",
+            "correct": false
+          },
+          {
+            "label": "git save -m \"横浜駅 開業\"",
+            "correct": false
+          },
+          {
+            "label": "git push -m \"横浜駅 開業\"",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ 二代目横浜駅が誕生した。\n同じ日付をメッセージに記録しておくと、後から見て分かりやすい。",
+          "ng": "git commit -m が正しい。メッセージは後から見てわかるように書こう。"
+        },
+        "graph": "ch4-new-station"
+      },
+      {
+        "char": "建設局長",
+        "text": "修正した路線図をRailHubに提出しよう。",
+        "terminal": "$ git push origin main\n! [rejected] main -> main (non-fast-forward)\nerror: 受理できません。",
+        "choices": null,
+        "graph": "ch4-new-station",
+        "nextLabel": "どうした？"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "少々お待ちください。\n路線図の内容が以前の提出と食い違っています。\n確認させてください。\n\n……桜木町駅への改名について、住民説明会は実施しましたか？\n告知期間は満たしていますか？",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-danger",
+        "nextLabel": "手続き済みを証明する"
+      },
+      {
+        "char": "建設局長",
+        "text": "住民説明会は実施済みです。告知期間も満たしています。\n必要な手続きはすべて完了しています。\n\n手続き済みであることを証明して、正式に路線図の上書き申請をしましょう。\nこのような場合に使う push のオプションはどれですか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git push --force-with-lease origin main",
+            "correct": true
+          },
+          {
+            "label": "git push --force origin main",
+            "correct": false
+          },
+          {
+            "label": "git push -f origin main",
+            "correct": false
+          },
+          {
+            "label": "git push --overwrite origin main",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ --force-with-lease は『他の担当者が push していなければ上書き申請する』安全策付きだ。\n--force は無条件に上書きするため、他の担当者の作業を消してしまう危険がある。",
+          "ng": "--force-with-lease が最も安全だ。--force は他の人の変更も上書きしてしまう。手続きを踏んだ上で、安全に上書き申請しよう。"
+        },
+        "graph": "ch4-force-push"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "手続きを確認しました。問題ありません。\n路線図の修正を承認します。",
+        "terminal": "✓ 住民説明会: 実施済み\n✓ 告知期間: 満了\n✓ 路線図の修正: 承認\n→ 桜木町駅 改称\n→ 横浜駅（二代目） 開業",
+        "choices": null,
+        "graph": "ch4-force-push",
+        "nextLabel": "その夜……"
+      },
+      {
+        "char": "建設局長",
+        "text": "桜木町駅への改称、二代目横浜駅の開業、すべて完了した。\nあとは営業運転を待つだけだ……",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-force-push",
+        "nextLabel": "深夜……"
+      },
+      {
+        "char": "現場監督",
+        "text": "た、大変です！！",
+        "terminal": "⚠ ALERT ⚠\n横浜駅が増殖しています\n現在の横浜駅数: 7\nお客様が横浜駅から出られません",
+        "choices": null,
+        "graph": "ch4-incident",
+        "nextLabel": "何が起きている？"
+      },
+      {
+        "char": "建設局長",
+        "text": "git log を確認すると……謎のコミットが大量に追加されている！",
+        "terminal": "$ git log --oneline\ng9h0i1j 横浜駅・最終形態\nf8g9h0i 横浜駅・暫定B\ne7f8g9h 横浜駅・暫定A\nd6e7f8g 横浜駅・拡張3\nc5d6e7f 横浜駅・拡張2\nb4c5d6e 横浜駅・拡張1\na3b4c5d 横浜駅 開業（二代目）\nf1a2b3c 桜木町駅 開業\n...",
+        "choices": null,
+        "graph": "ch4-incident",
+        "nextLabel": "対処する"
+      },
+      {
+        "char": "現場監督",
+        "text": "謎のコミットを削除しましょう。\ngit rebase -i で謎のコミットを削除するには、pick を何に変えますか？",
+        "terminal": "pick b4c5d6e 横浜駅・拡張1\npick c5d6e7f 横浜駅・拡張2\npick d6e7f8g 横浜駅・拡張3\npick e7f8g9h 横浜駅・暫定A\npick f8g9h0i 横浜駅・暫定B\npick g9h0i1j 横浜駅・最終形態",
+        "choices": [
+          {
+            "label": "drop",
+            "correct": true
+          },
+          {
+            "label": "reword",
+            "correct": false
+          },
+          {
+            "label": "edit",
+            "correct": false
+          },
+          {
+            "label": "squash",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ drop でコミットの記録を削除できる。\n謎のコミットをすべて drop して、正常な状態に戻そう。",
+          "ng": "drop が正しい。コミットを丸ごと削除する操作だ。"
+        },
+        "graph": "ch4-revert"
+      },
+      {
+        "char": "建設局長",
+        "text": "謎のコミットを drop したが……まだ横浜駅の増殖が止まらない。\n増殖前の状態に完全に戻す必要がある。\n特定のコミットの変更を『打ち消す』新しいコミットを作るコマンドは？",
+        "terminal": "⚠ 横浜駅数: 3\nまだ増殖中……",
+        "choices": [
+          {
+            "label": "git revert a3b4c5d",
+            "correct": true
+          },
+          {
+            "label": "git reset a3b4c5d",
+            "correct": false
+          },
+          {
+            "label": "git undo a3b4c5d",
+            "correct": false
+          },
+          {
+            "label": "git delete a3b4c5d",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git revert は指定コミットの変更を打ち消す新しいコミットを作る。\nreset と違い、歴史を書き換えずに安全に取り消しができる。",
+          "ng": "git revert が正しい。reset は歴史を書き換えるが、revert は打ち消しコミットを新しく作るため安全だ。"
+        },
+        "graph": "ch4-revert"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜駅の増殖が止まりました……！\n二代目横浜駅が1つだけ、正常に存在しています。",
+        "terminal": "$ git log --oneline\nz9y8x7w revert: 横浜駅増殖を打ち消し\na3b4c5d 横浜駅 開業（二代目）\nf1a2b3c 桜木町駅 開業\ne2b3c4d 神奈川駅 開業\n...\n\n現在の横浜駅数: 1 ✓",
+        "choices": null,
+        "graph": "ch4-safe",
+        "nextLabel": "収束確認"
+      },
+      {
+        "char": "建設局長",
+        "text": "……何があったのかは、口外無用だ。\n\n今章で学んだこと：\n― git commit --amend で直前のコミットを修正\n― amend は直前のコミットにしか使えない\n― git rebase -i で過去のコミットを対話的に編集\n― reword でメッセージを変更\n― drop でコミットの記録を削除\n― push後の修正は手続きを踏んで --force-with-lease で申請\n― git revert で安全にコミットを打ち消す\n\n旧横浜駅は桜木町駅と名を変えた。\n初代横浜駅は現在の桜木町駅。1872年の開業当時、横浜駅は今の桜木町にあったんだ。\n\n次の章では、みなとみらい方面への新路線を迎え入れる。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch4-safe",
+        "isLast": true,
+        "nextLabel": "第4章 完了"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "第5章",
+    "subtitle": "みなとみらい線を迎え入れよう",
+    "description": "横浜マリン鉄道との相互乗り入れが決まった。独立した路線をGRの管理下に取り込む方法を学ぼう。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線（GR）"
+      },
+      {
+        "color": "#a855f7",
+        "label": "minatomiral 横浜マリン鉄道"
+      },
+      {
+        "color": "#00e676",
+        "label": "cherry-pick"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "横浜駅の乗降客数が急増している。\nみなとみらい方面へのアクセス需要に応えるため、\n横浜マリン鉄道という新会社を設立することになった。\n\nGRとは独立した路線だが、横浜駅で相互乗り入れをする。\nGRの路線図の中に、マリン鉄道の路線図を取り込もう。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-start",
+        "nextLabel": "取り込み方を学ぶ"
+      },
+      {
+        "char": "建設局長",
+        "text": "別会社（別リポジトリ）の路線図を、自社の路線図の中に組み込む仕組みがある。\nどのコマンドで取り込む？",
+        "terminal": "横浜マリン鉄道のリポジトリURL:\nhttps://railhub.com/marina/minatomiral-line.git",
+        "choices": [
+          {
+            "label": "git submodule add https://railhub.com/marina/minatomiral-line.git",
+            "correct": true
+          },
+          {
+            "label": "git import https://railhub.com/marina/minatomiral-line.git",
+            "correct": false
+          },
+          {
+            "label": "git merge https://railhub.com/marina/minatomiral-line.git",
+            "correct": false
+          },
+          {
+            "label": "git clone https://railhub.com/marina/minatomiral-line.git",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule add で別リポジトリを子リポジトリとして取り込める。\nclone と違い、元のリポジトリとの繋がりを保ったまま取り込むのが特徴だ。",
+          "ng": "git submodule add が正しい。clone は独立したコピーを作るが、submodule は元のリポジトリとの繋がりを保つ。"
+        },
+        "graph": "ch5-submodule-added"
+      },
+      {
+        "char": "現場監督",
+        "text": "submodule を追加すると、.gitmodules というファイルが自動で作られました。\n中身を見てみましょう。",
+        "terminal": "$ cat .gitmodules\n[submodule \"minatomiral-line\"]\n  path = minatomiral-line\n  url = https://railhub.com/marina/minatomiral-line.git",
+        "choices": null,
+        "graph": "ch5-submodule-added",
+        "nextLabel": "協定書を確認する"
+      },
+      {
+        "char": "建設局長",
+        "text": ".gitmodules は2社の乗り入れ協定書のようなものだ。\n『どの路線を、どこから取り込むか』が記録されている。\nこれをコミットして、RailHubに登録しよう。",
+        "terminal": "$ git add .gitmodules minatomiral-line\n$ git commit -m \"横浜マリン鉄道との乗り入れ協定を締結\"",
+        "choices": null,
+        "graph": "ch5-submodule-added",
+        "nextLabel": "しばらく後……"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜マリン鉄道が新しい駅を追加したようです。\n確認してみましょう。",
+        "terminal": "$ ls minatomiral-line/\nstation_minatomirai.html\nstation_bashamichi.html\n station_nihon-odori.html\nstation_motomachi.html  ← 新しく追加された\n\n$ git log minatomiral-line\n（変更が表示されない）",
+        "choices": null,
+        "graph": "ch5-submodule-added",
+        "nextLabel": "なぜ反映されない？"
+      },
+      {
+        "char": "建設局長",
+        "text": "submodule は自動では更新されない。\n取り込んだ時点のバージョンで止まっている。\n\n子会社の最新状態を取り込むには、明示的に更新を指示する必要がある。\nどのコマンドを使う？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git submodule update --remote",
+            "correct": true
+          },
+          {
+            "label": "git submodule sync",
+            "correct": false
+          },
+          {
+            "label": "git pull submodule",
+            "correct": false
+          },
+          {
+            "label": "git fetch --submodules",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git submodule update --remote で子会社の最新状態を取り込める。\n--remote がないと『登録時点のバージョン』に戻ってしまうので注意だ。",
+          "ng": "git submodule update --remote が正しい。submodule は自動更新されないため、明示的に指示が必要だ。"
+        },
+        "graph": "ch5-submodule-updated"
+      },
+      {
+        "char": "現場監督",
+        "text": "元町・中華街駅が取り込まれました！\n\n今度はGR側が関内駅を追加します。\n関内には野球場があるので、需要が見込めます。",
+        "terminal": "$ git add station_kannai.html\n$ git commit -m \"関内駅 開業（野球場最寄り）\"",
+        "choices": null,
+        "graph": "ch5-gr-added",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "GRが関内駅を追加したが、横浜マリン鉄道側のリポジトリには関内駅は見えない。\n\nsubmodule の関係は一方向だ。\n― GRはマリン鉄道の変更を取り込める（submodule update --remote）\n― マリン鉄道はGRの変更を自動では受け取れない\n\nこれは実際の路線でも同じだ。\n相互乗り入れでも、それぞれの路線は独立して管理されている。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-gr-added",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "現場監督",
+        "text": "マリン鉄道側から連絡がありました。\n『みなとみらい駅でバリアフリー工事をしました。\n他の駅にも同じ工事を適用してほしい』とのことです。\n\nこのバリアフリー工事のコミットだけをGR本線に取り込みたい。\nどのコマンドを使いますか？",
+        "terminal": "横浜マリン鉄道のコミット:\na1b2c3d バリアフリー設備を設置（みなとみらい駅）",
+        "choices": [
+          {
+            "label": "git cherry-pick a1b2c3d",
+            "correct": true
+          },
+          {
+            "label": "git merge a1b2c3d",
+            "correct": false
+          },
+          {
+            "label": "git pick a1b2c3d",
+            "correct": false
+          },
+          {
+            "label": "git apply a1b2c3d",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git cherry-pick で特定のコミットだけを選んで取り込める。\nサクランボを一粒だけ摘む（pick）イメージだ。ブランチ全体ではなく、特定の変更だけが欲しい時に使う。",
+          "ng": "git cherry-pick が正しい。特定のコミットだけをつまみ食いする操作だ。merge はブランチ全体を統合するが、cherry-pick は1つを選べる。"
+        },
+        "graph": "ch5-cherry-pick"
+      },
+      {
+        "char": "建設局長",
+        "text": "バリアフリー設備がGR全駅に適用された。\n\nところで、新しくGRに参加するメンバーのために確認しておこう。\nsubmodule を含むリポジトリを clone する場合、submodule も一緒に取り込むオプションは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git clone --recurse-submodules https://railhub.com/gr/train-line.git",
+            "correct": true
+          },
+          {
+            "label": "git clone --with-submodules https://railhub.com/gr/train-line.git",
+            "correct": false
+          },
+          {
+            "label": "git clone --include-all https://railhub.com/gr/train-line.git",
+            "correct": false
+          },
+          {
+            "label": "git clone --deep https://railhub.com/gr/train-line.git",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ --recurse-submodules を付けると、submodule のリポジトリも一緒に取り込まれる。\nこれを忘れると submodule のフォルダが空のまま になるので注意だ。",
+          "ng": "--recurse-submodules が正しい。忘れると submodule のフォルダが空のままになる。後から git submodule update --init で補完することもできる。"
+        },
+        "graph": "ch5-cherry-pick"
+      },
+      {
+        "char": "建設局長",
+        "text": "みなとみらい線との相互乗り入れが正式に開始された。\n\n今章で学んだこと：\n― git submodule add で別リポジトリを子として取り込む\n― .gitmodules が乗り入れ協定書の役割を果たす\n― submodule は自動更新されない\n― git submodule update --remote で最新を取り込む\n― git cherry-pick で特定のコミットだけを選んで流用する\n― git clone --recurse-submodules で submodule ごと取得する\n\n次の章では、GRに新しいメンバーが加わる。\n……なかなかのやらかしっぷりを発揮してくれる。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch5-cherry-pick",
+        "isLast": true,
+        "nextLabel": "第5章 完了"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "第6章",
+    "subtitle": "開発環境を整えよう",
+    "description": "GRに新人・田中くんが入社した。やらかしが続くが、おかげで開発環境が整っていく。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "feature ブランチ"
+      },
+      {
+        "color": "#ff5252",
+        "label": "⚠ やらかし"
+      },
+      {
+        "color": "#00e676",
+        "label": "✓ 対策済み"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "今日からGRに新しいメンバーが加わった。\n田中くん、よろしく頼む。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-start",
+        "nextLabel": "田中くんに会う"
+      },
+      {
+        "char": "田中くん",
+        "text": "田中です！よろしくお願いします！\nGitは……まあ、なんとなく使ってました！",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-start",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "現場監督",
+        "text": "……『なんとなく』が一番怖い。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-start",
+        "nextLabel": "仕事を始める"
+      },
+      {
+        "char": "田中くん",
+        "text": "では早速、新橋駅の改修コミットをRailHubに送ります！",
+        "terminal": "$ git push origin main\nEnumerating objects: done.\nTo https://railhub.com/gr/train-line.git\n  a1b2c3d..e4f5g6h main -> main",
+        "choices": null,
+        "graph": "ch6-danger",
+        "nextLabel": "……？"
+      },
+      {
+        "char": "建設局長",
+        "text": "待て！！\nmainに直接pushした？！\nレビューなしで本線に直接反映されてしまった。\nこれは危険だ。\n\nmainへの直接pushを禁止するルールを設定しよう。\nRailHubのこの機能を何と呼ぶ？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "ブランチ保護ルール",
+            "correct": true
+          },
+          {
+            "label": "ブランチロック",
+            "correct": false
+          },
+          {
+            "label": "プッシュ制限",
+            "correct": false
+          },
+          {
+            "label": "アクセス制御",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ ブランチ保護ルールを設定すると、指定ブランチへの直接pushを禁止できる。\nPR経由のマージのみ許可することで、必ず管理局のレビューを通る仕組みになる。",
+          "ng": "ブランチ保護ルール（Branch Protection Rules）が正しい。RailHubの設定画面で main への直接pushを禁止できる。"
+        },
+        "graph": "ch6-danger"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "設定しました。これで main への直接pushはエラーになります。\n以後、作業は必ずfeatureブランチで行い、PRを出して管理局の承認を得ること。\nよろしいですね、田中くん。",
+        "terminal": "RailHub > Settings > Branches\n✓ Require pull request before merging\n✓ Require approvals: 1（管理局審査官）\n✓ Do not allow bypassing the above settings",
+        "choices": null,
+        "graph": "ch6-protected",
+        "nextLabel": "翌日……"
+      },
+      {
+        "char": "田中くん",
+        "text": "わかりました！featureブランチで作業します！\n\n……あ、社内システムへの接続情報が書いてあるファイルも一緒にコミットしてもいいですか？",
+        "terminal": "$ git status\nUntracked files:\n  feature/station-update.html\n  .env                    ← 社内システムへの接続情報などが記載",
+        "choices": null,
+        "graph": "ch6-danger",
+        "nextLabel": "止める"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "ダメです！！\n.env には社内システムへの接続情報が入っている。\nRailHubに上げると社外に漏れる可能性がある。\n環境ごとに値も違うから、そもそもリポジトリで管理するものではない。\n\nGitが追跡しないファイルを指定する仕組みを使いましょう。\n何というファイルに設定しますか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": ".gitignore",
+            "correct": true
+          },
+          {
+            "label": ".gitexclude",
+            "correct": false
+          },
+          {
+            "label": ".gitskip",
+            "correct": false
+          },
+          {
+            "label": ".gitsecret",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ .gitignore に記載したファイルはGitが追跡しなくなる。\n.env や node_modules など、リポジトリに含めてはいけないものを列挙しておこう。",
+          "ng": ".gitignore が正しい。このファイルに記載したパターンに一致するファイルはGitに無視される。"
+        },
+        "graph": "ch6-danger"
+      },
+      {
+        "char": "佐藤さん",
+        "text": ".gitignore を作成しました。\n.env が追跡対象から外れました。",
+        "terminal": "$ cat .gitignore\n.env\n.env.*\nnode_modules/\n*.log\n\n$ git status\nUntracked files:\n  feature/station-update.html\n  （.envは表示されなくなった）",
+        "choices": null,
+        "graph": "ch6-protected",
+        "nextLabel": "数日後……"
+      },
+      {
+        "char": "現場監督",
+        "text": "田中くんのPRが届きました。\nコミット履歴を確認してみましょう。",
+        "terminal": "$ git log --oneline feature/tanaka-update\na1b2c3d あ\nb2c3d4e うーん\nc3d4e5f 修正\nd4e5f6g 最終\ne5f6g7h 最終2\nf6g7h8i 最終3（本当に）",
+        "choices": null,
+        "graph": "ch6-danger",
+        "nextLabel": "……"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "田中くん、コミットメッセージが意味をなしていません。\n『あ』とか『修正』では、何を変えたか後から分かりません。\n\nコミットメッセージのフォーマットを検証するツールを導入しましょう。\nどれですか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "commitlint",
+            "correct": true
+          },
+          {
+            "label": "Prettier",
+            "correct": false
+          },
+          {
+            "label": "ESLint",
+            "correct": false
+          },
+          {
+            "label": "Husky",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ commitlint はコミットメッセージのフォーマットを検証するツールだ。\n『feat: 新橋駅のホームを改修』のように、種別と説明を書くルールを強制できる。",
+          "ng": "commitlint が正しい。Prettier や ESLint はコードの整形・検証用。commitlint はコミットメッセージ専用だ。"
+        },
+        "graph": "ch6-danger"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "commitlint を設定しました。\n以後、このフォーマット以外のコミットはエラーになります。",
+        "terminal": "$ cat commitlint.config.js\nmodule.exports = { extends: ['@commitlint/config-conventional'] };\n\n$ git commit -m \"あ\"\n✗ subject may not be empty\n✗ type must be one of [feat, fix, docs, refactor, ...]",
+        "choices": null,
+        "graph": "ch6-protected",
+        "nextLabel": "さらに数日後……"
+      },
+      {
+        "char": "現場監督",
+        "text": "また田中くんのPRが来ました……\n差分を見ると、インデントがバラバラです。",
+        "terminal": "$ git diff feature/tanaka-update\n-    const station = '新橋';\n+  const station = '新橋';\n-      name: '新橋駅',\n+    name:  '新橋駅',",
+        "choices": null,
+        "graph": "ch6-danger",
+        "nextLabel": "確認する"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "スペースの数がバラバラです。\nこの状況、どんな種類のツールを導入すれば解決できますか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "フォーマッター（コードの見た目を自動統一するツール）",
+            "correct": true
+          },
+          {
+            "label": "リンター（コードの問題点を検出するツール）",
+            "correct": false
+          },
+          {
+            "label": "コミットリント（メッセージのフォーマットを検証するツール）",
+            "correct": false
+          },
+          {
+            "label": "トランスパイラー（コードを変換するツール）",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ フォーマッターはインデント・クォート・セミコロンなど、コードの見た目を自動で統一するツールだ。\nJavaScriptならPrettier、PythonならBlackなど、言語ごとに定番がある。",
+          "ng": "フォーマッターが正しい。見た目の統一はフォーマッターの役割。リンターは別の問題を担当する。"
+        },
+        "graph": "ch6-danger"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "フォーマッターを設定しました。\nコミット前に自動でフォーマットが適用されます。",
+        "terminal": "# フォーマッターの設定例（言語によって異なる）\n# JavaScript: Prettier\n# Python: Black / autopep8\n# Go: gofmt（標準搭載）\n\n$ git commit -m \"feat: 新橋駅ホームを改修\"\n✓ formatter: フォーマット適用済み\n→ コミット完了",
+        "choices": null,
+        "graph": "ch6-protected",
+        "nextLabel": "またまた数日後……"
+      },
+      {
+        "char": "現場監督",
+        "text": "今度は田中くんのコードに問題のある書き方が見つかりました。",
+        "terminal": "$ git diff feature/tanaka-update\n+ var stationName = '新橋';   // varは使わない\n+ if (stationName == '新橋') { // ==は型変換が起きて危険",
+        "choices": null,
+        "graph": "ch6-danger",
+        "nextLabel": "確認する"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "バグを生みやすい書き方をしています。\nこの状況、どんな種類のツールを導入すれば解決できますか？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "リンター（コードの問題点を検出するツール）",
+            "correct": true
+          },
+          {
+            "label": "フォーマッター（コードの見た目を自動統一するツール）",
+            "correct": false
+          },
+          {
+            "label": "コミットリント（メッセージのフォーマットを検証するツール）",
+            "correct": false
+          },
+          {
+            "label": "トランスパイラー（コードを変換するツール）",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ リンターはバグや問題のある書き方を検出するツールだ。\nフォーマッターが『見た目』を整えるのに対して、リンターは『品質』を守る役割を担う。\nJavaScriptならESLint、PythonならFlake8やRuffなどが定番だ。",
+          "ng": "リンターが正しい。コードの問題点を検出するのがリンターの役割。フォーマッターとは担当が違う。"
+        },
+        "graph": "ch6-danger"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "リンターを設定しました。\nこれでコミット前にコードの品質もチェックされます。",
+        "terminal": "# リンターの設定例（言語によって異なる）\n# JavaScript: ESLint\n# Python: Flake8 / Ruff\n# Go: staticcheck\n\n$ git commit -m \"feat: 新橋駅ホームを改修\"\n✓ formatter: フォーマット適用済み\n✓ linter: 問題なし\n✓ commitlint: フォーマット適合\n→ コミット完了",
+        "choices": null,
+        "graph": "ch6-safe",
+        "nextLabel": "田中くんの感想を聞く"
+      },
+      {
+        "char": "田中くん",
+        "text": "いやー、なんか気づいたら環境がめちゃくちゃ整いましたね。\n僕のおかげですかね？",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-safe",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "佐藤さん",
+        "text": "……あなたが引き金を引いただけです。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-safe",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "まあ、結果的に環境が整ったのは事実だ。\n\n今章で学んだこと：\n― ブランチ保護ルールで main への直接pushを禁止（管理局レビュー必須）\n― .gitignore で社内の接続情報をGitの追跡対象から除外\n― commitlint でコミットメッセージのフォーマットを強制\n― フォーマッター：コードの見た目を自動統一するツール\n― リンター：コードの品質問題を自動検出するツール\n\n次の章では、この環境をさらに発展させて自動化する。\n田中くん、まだ活躍（？）が続く。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch6-safe",
+        "isLast": true,
+        "nextLabel": "第6章 完了"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "第7章",
+    "subtitle": "自動化しよう",
+    "description": "新型検測車が導入された。保線作業のチェックが一気に自動化される。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "maintenance 保線作業"
+      },
+      {
+        "color": "#00e676",
+        "label": "検測 通過"
+      },
+      {
+        "color": "#ff5252",
+        "label": "検測 異常検知"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "今日はいい知らせがある。\nGRに新型検測車が導入された。\n\nこれまでは保線作業のあと、担当者が目視で確認してからでないと\n始発を出せなかった。\nこの新型検測車は、PRを出すだけで自動でチェックしてくれる。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-maintenance",
+        "nextLabel": "新型検測車を見に行く"
+      },
+      {
+        "char": "現場監督",
+        "text": "すごい……！PRを出すたびに自動で走るんですか？\nこれまでは作業のたびに人を呼んで確認してもらってたのに。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-maintenance",
+        "nextLabel": "設定を見る"
+      },
+      {
+        "char": "建設局長",
+        "text": "RailHub（GitHub）に内蔵されたCI機能を使う。\nリポジトリに設定ファイルを置くだけで動く。\nこのサービスを何と呼ぶ？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "RailHub Actions（GitHub Actions）",
+            "correct": true
+          },
+          {
+            "label": "RailHub CI",
+            "correct": false
+          },
+          {
+            "label": "RailHub Runner",
+            "correct": false
+          },
+          {
+            "label": "RailHub Inspector",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ RailHub Actions はリポジトリに設定ファイルを置くだけで、\nPRを検知して自動でジョブを実行できる。",
+          "ng": "RailHub Actions（GitHub Actions）が正しい。設定ファイルを置くだけで新型検測車が自動で走り始める。"
+        },
+        "graph": "ch7-maintenance"
+      },
+      {
+        "char": "建設局長",
+        "text": "設定ファイルはこうなっている。\nPRが出るたびに、レール締結・ゲージ・信号設備を自動でチェックする。",
+        "terminal": "$ cat .github/workflows/inspection.yml\nname: 新型検測\non: [pull_request]\njobs:\n  inspect:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: レール締結確認\n        run: check-rail-fastening .\n      - name: ゲージ（軌間）確認\n        run: check-gauge .\n      - name: 信号設備確認\n        run: check-signal .",
+        "choices": null,
+        "graph": "ch7-maintenance",
+        "nextLabel": "さっそく使ってみる"
+      },
+      {
+        "char": "現場監督",
+        "text": "川崎〜横浜間の保線作業が完了しました。\nPRを出してみましょう。",
+        "terminal": "$ git switch -c maintenance/track-adjustment-kawasaki\n$ git add .\n$ git commit -m \"fix: 川崎〜横浜間 軌道を調整\"\n$ git push origin maintenance/track-adjustment-kawasaki\n\n新型検測車、発車……",
+        "choices": null,
+        "graph": "ch7-ci-fail",
+        "nextLabel": "結果を待つ"
+      },
+      {
+        "char": "現場監督",
+        "text": "異常を検知しました。\nログを確認してみましょう。",
+        "terminal": "✗ 検測異常\n  ステップ: ゲージ（軌間）確認\n  詳細はログを確認してください",
+        "choices": null,
+        "graph": "ch7-ci-fail",
+        "nextLabel": "ログを確認する"
+      },
+      {
+        "char": "建設局長",
+        "text": "どこで異常が出たか特定しよう。\nコミット履歴を確認するコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git log",
+            "correct": true
+          },
+          {
+            "label": "git status",
+            "correct": false
+          },
+          {
+            "label": "git diff",
+            "correct": false
+          },
+          {
+            "label": "git show",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git log でコミット履歴を確認できる。\n--oneline を付けると1行で見やすくなる。",
+          "ng": "git log が正しい。--oneline オプションで1行表示にすると見やすい。"
+        },
+        "graph": "ch7-ci-fail"
+      },
+      {
+        "char": "現場監督",
+        "text": "履歴を確認すると、軌道調整のコミットが怪しそうです。\n中身を詳しく見てみましょう。",
+        "terminal": "$ git log --oneline\na1b2c3d fix: 川崎〜横浜間 軌道を調整   ← これを確認する\nb2c3d4e fix: 川崎〜横浜間 レールを交換",
+        "choices": [
+          {
+            "label": "git show a1b2c3d",
+            "correct": true
+          },
+          {
+            "label": "git log a1b2c3d",
+            "correct": false
+          },
+          {
+            "label": "git status a1b2c3d",
+            "correct": false
+          },
+          {
+            "label": "git diff a1b2c3d",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git show でそのコミットの変更内容を詳細に確認できる。",
+          "ng": "git show コミットID が正しい。そのコミットで何が変わったかを詳細に確認できる。"
+        },
+        "graph": "ch7-ci-fail"
+      },
+      {
+        "char": "現場監督",
+        "text": "わかりました。レールの間隔が基準値からずれています。\n調整が必要です。",
+        "terminal": "$ git show a1b2c3d\n- gauge: 1067,  // mm（正常）\n+ gauge: 1052,  // mm（← 15mm狭い）\n\n基準値: 1067mm（狭軌）\n実測値: 1052mm",
+        "choices": null,
+        "graph": "ch7-ci-fail",
+        "nextLabel": "修正する"
+      },
+      {
+        "char": "現場監督",
+        "text": "軌間を修正しました。pushすると検測が自動で再実行されます。",
+        "terminal": "$ git add .\n$ git commit -m \"fix: 川崎〜横浜間 軌間を修正（1052mm→1067mm）\"\n$ git push origin maintenance/track-adjustment-kawasaki\n\n新型検測車、再発車……",
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "nextLabel": "結果を待つ"
+      },
+      {
+        "char": "現場監督",
+        "text": "通過！",
+        "terminal": "✓ 検測通過\n  レール締結確認: 正常\n  ゲージ（軌間）: 正常（1067mm）\n  信号設備確認: 正常\n\n→ マージ可能",
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "nextLabel": "管理局の承認へ"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "検測結果を確認しました。問題ありません。承認します。",
+        "terminal": "✓ 検測: 通過\n✓ 管理局審査官: 承認\n→ マージ実行",
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "現場監督",
+        "text": "これまでは人が目視で確認していたチェックが、全部自動になった。\nPRを出せば検測車が走り、問題があればログに記録される。\n修正してpushすれば、また自動で走ってくれる。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "一気に現代化した。\n\n今章で学んだこと：\n― CI（継続的インテグレーション）でPR時に自動検測\n― RailHub Actions でワークフローを設定\n― git log でコミット履歴を確認\n― git show でコミットの変更内容を詳細確認\n― CIが落ちたら修正してpush、自動で再実行される\n\n次の章は最終章だ。\n今夜は、全駅に一斉ホームドアを設置する。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "isLast": true,
+        "nextLabel": "第7章 完了"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "第8章",
+    "subtitle": "一晩で全駅にホームドアを！",
+    "description": "深夜、全駅に一斉ホームドアを設置する。全駅の検測が通らなければ、始発は出せない。",
+    "legend": [
+      {
+        "color": "#00c8ff",
+        "label": "main 本線"
+      },
+      {
+        "color": "#ff9800",
+        "label": "各駅 設置作業"
+      },
+      {
+        "color": "#00e676",
+        "label": "検測 通過"
+      },
+      {
+        "color": "#ff5252",
+        "label": "⚠ 緊急対応"
+      }
+    ],
+    "scenes": [
+      {
+        "char": "建設局長",
+        "text": "今夜、横浜駅と桜木町駅に同時にホームドアを設置する。\n隣り合った2駅だが、それぞれ別のチームで並行して進めたい。\n\n終電から始発まで、約5時間。\n両駅の設置が完了して検測を通過しなければ、始発は出せない。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch7-ci-pass",
+        "nextLabel": "作戦を聞く"
+      },
+      {
+        "char": "建設局長",
+        "text": "通常、作業ブランチは1つだ。\nしかし今夜は横浜・桜木町を同時並行で進めたい。\n\nGitには、1つのリポジトリで複数の作業ディレクトリを同時に持てる仕組みがある。\nどのコマンドを使う？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git worktree add",
+            "correct": true
+          },
+          {
+            "label": "git branch --parallel",
+            "correct": false
+          },
+          {
+            "label": "git clone --multi",
+            "correct": false
+          },
+          {
+            "label": "git checkout --all",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git worktree add で、同じリポジトリを複数の場所に展開できる。\nそれぞれ別のブランチで独立して作業できる。\nリポジトリを丸ごとcloneしなくていいのが利点だ。",
+          "ng": "git worktree add が正しい。同じリポジトリで複数の作業ディレクトリを持てる。別々のブランチを同時に作業できる。"
+        },
+        "graph": "ch8-worktree"
+      },
+      {
+        "char": "現場監督",
+        "text": "全6駅の作業ディレクトリを展開しました。\nそれぞれ独立したブランチで作業を進めます。",
+        "terminal": "$ git worktree add ../work-yokohama feature/door-yokohama\n$ git worktree add ../work-sakuragicho feature/door-sakuragicho\n\n$ git worktree list\n/repo               main\n/work-yokohama      feature/door-yokohama\n/work-sakuragicho   feature/door-sakuragicho",
+        "choices": null,
+        "graph": "ch8-worktree",
+        "nextLabel": "作業開始"
+      },
+      {
+        "char": "現場監督",
+        "text": "2チームが並行して作業を進めている。\n桜木町駅の設置が完了した。横浜駅はまだ作業中だ。",
+        "terminal": "work-sakuragicho $ git commit -m \"feat: 桜木町駅 ホームドアを設置\"\nwork-yokohama    $ # 作業中……",
+        "choices": null,
+        "graph": "ch8-worktree",
+        "nextLabel": "作業継続中……"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜駅の作業中です。ホームドアの取り付けを進めています……",
+        "terminal": "work-yokohama $ # ホームドア設置中（未コミット）\nwork-yokohama $ git status\nChanges not staged for commit:\n  modified: platform_yokohama.json\n  modified: door_sensor_yokohama.json",
+        "choices": null,
+        "graph": "ch8-worktree",
+        "nextLabel": "そのとき……"
+      },
+      {
+        "char": "建設局長",
+        "text": "横浜駅の作業中に連絡が入った。\nホームドアのセンサー仕様が変更になった。\n最新の仕様書を取り込んでから作業を再開してほしい。",
+        "terminal": "⚠ 仕様変更通知\n  door_sensor_spec v2.1 → v2.2\n  センサーの取り付け位置が変更",
+        "choices": null,
+        "graph": "ch8-stash",
+        "nextLabel": "どうする？"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜駅の作業が途中だ。コミットもできない状態で最新仕様書を取り込めない。\n作業中の変更を一時退避させるコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git stash",
+            "correct": true
+          },
+          {
+            "label": "git save",
+            "correct": false
+          },
+          {
+            "label": "git pause",
+            "correct": false
+          },
+          {
+            "label": "git temp-commit",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git stash でコミットしていない変更を一時的に退避できる。\n作業ディレクトリがきれいな状態になるので、別の作業に切り替えられる。",
+          "ng": "git stash が正しい。未コミットの変更を一時退避して、作業ディレクトリをきれいにできる。"
+        },
+        "graph": "ch8-stash"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜駅の作業を退避しました。\n最新の仕様書を取り込みます。",
+        "terminal": "work-yokohama $ git stash\nSaved working directory and index state\nWIP on feature/door-yokohama: 「ホームドア設置中」\n\nwork-yokohama $ git pull origin feature/door-yokohama\n# 最新仕様書（door_sensor_spec v2.2）を取り込んだ",
+        "choices": null,
+        "graph": "ch8-stash",
+        "nextLabel": "安全確認完了"
+      },
+      {
+        "char": "現場監督",
+        "text": "最新仕様書の取り込みが完了しました。\n退避していた作業を復元して、新しい仕様で続きをやりましょう。\n退避した変更を復元するコマンドは？",
+        "terminal": null,
+        "choices": [
+          {
+            "label": "git stash pop",
+            "correct": true
+          },
+          {
+            "label": "git stash restore",
+            "correct": false
+          },
+          {
+            "label": "git stash resume",
+            "correct": false
+          },
+          {
+            "label": "git unstash",
+            "correct": false
+          }
+        ],
+        "feedback": {
+          "ok": "正解！ git stash pop で退避していた変更を復元できる。\nスタックに積まれた変更を取り出すイメージだ。",
+          "ng": "git stash pop が正しい。退避した変更をスタックから取り出して復元する。"
+        },
+        "graph": "ch8-stash"
+      },
+      {
+        "char": "現場監督",
+        "text": "作業が再開できた。横浜駅のホームドア設置を完了させよう。",
+        "terminal": "work-yokohama $ git stash pop\nOn branch feature/door-yokohama\nChanges not staged for commit:\n  modified: platform_yokohama.json\n  modified: door_sensor_yokohama.json\n\nwork-yokohama $ git commit -m \"feat: 横浜駅 ホームドアを設置\"",
+        "choices": null,
+        "graph": "ch8-stash",
+        "nextLabel": "残りの駅も完了させる"
+      },
+      {
+        "char": "現場監督",
+        "text": "横浜駅のホームドア設置も完了しました。\n両駅の設置完了です。\n\n各ブランチからPRを出して、検測を受けましょう。",
+        "terminal": "work-yokohama $ git commit -m \"feat: 横浜駅 ホームドアを設置\"\n\n横浜・桜木町 設置完了\n→ 各ブランチからPRを提出",
+        "choices": null,
+        "graph": "ch8-testing",
+        "nextLabel": "検測を受ける"
+      },
+      {
+        "char": "現場監督",
+        "text": "全6駅の検測が完了しました。",
+        "terminal": "✓ 横浜駅   ホームドア検測: 通過\n✓ 桜木町駅 ホームドア検測: 通過\n\n両駅 通過",
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "管理局の承認へ"
+      },
+      {
+        "char": "管理局審査官",
+        "text": "両駅の検測結果を確認しました。問題ありません。\n2件、承認します。",
+        "terminal": "✓ 2PR 承認\n→ マージ実行",
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "マージ"
+      },
+      {
+        "char": "建設局長",
+        "text": "横浜・桜木町へのホームドア設置、完了。\n始発列車、出発。",
+        "terminal": "06:00 桜木町発 横浜行き\n横浜・桜木町 ホームドア稼働中\n→ 定刻通り出発",
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "エピローグへ"
+      },
+      {
+        "char": "建設局長",
+        "text": "git init から始まった路線が、ここまで育った。\n\n今章で学んだこと：\n― git worktree add で複数駅を同時並行作業\n― git stash で作業中の変更を一時退避\n― git stash pop で退避した変更を復元\n\nGit鉄道、全線開通。",
+        "terminal": "$ git log --oneline\n新橋駅 開業\n品川駅 開業\n川崎駅 開業\n横浜駅 開業（初代）\n桜木町駅 改称\n横浜駅 開業（二代目）\n関内駅 開業\n全駅 ホームドア設置完了",
+        "choices": null,
+        "graph": "ch8-complete",
+        "isLast": true,
+        "nextLabel": "完走！"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "エピローグ",
+    "subtitle": "",
+    "description": "",
+    "legend": [],
+    "scenes": [
+      {
+        "char": null,
+        "text": "git log --oneline",
+        "terminal": "b5e6f7g 新橋駅 開業\nc4d5e6f 品川駅 開業\nd3c4d5e 川崎駅 開業\nf1a2b3c 桜木町駅 改称（初代横浜駅より）\na3b4c5d 横浜駅 開業（二代目）\n3f4g5h6 関内駅 開業\nz9y8x7w みなとみらい線 乗り入れ開始\np1q2r3s ブランチ保護・コミット規約を導入\nm4n5o6p 新型検測車 導入\nx7y8z9a 横浜・桜木町 ホームドア設置完了",
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "最初は、変更を記録するだけだった。\nどこを変えたか。いつ変えたか。誰が変えたか。\nそれだけでよかった。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "路線が伸びるにつれて、仕組みが変わっていった。\n\nブランチで、安全に試せるようになった。\nレビューで、一人で抱えなくてよくなった。\nCIで、変更のたびに自動で検証されるようになった。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": "建設局長",
+        "text": "なぜ、品質を守るのか。\n\n架線が切れれば、電車が止まる。\n軌間がずれれば、脱線する。\nホームドアが誤作動すれば、乗客が危険にさらされる。\n\nGitの仕組みは、記録するためだけにあるのではない。\n乗客を守るためにある。",
+        "terminal": null,
+        "choices": null,
+        "graph": "ch8-complete",
+        "nextLabel": "次へ"
+      },
+      {
+        "char": null,
+        "text": "今日もいつものように、始発電車が走る。",
+        "terminal": "06:00 新橋発 関内行き\n全線 正常運行中",
+        "choices": null,
+        "graph": "ch8-complete",
+        "isLast": true,
+        "nextLabel": "完走！"
+      }
+    ]
+  }
+]

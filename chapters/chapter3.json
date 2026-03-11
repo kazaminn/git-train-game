@@ -1,0 +1,214 @@
+{
+  "id": 2,
+  "title": "第3章",
+  "subtitle": "新しい駅を作ろう",
+  "description": "利用者が増え、新駅のニーズが高まってきた。しかし駅名をめぐって大騒動が起きる。",
+  "legend": [
+    { "color": "#00c8ff", "label": "main 本線" },
+    { "color": "#ff9800", "label": "feature/new-station 延伸工事" },
+    { "color": "#ff5252", "label": "コンフリクト（衝突）" }
+  ],
+  "scenes": [
+    {
+      "char": "建設局長",
+      "text": "開業以来、利用者が増え続けている。\n沿線住民からは『川崎の先にも駅を作ってほしい』という声が高まってきた。\n次の駅を建設しよう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-start",
+      "nextLabel": "延伸計画を始める"
+    },
+    {
+      "char": "建設局長",
+      "text": "住民からの要望を整理する必要がある。\nRailHubには、こういった問題提起や要望を記録・管理する仕組みがある。\nこれを何と呼ぶ？",
+      "terminal": null,
+      "choices": [
+        { "label": "Issue（イシュー）", "correct": true },
+        { "label": "Ticket（チケット）", "correct": false },
+        { "label": "Report（レポート）", "correct": false },
+        { "label": "Thread（スレッド）", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ Issue は問題提起・要望・議論を記録する仕組みだ。\n住民の声を整理して議論するための『公聴会の議事録』のようなものだ。",
+        "ng": "RailHub（GitHub）では Issue と呼ぶ。問題提起や要望を記録し、チームで議論できる。"
+      },
+      "graph": "ch3-start"
+    },
+    {
+      "char": "地元住民代表",
+      "text": "Issue を立てました！\n『川崎の先に新駅を建設してください』\nこの要望に適切なラベルはどれですか？",
+      "terminal": "Issue #7: 川崎以南への路線延伸を要望\nStatus: Open\nComments: 3",
+      "choices": [
+        { "label": "enhancement（機能改善・新機能）", "correct": true },
+        { "label": "bug（バグ）", "correct": false },
+        { "label": "discussion（議論）", "correct": false },
+        { "label": "wontfix（対応しない）", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ enhancement は『新しい機能・改善の要望』に使うラベルだ。\n新駅の建設は新機能の追加と同じ扱いになる。",
+        "ng": "enhancement が適切だ。新駅の建設は新機能の追加と同じ扱いになる。"
+      },
+      "graph": "ch3-start"
+    },
+    {
+      "char": "建設局長",
+      "text": "Issueでの議論の結果、新駅の建設が決定した。\n工事用の支線を作って作業しよう。",
+      "terminal": "$ git switch -c feature/new-station\nSwitched to a new branch 'feature/new-station'",
+      "choices": null,
+      "graph": "ch3-branch-created",
+      "nextLabel": "工事を進める"
+    },
+    {
+      "char": "現場監督",
+      "text": "駅舎の建設が進んでいます。\nところで、新駅の名前を決めなければなりません。\n会社側から案が提出されました。",
+      "terminal": "$ cat station-name.txt\nみなとみらいイノベーションゲートウェイ",
+      "choices": null,
+      "graph": "ch3-branch-created",
+      "nextLabel": "名前を確認する"
+    },
+    {
+      "char": "建設局長",
+      "text": "国際都市にふさわしい、未来感あふれる名称だ。\nこれで決まりだな。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-branch-created",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "地元住民代表",
+      "text": "ちょっと待ってください！\nIssue に住民の声が殺到しています。",
+      "terminal": "Issue #8: 新駅の名称について\n---\n会社側:  「みなとみらいイノベーションゲートウェイ」を提案します。\n          国際都市横浜にふさわしい、未来感あふれる名称です。\n\n住民A:   反対！長すぎて看板に入らない\n住民B:   そもそも読めない\n住民C:   「横浜」でいいじゃないか！\n住民D:   +1\n\nComments: 42  👎 38",
+      "choices": null,
+      "graph": "ch3-conflict",
+      "nextLabel": "状況を確認する"
+    },
+    {
+      "char": "地元住民代表",
+      "text": "黙って見ていられず、住民側でも station-name.txt を編集しました。\n会社側と住民側が同じファイルを別々に編集してしまっています。",
+      "terminal": "$ git merge feature/new-station\nCONFLICT (content): Merge conflict in station-name.txt\nAutomatic merge failed; fix conflicts and then commit.",
+      "choices": null,
+      "graph": "ch3-conflict",
+      "nextLabel": "コンフリクトを確認する"
+    },
+    {
+      "char": "現場監督",
+      "text": "コンフリクトが発生しました！\nどこが衝突しているか確認しましょう。\n衝突箇所の詳細を表示するコマンドは？",
+      "terminal": null,
+      "choices": [
+        { "label": "git diff", "correct": true },
+        { "label": "git status", "correct": false },
+        { "label": "git log", "correct": false },
+        { "label": "git show", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ git diff でコンフリクトの詳細が確認できる。\nどの行が衝突しているか、双方の変更内容が表示される。",
+        "ng": "git diff が最適だ。status は衝突ファイル名だけだが、diff は具体的な内容を見られる。"
+      },
+      "graph": "ch3-conflict"
+    },
+    {
+      "char": "現場監督",
+      "text": "ファイルの中を見てみましょう。\nGitは衝突箇所に特別なマーカーを挿入します。\n『自分の変更』と『相手の変更』を区切る記号はどれですか？",
+      "terminal": "<<<<<<< HEAD\nみなとみらいイノベーションゲートウェイ\n=======\n横浜\n>>>>>>> feature/new-station",
+      "choices": [
+        { "label": "<<<<<<< と ======= と >>>>>>>", "correct": true },
+        { "label": "### と --- と ###", "correct": false },
+        { "label": "/* と */ と //", "correct": false },
+        { "label": "{{ と }} と ||", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ <<<<<<< が自分の変更の開始、======= が区切り、>>>>>>> が相手の変更の終了だ。\nこのマーカーを手動で編集して、最終的な内容を決める。",
+        "ng": "<<<<<<< ======= >>>>>>> がコンフリクトマーカーだ。Gitが自動で挿入する。手動で解消する必要がある。"
+      },
+      "graph": "ch3-conflict"
+    },
+    {
+      "char": "社員A",
+      "text": "社内でも『さすがに住民の声を無視できない』という意見が広がっています……",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-conflict",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "社員B",
+      "text": "看板の製作コストも試算しましたが、あの駅名、フォントサイズを限界まで下げないと入りません。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-conflict",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "社長",
+      "text": "……横浜、でいいだろう。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-resolving",
+      "nextLabel": "コンフリクトを解消する"
+    },
+    {
+      "char": "建設局長",
+      "text": "方針が決まった。ファイルを『横浜』に書き換えた。\n解消後、Gitに『解決済み』と伝えるために何をする？",
+      "terminal": "（編集後の station-name.txt）\n横浜",
+      "choices": [
+        { "label": "git add station-name.txt", "correct": true },
+        { "label": "git resolve station-name.txt", "correct": false },
+        { "label": "git fix station-name.txt", "correct": false },
+        { "label": "git merge --continue", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ 解消したファイルを git add するとGitは『解決済み』と認識する。\n続けて commit してマージを完了させよう。",
+        "ng": "git add が正しい。衝突を解消したファイルを add することで、解決済みと宣言できる。"
+      },
+      "graph": "ch3-resolving"
+    },
+    {
+      "char": "現場監督",
+      "text": "工事ブランチをコミットして、RailHubに送りましょう。",
+      "terminal": "$ git status\nAll conflicts fixed but you are still merging.\n  (use \"git commit\" to conclude merge)",
+      "choices": [
+        { "label": "git commit -m \"駅名を横浜に決定\" → git push origin feature/new-station", "correct": true },
+        { "label": "git commit → git push origin main", "correct": false },
+        { "label": "git merge --finish → git push", "correct": false },
+        { "label": "git commit --merge → git send", "correct": false }
+      ],
+      "feedback": {
+        "ok": "正解！ 工事ブランチをコミットして push した。\n次は管理局に正式な承認申請を出そう。",
+        "ng": "工事ブランチを commit して push するのが正しい。mainへの push は管理局の承認後だ。"
+      },
+      "graph": "ch3-resolved"
+    },
+    {
+      "char": "建設局長",
+      "text": "工事ブランチをRailHubに送った。\n次は正式な承認申請（プルリクエスト）を出そう。\nIssue #8 と紐付けて申請する。",
+      "terminal": "PR #9: 横浜駅を建設\nbase: main ← compare: feature/new-station\nCloses #8\n\n工事内容：\n- station-name.txt: 駅名を「横浜」に決定\n- station_yokohama.html: 駅舎を建設",
+      "choices": null,
+      "graph": "ch3-resolved",
+      "nextLabel": "PRを提出する"
+    },
+    {
+      "char": "管理局審査官",
+      "text": "PRを確認しました。\n駅名『横浜』、問題ありません。承認します。",
+      "terminal": "✓ Review: Approved\n✓ All checks passed\n→ Ready to merge",
+      "choices": null,
+      "graph": "ch3-resolved",
+      "nextLabel": "マージを実行"
+    },
+    {
+      "char": "地元住民代表",
+      "text": "駅名が『横浜』に決まりました！\nPRがマージされたので、Issue #8 も自動でクローズされました。",
+      "terminal": "Issue #8: 新駅の名称について\nStatus: Closed ✓\nClosed by PR #9",
+      "choices": null,
+      "graph": "ch3-resolved",
+      "nextLabel": "Issue をクローズ"
+    },
+    {
+      "char": "建設局長",
+      "text": "横浜駅、営業運転開始！新橋から横浜まで、4つの駅が繋がった。\nなお、川崎〜横浜間には、その後神奈川駅も開業し、路線はさらに充実した。\n\n今章で学んだこと：\n― Issue で要望・議論を管理\n― ラベルで Issue を分類\n― git diff でコンフリクト箇所を確認\n― コンフリクトマーカーの読み方（<<<<<<< ======= >>>>>>>）\n― git add で解決済みを宣言\n― PRとIssueを紐付けて管理局の承認を得る\n\n……ところで、この『横浜』という駅名。\n将来また変わることになるとは、このとき誰も知らなかった。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch3-resolved",
+      "isLast": true,
+      "nextLabel": "第3章 完了"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": 8,
+  "title": "エピローグ",
+  "subtitle": "",
+  "description": "",
+  "legend": [],
+  "scenes": [
+    {
+      "char": null,
+      "text": "git log --oneline",
+      "terminal": "b5e6f7g 新橋駅 開業\nc4d5e6f 品川駅 開業\nd3c4d5e 川崎駅 開業\nf1a2b3c 桜木町駅 改称（初代横浜駅より）\na3b4c5d 横浜駅 開業（二代目）\n3f4g5h6 関内駅 開業\nz9y8x7w みなとみらい線 乗り入れ開始\np1q2r3s ブランチ保護・コミット規約を導入\nm4n5o6p 新型検測車 導入\nx7y8z9a 横浜・桜木町 ホームドア設置完了",
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "最初は、変更を記録するだけだった。\nどこを変えたか。いつ変えたか。誰が変えたか。\nそれだけでよかった。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "路線が伸びるにつれて、仕組みが変わっていった。\n\nブランチで、安全に試せるようになった。\nレビューで、一人で抱えなくてよくなった。\nCIで、変更のたびに自動で検証されるようになった。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": "建設局長",
+      "text": "なぜ、品質を守るのか。\n\n架線が切れれば、電車が止まる。\n軌間がずれれば、脱線する。\nホームドアが誤作動すれば、乗客が危険にさらされる。\n\nGitの仕組みは、記録するためだけにあるのではない。\n乗客を守るためにある。",
+      "terminal": null,
+      "choices": null,
+      "graph": "ch8-complete",
+      "nextLabel": "次へ"
+    },
+    {
+      "char": null,
+      "text": "今日もいつものように、始発電車が走る。",
+      "terminal": "06:00 新橋発 関内行き\n全線 正常運行中",
+      "choices": null,
+      "graph": "ch8-complete",
+      "isLast": true,
+      "nextLabel": "完走！"
+    }
+  ]
+}
