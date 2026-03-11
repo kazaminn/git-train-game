@@ -102,11 +102,17 @@ const Engine = (() => {
   function renderCurrentScene() {
     const ch = currentChapter();
     const scene = currentScene();
+    const totalScenes = totalSceneCount();
 
     UI.setChapter(ch.title, ch.subtitle);
-    UI.setProgress(scenesSoFar() / totalSceneCount());
-    Graph.draw(scene.graph);
-    Graph.drawLegend(document.getElementById('legend'), ch.legend);
+    UI.setProgress(totalScenes ? (scenesSoFar() + 1) / totalScenes : 0);
+    try {
+      Graph.draw(scene.graph);
+      Graph.drawLegend(document.getElementById('legend'), ch.legend);
+    } catch (error) {
+      console.error('Graph render failed:', error);
+      Graph.drawLegend(document.getElementById('legend'), ch.legend);
+    }
 
     answered = false;
 
@@ -123,6 +129,7 @@ const Engine = (() => {
     }
 
     UI.renderScene(scene, handleChoice, nextScene);
+    UI.syncPanelState();
   }
 
   function handleChoice(choice, idx) {

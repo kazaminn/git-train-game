@@ -1,15 +1,28 @@
 /**
  * graph.js — 路線図描画エンジン
- * SVGで路線図のノード・ライン・ラベルを描画する
  */
 
 const Graph = (() => {
+  const VIEWPORT = {
+    width: 920,
+    height: 500,
+  };
+  const FRAME = {
+    x: 34,
+    y: 26,
+    width: 852,
+    height: 400,
+  };
+  const MIN_PADDING_X = 88;
+  const MIN_PADDING_Y = 72;
+
   let svg = null;
   let states = {};
   let currentState = null;
 
   function init(svgElement) {
     svg = svgElement;
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   }
 
   function loadStates(data) {
@@ -18,197 +31,430 @@ const Graph = (() => {
 
   function draw(stateKey, animate = true) {
     const state = states[stateKey];
-    if (!state) return;
+    if (!svg || !state) return;
+
+    const shouldAnimate = animate && currentState !== stateKey;
     currentState = stateKey;
 
-    // SVGサイズ計算
-    let maxX = 200,
-      maxY = 160;
-    state.nodes.forEach((n) => {
-      maxX = Math.max(maxX, n.x + 100);
-      maxY = Math.max(maxY, n.y + 60);
-    });
-    (state.labels || []).forEach((l) => {
-      maxX = Math.max(maxX, l.x + 80);
-      maxY = Math.max(maxY, l.y + 20);
-    });
-    svg.setAttribute('viewBox', `0 0 ${maxX} ${maxY}`);
+    const bounds = _measureState(state);
+    const labelLayout = _buildNodeLabelLayout(state, bounds.medianY);
+    const scene = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+    svg.setAttribute('viewBox', `0 0 ${VIEWPORT.width} ${VIEWPORT.height}`);
     svg.innerHTML = '';
+    svg.appendChild(_createDefs());
+    svg.appendChild(_createFrame());
 
-    // グリッド背景（薄い点）
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    const transform = _computeSceneTransform(bounds);
+    scene.setAttribute(
+      'transform',
+      `translate(${transform.tx} ${transform.ty}) scale(${transform.scale})`
+    );
+    svg.appendChild(scene);
 
-    // グローフィルター
-    const filter = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'filter'
-    );
-    filter.setAttribute('id', 'glow');
-    const blur = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'feGaussianBlur'
-    );
-    blur.setAttribute('stdDeviation', '3');
-    blur.setAttribute('result', 'glow');
-    filter.appendChild(blur);
-    const merge = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'feMerge'
-    );
-    const m1 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'feMergeNode'
-    );
-    m1.setAttribute('in', 'glow');
-    const m2 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'feMergeNode'
-    );
-    m2.setAttribute('in', 'SourceGraphic');
-    merge.appendChild(m1);
-    merge.appendChild(m2);
-    filter.appendChild(merge);
-    defs.appendChild(filter);
-    svg.appendChild(defs);
+    _createLaneGuides(state).forEach((guide) => scene.appendChild(guide));
 
-    // ライン描画
-    state.lines.forEach((l, i) => {
-      const line = _createLine(l);
-      if (animate) {
-        line.style.opacity = '0';
-        line.style.transition = `opacity 0.4s ease ${i * 0.1}s`;
-        requestAnimationFrame(() => {
-          line.style.opacity = '1';
-        });
-      }
-      svg.appendChild(line);
+    state.lines.forEach((lineData, index) => {
+      const line = _createLine(lineData);
+      _animate(line, shouldAnimate, index * 0.06, 0.28);
+      scene.appendChild(line);
     });
 
-    // ノード描画
-    state.nodes.forEach((n, i) => {
-      const g = _createNode(n);
-      if (animate) {
-        g.style.opacity = '0';
-        g.style.transition = `opacity 0.4s ease ${state.lines.length * 0.1 + i * 0.12}s`;
-        requestAnimationFrame(() => {
-          g.style.opacity = '1';
-        });
-      }
-      svg.appendChild(g);
+    state.nodes.forEach((nodeData, index) => {
+      const node = _createNode(nodeData, state, labelLayout[index]);
+      _animate(
+        node,
+        shouldAnimate,
+        state.lines.length * 0.04 + index * 0.06,
+        0.28
+      );
+      scene.appendChild(node);
     });
 
-    // ブランチラベル描画
-    (state.labels || []).forEach((l, i) => {
-      const text = document.createElementNS(
-        'http://www.w3.org/2000/svg',
-        'text'
-      );
-      text.setAttribute('x', l.x);
-      text.setAttribute('y', l.y);
-      text.setAttribute('text-anchor', 'middle');
-      text.setAttribute('fill', l.color);
-      text.setAttribute('class', 'branch-label');
-      text.setAttribute('font-size', '11');
-      text.setAttribute('font-family', "'Share Tech Mono', monospace");
-      text.setAttribute('opacity', '0.7');
-      text.textContent = l.text;
-      if (animate) {
-        text.style.opacity = '0';
-        text.style.transition = `opacity 0.5s ease ${0.5 + i * 0.1}s`;
-        requestAnimationFrame(() => {
-          text.style.opacity = '0.7';
-        });
-      }
-      svg.appendChild(text);
+    (state.labels || []).forEach((labelData, index) => {
+      const label = _createBranchLabel(labelData);
+      _animate(label, shouldAnimate, 0.18 + index * 0.05, 0.24);
+      scene.appendChild(label);
     });
-  }
-
-  function _createLine(l) {
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', l.x1);
-    line.setAttribute('y1', l.y1);
-    line.setAttribute('x2', l.x2);
-    line.setAttribute('y2', l.y2);
-    line.setAttribute('stroke', l.color);
-    line.setAttribute('stroke-width', '2.5');
-    line.setAttribute('stroke-linecap', 'round');
-    if (l.dashed) line.setAttribute('stroke-dasharray', '6,4');
-    return line;
-  }
-
-  function _createNode(n) {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-
-    // 発光エフェクト（glowノード）
-    if (n.glow) {
-      const glowCircle = document.createElementNS(
-        'http://www.w3.org/2000/svg',
-        'circle'
-      );
-      glowCircle.setAttribute('cx', n.x);
-      glowCircle.setAttribute('cy', n.y);
-      glowCircle.setAttribute('r', '16');
-      glowCircle.setAttribute('fill', n.color);
-      glowCircle.setAttribute('opacity', '0.15');
-      glowCircle.setAttribute('filter', 'url(#glow)');
-      g.appendChild(glowCircle);
-    }
-
-    // 外枠（破線ノード）
-    if (n.dashed) {
-      const outer = document.createElementNS(
-        'http://www.w3.org/2000/svg',
-        'circle'
-      );
-      outer.setAttribute('cx', n.x);
-      outer.setAttribute('cy', n.y);
-      outer.setAttribute('r', '12');
-      outer.setAttribute('fill', 'none');
-      outer.setAttribute('stroke', n.color);
-      outer.setAttribute('stroke-width', '1.5');
-      outer.setAttribute('stroke-dasharray', '3,2');
-      outer.setAttribute('opacity', '0.5');
-      g.appendChild(outer);
-    }
-
-    // メインの丸
-    const circle = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'circle'
-    );
-    circle.setAttribute('cx', n.x);
-    circle.setAttribute('cy', n.y);
-    circle.setAttribute('r', n.dashed ? '6' : '8');
-    circle.setAttribute('fill', n.dashed ? 'transparent' : n.color);
-    circle.setAttribute('stroke', n.color);
-    circle.setAttribute('stroke-width', n.dashed ? '1.5' : '0');
-    g.appendChild(circle);
-
-    // ラベル
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', n.x);
-    text.setAttribute('y', n.y + 24);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('fill', n.color);
-    text.setAttribute('font-size', '10');
-    text.setAttribute('font-family', "'M PLUS 1p', sans-serif");
-    text.setAttribute('opacity', '0.9');
-    text.textContent = n.label;
-    g.appendChild(text);
-
-    return g;
   }
 
   function drawLegend(container, items) {
-    container.innerHTML = items
+    container.innerHTML = (items || [])
       .map(
-        (item) =>
-          `<div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:${item.color};font-family:'Share Tech Mono',monospace">
-        <div style="width:20px;height:3px;background:${item.color};border-radius:2px"></div>
-        ${item.label}
-      </div>`
+        (item) => `
+          <div class="legend-item">
+            <span class="legend-swatch" style="--legend-color:${item.color}"></span>
+            <span class="legend-label">${item.label}</span>
+          </div>
+        `
       )
       .join('');
+  }
+
+  function _measureState(state) {
+    const nodeYs = state.nodes.map((node) => node.y).sort((a, b) => a - b);
+    const medianY = nodeYs[Math.floor(nodeYs.length / 2)] || VIEWPORT.height / 2;
+    const labelLayout = _buildNodeLabelLayout(state, medianY);
+    const points = [];
+
+    state.nodes.forEach((node, index) => {
+      const config = labelLayout[index];
+      const labelWidth = Math.max(50, _estimateLabelWidth(node.label, 9.2) + 20);
+      const labelTop = config.placement === 'above' ? node.y - 40 : node.y + 18;
+      const labelBottom = labelTop + 22;
+
+      points.push([node.x - 18, node.y - 18]);
+      points.push([node.x + 18, node.y + 18]);
+      points.push([node.x + config.dx - labelWidth / 2 - 10, labelTop - 8]);
+      points.push([node.x + config.dx + labelWidth / 2 + 10, labelBottom + 8]);
+    });
+
+    (state.labels || []).forEach((label) => {
+      const width = _estimateLabelWidth(label.text, 8.2) + 18;
+      points.push([label.x - width / 2 - 4, label.y - 20]);
+      points.push([label.x + width / 2 + 4, label.y + 8]);
+    });
+
+    if (points.length === 0) {
+      return {
+        minX: 0,
+        minY: 0,
+        maxX: 480,
+        maxY: 240,
+        width: 480,
+        height: 240,
+        medianY: 120,
+      };
+    }
+
+    const xs = points.map((point) => point[0]);
+    const ys = points.map((point) => point[1]);
+    const minX = Math.min(...xs) - MIN_PADDING_X;
+    const maxX = Math.max(...xs) + MIN_PADDING_X;
+    const minY = Math.min(...ys) - MIN_PADDING_Y;
+    const maxY = Math.max(...ys) + MIN_PADDING_Y;
+
+    return {
+      minX,
+      minY,
+      maxX,
+      maxY,
+      width: maxX - minX,
+      height: maxY - minY,
+      medianY,
+    };
+  }
+
+  function _buildNodeLabelLayout(state, medianY) {
+    const layout = state.nodes.map((node) => ({
+      placement: node.y >= medianY ? 'above' : 'below',
+      dx: 0,
+    }));
+    const lanes = new Map();
+
+    state.nodes.forEach((node, index) => {
+      const key = String(node.y);
+      if (!lanes.has(key)) {
+        lanes.set(key, []);
+      }
+      lanes.get(key).push({ node, index });
+    });
+
+    lanes.forEach((items) => {
+      items.sort((a, b) => a.node.x - b.node.x);
+      items.forEach((item, laneIndex) => {
+        const prev = items[laneIndex - 1];
+        const next = items[laneIndex + 1];
+        const hasTightNeighbor =
+          (prev && item.node.x - prev.node.x < 110) ||
+          (next && next.node.x - item.node.x < 110);
+
+        if (hasTightNeighbor) {
+          layout[item.index].placement = laneIndex % 2 === 0 ? 'above' : 'below';
+          layout[item.index].dx = laneIndex % 2 === 0 ? -14 : 14;
+        }
+
+        const branchNearBelow = (state.labels || []).some(
+          (label) =>
+            Math.abs(label.x - item.node.x) < 76 &&
+            label.y >= item.node.y &&
+            label.y - item.node.y < 54
+        );
+
+        if (branchNearBelow) {
+          layout[item.index].placement = 'above';
+        }
+      });
+    });
+
+    return layout;
+  }
+
+  function _computeSceneTransform(bounds) {
+    const safeWidth = Math.max(bounds.width, 160);
+    const safeHeight = Math.max(bounds.height, 120);
+    const scale = Math.min(FRAME.width / safeWidth, FRAME.height / safeHeight);
+    const scaledWidth = safeWidth * scale;
+    const scaledHeight = safeHeight * scale;
+
+    return {
+      scale,
+      tx: FRAME.x + (FRAME.width - scaledWidth) / 2 - bounds.minX * scale,
+      ty: FRAME.y + (FRAME.height - scaledHeight) / 2 - bounds.minY * scale,
+    };
+  }
+
+  function _createDefs() {
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    const glowFilter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    const glowBlur = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feGaussianBlur'
+    );
+    const glowMerge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+    const glowFirstNode = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
+    const glowSecondNode = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
+    const shadowFilter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    const shadowOffset = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feOffset'
+    );
+    const shadowBlur = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feGaussianBlur'
+    );
+    const shadowColor = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feColorMatrix'
+    );
+    const shadowMerge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+    const shadowFirstNode = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
+    const shadowSecondNode = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'feMergeNode'
+    );
+
+    glowFilter.setAttribute('id', 'graph-glow');
+    glowFilter.setAttribute('x', '-80%');
+    glowFilter.setAttribute('y', '-80%');
+    glowFilter.setAttribute('width', '260%');
+    glowFilter.setAttribute('height', '260%');
+    glowBlur.setAttribute('stdDeviation', '4.8');
+    glowBlur.setAttribute('result', 'glow');
+    glowFirstNode.setAttribute('in', 'glow');
+    glowSecondNode.setAttribute('in', 'SourceGraphic');
+    glowMerge.append(glowFirstNode, glowSecondNode);
+    glowFilter.append(glowBlur, glowMerge);
+
+    shadowFilter.setAttribute('id', 'graph-shadow');
+    shadowFilter.setAttribute('x', '-40%');
+    shadowFilter.setAttribute('y', '-40%');
+    shadowFilter.setAttribute('width', '180%');
+    shadowFilter.setAttribute('height', '180%');
+    shadowOffset.setAttribute('in', 'SourceAlpha');
+    shadowOffset.setAttribute('result', 'shadow-offset');
+    shadowOffset.setAttribute('dx', '0');
+    shadowOffset.setAttribute('dy', '6');
+    shadowBlur.setAttribute('in', 'shadow-offset');
+    shadowBlur.setAttribute('stdDeviation', '9');
+    shadowColor.setAttribute(
+      'values',
+      '0 0 0 0 0.019 0 0 0 0 0.043 0 0 0 0 0.086 0 0 0 0.38 0'
+    );
+    shadowMerge.append(shadowFirstNode, shadowSecondNode);
+    shadowFirstNode.setAttribute('in', 'shadow');
+    shadowSecondNode.setAttribute('in', 'SourceGraphic');
+    shadowBlur.setAttribute('result', 'shadow-blur');
+    shadowColor.setAttribute('in', 'shadow-blur');
+    shadowColor.setAttribute('result', 'shadow');
+    shadowFilter.append(shadowOffset, shadowBlur, shadowColor, shadowMerge);
+
+    defs.append(glowFilter, shadowFilter);
+    return defs;
+  }
+
+  function _createFrame() {
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('class', 'graph-frame');
+    rect.setAttribute('x', String(FRAME.x));
+    rect.setAttribute('y', String(FRAME.y));
+    rect.setAttribute('width', String(FRAME.width));
+    rect.setAttribute('height', String(FRAME.height));
+    rect.setAttribute('rx', '28');
+    rect.setAttribute('fill', 'rgba(255, 255, 255, 0.02)');
+    rect.setAttribute('stroke', 'rgba(123, 147, 182, 0.14)');
+    rect.setAttribute('stroke-width', '1.5');
+    return rect;
+  }
+
+  function _createLaneGuides(state) {
+    const groups = new Map();
+
+    state.nodes.forEach((node) => {
+      const key = String(node.y);
+      if (!groups.has(key)) {
+        groups.set(key, []);
+      }
+      groups.get(key).push(node);
+    });
+
+    return Array.from(groups.values())
+      .filter((nodes) => nodes.length > 1)
+      .map((nodes) => {
+        const xs = nodes.map((node) => node.x);
+        const guide = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        guide.setAttribute('x1', String(Math.min(...xs) - 26));
+        guide.setAttribute('y1', String(nodes[0].y));
+        guide.setAttribute('x2', String(Math.max(...xs) + 26));
+        guide.setAttribute('y2', String(nodes[0].y));
+        guide.setAttribute('stroke', 'rgba(141, 162, 194, 0.1)');
+        guide.setAttribute('stroke-width', '1.5');
+        guide.setAttribute('stroke-dasharray', '3,9');
+        return guide;
+      });
+  }
+
+  function _createLine(lineData) {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', lineData.x1);
+    line.setAttribute('y1', lineData.y1);
+    line.setAttribute('x2', lineData.x2);
+    line.setAttribute('y2', lineData.y2);
+    line.setAttribute('stroke', lineData.color);
+    line.setAttribute('stroke-width', lineData.dashed ? '2.6' : '4.4');
+    line.setAttribute('stroke-linecap', 'round');
+    line.setAttribute('opacity', lineData.dashed ? '0.72' : '0.88');
+
+    if (lineData.dashed) {
+      line.setAttribute('stroke-dasharray', '7,5');
+    }
+
+    return line;
+  }
+
+  function _createNode(nodeData, state, labelConfig) {
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+    if (nodeData.glow) {
+      const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      glow.setAttribute('cx', nodeData.x);
+      glow.setAttribute('cy', nodeData.y);
+      glow.setAttribute('r', '18');
+      glow.setAttribute('fill', nodeData.color);
+      glow.setAttribute('opacity', '0.34');
+      glow.setAttribute('filter', 'url(#graph-glow)');
+      group.appendChild(glow);
+    }
+
+    if (nodeData.dashed) {
+      const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      outer.setAttribute('cx', nodeData.x);
+      outer.setAttribute('cy', nodeData.y);
+      outer.setAttribute('r', '11');
+      outer.setAttribute('fill', 'none');
+      outer.setAttribute('stroke', nodeData.color);
+      outer.setAttribute('stroke-width', '1.8');
+      outer.setAttribute('stroke-dasharray', '3,3');
+      outer.setAttribute('opacity', '0.7');
+      group.appendChild(outer);
+    }
+
+    const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    halo.setAttribute('cx', nodeData.x);
+    halo.setAttribute('cy', nodeData.y);
+    halo.setAttribute('r', nodeData.glow ? '12.5' : '10');
+    halo.setAttribute('fill', 'rgba(246, 250, 255, 0.07)');
+    group.appendChild(halo);
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', nodeData.x);
+    circle.setAttribute('cy', nodeData.y);
+    circle.setAttribute('r', nodeData.dashed ? '5.8' : '8.5');
+    circle.setAttribute(
+      'fill',
+      nodeData.dashed
+        ? 'rgba(18, 29, 47, 0.82)'
+        : nodeData.glow
+          ? '#f6fbff'
+          : nodeData.color
+    );
+    circle.setAttribute('stroke', nodeData.color);
+    circle.setAttribute('stroke-width', nodeData.glow ? '3.4' : '2.8');
+    group.appendChild(circle);
+
+    group.appendChild(_createNodeLabel(nodeData, labelConfig));
+    return group;
+  }
+
+  function _createNodeLabel(nodeData, labelConfig) {
+    const width = Math.max(50, _estimateLabelWidth(nodeData.label, 9.2) + 20);
+    const x = nodeData.x + labelConfig.dx - width / 2;
+    const y = labelConfig.placement === 'above' ? nodeData.y - 40 : nodeData.y + 18;
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    rect.setAttribute('x', String(x));
+    rect.setAttribute('y', String(y));
+    rect.setAttribute('width', String(width));
+    rect.setAttribute('height', '22');
+    rect.setAttribute('rx', '11');
+    rect.setAttribute('fill', 'rgba(17, 26, 41, 0.96)');
+    rect.setAttribute('stroke', nodeData.color);
+    rect.setAttribute('stroke-width', '1.2');
+    rect.setAttribute('filter', 'url(#graph-shadow)');
+
+    text.setAttribute('x', String(nodeData.x + labelConfig.dx));
+    text.setAttribute('y', String(y + 14.8));
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', '#f4f8ff');
+    text.setAttribute('font-size', '9.4');
+    text.setAttribute('font-weight', '700');
+    text.setAttribute('font-family', "'Share Tech Mono', monospace");
+    text.textContent = nodeData.label;
+
+    group.append(rect, text);
+    return group;
+  }
+
+  function _createBranchLabel(labelData) {
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    text.setAttribute('x', String(labelData.x));
+    text.setAttribute('y', String(labelData.y - 3));
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', labelData.color);
+    text.setAttribute('font-size', '9.2');
+    text.setAttribute('font-family', "'Share Tech Mono', monospace");
+    text.setAttribute('font-weight', '700');
+    text.setAttribute('filter', 'url(#graph-shadow)');
+    text.textContent = labelData.text;
+
+    group.append(text);
+    return group;
+  }
+
+  function _estimateLabelWidth(text, charWidth) {
+    return Math.max(20, String(text || '').length * charWidth);
+  }
+
+  function _animate(element, shouldAnimate, delaySeconds, durationSeconds) {
+    if (!shouldAnimate) return;
+    element.style.opacity = '0';
+    element.style.transition = `opacity ${durationSeconds}s ease ${delaySeconds}s`;
+    requestAnimationFrame(() => {
+      element.style.opacity = '1';
+    });
   }
 
   return { init, loadStates, draw, drawLegend };

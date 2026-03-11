@@ -53,7 +53,8 @@
     <div class="graph-panel collapsed" id="graph-panel">
       <div class="graph-header">
         <div class="graph-title">路線図</div>
-        <button class="graph-toggle" id="graph-toggle" onclick="toggleGraph()">表示/非表示</button>
+        <button class="graph-toggle" id="graph-toggle" type="button" aria-controls="graph-panel" aria-expanded="false"
+          onclick="UI.toggleGraphPanel()">路線図を表示</button>
       </div>
       <div class="graph-wrap">
         <svg id="graph" height="200"></svg>
@@ -64,17 +65,18 @@
     <div class="story-panel" id="story-panel">
       <div class="story-header">
         <div class="story-title">問題</div>
-        <button class="story-toggle" onclick="toggleStory()">表示/非表示</button>
+        <button class="story-toggle" id="story-toggle" type="button" aria-controls="story-panel" aria-expanded="true"
+          onclick="UI.toggleStoryPanel()">問題を閉じる</button>
       </div>
-      <div class="story-scroll">
+      <div class="story-scroll" id="story-scroll">
         <div class="scene-box">
           <div class="scene-character" id="scene-char"></div>
           <div class="scene-text" id="scene-text"></div>
-          <div class="terminal-output" id="terminal-out"></div>
+          <div class="terminal-output" id="terminal-out" aria-live="polite"></div>
         </div>
         <div class="choices-box" id="choices-box"></div>
-        <div class="feedback-box" id="feedback-box"></div>
-        <button class="next-btn" id="next-btn">次の駅へ</button>
+        <div class="feedback-box" id="feedback-box" aria-live="polite"></div>
+        <button class="next-btn" id="next-btn" type="button">次の駅へ</button>
       </div>
     </div>
   </div>
@@ -82,14 +84,6 @@
   <script src="js/graph.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/engine.js"></script>
-  <script>
-    function toggleGraph() {
-      document.getElementById('graph-panel').classList.toggle('collapsed');
-    }
-    function toggleStory() {
-      document.getElementById('story-panel').classList.toggle('collapsed');
-    }
-  </script>
 </body>
 
 </html>
