@@ -6,7 +6,7 @@ const path = require('path');
 const { minifyByExtension, walk } = require('./minify');
 
 const SRC_DIR = path.resolve(process.cwd(), 'src');
-const DIST_DIR = path.resolve(process.cwd(), 'dist');
+const DIST_DIR = path.resolve(process.cwd(), 'docs');
 const MINIFY_EXTENSIONS = new Set(['.js', '.css', '.json']);
 
 function ensureCleanDir(dirPath) {
