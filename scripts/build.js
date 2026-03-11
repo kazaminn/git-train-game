@@ -9,8 +9,7 @@ const SRC_DIR = path.resolve(process.cwd(), 'src');
 const DIST_DIR = path.resolve(process.cwd(), 'docs');
 const MINIFY_EXTENSIONS = new Set(['.js', '.css', '.json']);
 
-function ensureCleanDir(dirPath) {
-  fs.rmSync(dirPath, { recursive: true, force: true });
+function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
@@ -21,28 +20,61 @@ function copyBuiltFile(sourcePath) {
   const extension = path.extname(sourcePath).toLowerCase();
   const original = fs.readFileSync(sourcePath, 'utf8');
 
-  fs.mkdirSync(destinationDir, { recursive: true });
+  ensureDir(destinationDir);
 
   if (relativePath === 'index.html') {
-    fs.writeFileSync(destinationPath, original, 'utf8');
-    return destinationPath;
+    const previous = fs.existsSync(destinationPath)
+      ? fs.readFileSync(destinationPath, 'utf8')
+      : null;
+    if (previous !== original) {
+      fs.writeFileSync(destinationPath, original, 'utf8');
+      return { destinationPath, changed: true };
+    }
+    return { destinationPath, changed: false };
   }
 
   const output = MINIFY_EXTENSIONS.has(extension)
     ? minifyByExtension(sourcePath, original)
     : original;
 
-  fs.writeFileSync(destinationPath, output, 'utf8');
-  return destinationPath;
+  const previous = fs.existsSync(destinationPath)
+    ? fs.readFileSync(destinationPath, 'utf8')
+    : null;
+
+  if (previous !== output) {
+    fs.writeFileSync(destinationPath, output, 'utf8');
+    return { destinationPath, changed: true };
+  }
+
+  return { destinationPath, changed: false };
+}
+
+function removeStaleFiles(validDestinations) {
+  if (!fs.existsSync(DIST_DIR)) {
+    return [];
+  }
+
+  const staleFiles = walk(DIST_DIR).filter((filePath) => !validDestinations.has(filePath));
+  for (const filePath of staleFiles) {
+    fs.rmSync(filePath, { force: true });
+  }
+  return staleFiles;
 }
 
 function build() {
-  ensureCleanDir(DIST_DIR);
+  ensureDir(DIST_DIR);
 
   const sourceFiles = walk(SRC_DIR).sort();
   const builtFiles = sourceFiles.map(copyBuiltFile);
+  const validDestinations = new Set(builtFiles.map((result) => result.destinationPath));
+  const staleFiles = removeStaleFiles(validDestinations);
+  const changedFiles = builtFiles.filter((result) => result.changed);
 
-  process.stdout.write(`${builtFiles.length} file(s) written to dist.\n`);
+  process.stdout.write(
+    `${changedFiles.length} file(s) updated, ${staleFiles.length} file(s) removed in ${path.basename(
+      DIST_DIR
+    )}.\n`
+  );
 }
 
 build();
