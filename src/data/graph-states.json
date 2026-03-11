@@ -76,7 +76,7 @@
         "x": 240,
         "y": 100,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "新橋",
         "branch": "main",
         "glow": true
       }
@@ -112,7 +112,7 @@
         "x": 240,
         "y": 100,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
@@ -120,7 +120,7 @@
         "y": 200,
         "color": "#ff9800",
         "label": "工事開始",
-        "branch": "build/plaza",
+        "branch": "build/station-kawasaki",
         "dashed": true,
         "glow": true
       }
@@ -152,7 +152,7 @@
       {
         "x": 320,
         "y": 240,
-        "text": "build/plaza",
+        "text": "build/station-kawasaki",
         "color": "#ff9800"
       }
     ]
@@ -170,22 +170,22 @@
         "x": 240,
         "y": 100,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 360,
         "y": 200,
         "color": "#ff9800",
-        "label": "広場",
-        "branch": "build/plaza"
+        "label": "線路敷設",
+        "branch": "build/station-kawasaki"
       },
       {
         "x": 480,
         "y": 200,
         "color": "#ff9800",
-        "label": "改札口",
-        "branch": "build/plaza",
+        "label": "駅舎建設",
+        "branch": "build/station-kawasaki",
         "glow": true
       }
     ],
@@ -222,7 +222,7 @@
       {
         "x": 420,
         "y": 240,
-        "text": "build/plaza",
+        "text": "build/station-kawasaki",
         "color": "#ff9800"
       }
     ]
@@ -240,28 +240,28 @@
         "x": 240,
         "y": 100,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 360,
         "y": 200,
         "color": "#ff9800",
-        "label": "広場",
-        "branch": "build/plaza"
+        "label": "線路敷設",
+        "branch": "build/station-kawasaki"
       },
       {
         "x": 480,
         "y": 200,
         "color": "#ff9800",
-        "label": "改札口",
-        "branch": "build/plaza"
+        "label": "駅舎建設",
+        "branch": "build/station-kawasaki"
       },
       {
         "x": 560,
         "y": 100,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎開通",
         "branch": "main",
         "glow": true
       }
@@ -313,7 +313,7 @@
       {
         "x": 420,
         "y": 240,
-        "text": "build/plaza",
+        "text": "build/station-kawasaki",
         "color": "#ff9800"
       }
     ]
@@ -324,21 +324,21 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main",
         "glow": true
       }
@@ -374,21 +374,21 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main",
         "glow": true
       },
@@ -438,42 +438,42 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main",
         "glow": true
       }
@@ -537,42 +537,42 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main"
       },
       {
@@ -666,42 +666,42 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main"
       },
       {
@@ -794,21 +794,21 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
@@ -823,21 +823,21 @@
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main"
       },
       {
@@ -922,21 +922,21 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
@@ -950,21 +950,21 @@
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main"
       },
       {
@@ -1063,21 +1063,21 @@
         "x": 80,
         "y": 80,
         "color": "#00c8ff",
-        "label": "init",
+        "label": "新橋",
         "branch": "main"
       },
       {
         "x": 220,
         "y": 80,
         "color": "#00c8ff",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "main"
       },
       {
         "x": 380,
         "y": 80,
         "color": "#00c8ff",
-        "label": "統合",
+        "label": "川崎",
         "branch": "main"
       },
       {
@@ -1091,21 +1091,21 @@
         "x": 80,
         "y": 220,
         "color": "#a855f7",
-        "label": "init",
+        "label": "新橋",
         "branch": "origin/main"
       },
       {
         "x": 220,
         "y": 220,
         "color": "#a855f7",
-        "label": "第一号駅",
+        "label": "品川",
         "branch": "origin/main"
       },
       {
         "x": 380,
         "y": 220,
         "color": "#a855f7",
-        "label": "統合",
+        "label": "川崎",
         "branch": "origin/main"
       },
       {
