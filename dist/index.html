@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>git train — 路線図でわかる Git 入門</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=M+PLUS+1p:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="globals.css">
+</head>
+
+<body>
+  <div id="title-screen">
+    <div class="title-logo">git<span> train</span></div>
+    <div class="title-sub">路線図でわかる Git 入門</div>
+    <div class="title-buttons">
+      <button class="start-btn" onclick="Engine.start(false)">乗車する</button>
+      <button class="resume-btn" id="resume-btn" onclick="Engine.start(true)">前回の続きから</button>
+    </div>
+  </div>
+
+  <div id="clear-screen">
+    <div class="clear-title">全路線 開通</div>
+    <div class="clear-sub" id="clear-sub">おめでとうございます。すべての章を完了しました。</div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num" id="stat-correct">0</div>
+        <div class="stat-label">正解</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">問題数</div>
+      </div>
+    </div>
+    <button class="start-btn" onclick="Engine.restart()" style="margin-top:16px">もう一度乗る</button>
+  </div>
+
+  <header>
+    <div class="logo">git<span> train</span></div>
+    <div class="header-info">
+      <div class="chapter-label" id="chapter-label"></div>
+      <div class="chapter-sub" id="chapter-sub"></div>
+    </div>
+  </header>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <div class="game-layout">
+    <div class="graph-panel collapsed" id="graph-panel">
+      <div class="graph-header">
+        <div class="graph-title">路線図</div>
+        <button class="graph-toggle" id="graph-toggle" onclick="toggleGraph()">表示/非表示</button>
+      </div>
+      <div class="graph-wrap">
+        <svg id="graph" height="200"></svg>
+      </div>
+      <div id="legend"></div>
+    </div>
+
+    <div class="story-panel" id="story-panel">
+      <div class="story-header">
+        <div class="story-title">問題</div>
+        <button class="story-toggle" onclick="toggleStory()">表示/非表示</button>
+      </div>
+      <div class="story-scroll">
+        <div class="scene-box">
+          <div class="scene-character" id="scene-char"></div>
+          <div class="scene-text" id="scene-text"></div>
+          <div class="terminal-output" id="terminal-out"></div>
+        </div>
+        <div class="choices-box" id="choices-box"></div>
+        <div class="feedback-box" id="feedback-box"></div>
+        <button class="next-btn" id="next-btn">次の駅へ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/graph.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/engine.js"></script>
+  <script>
+    function toggleGraph() {
+      document.getElementById('graph-panel').classList.toggle('collapsed');
+    }
+    function toggleStory() {
+      document.getElementById('story-panel').classList.toggle('collapsed');
+    }
+  </script>
+</body>
+
+</html>
